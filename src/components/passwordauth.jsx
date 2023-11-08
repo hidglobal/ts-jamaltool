@@ -1,0 +1,132 @@
+import { Text,TextInput, Button, Stepper, Box, Group,Grid, Chip, Badge, Center,PasswordInput, JsonInput,Code} from '@mantine/core';
+import axios from 'axios';
+import { notifications } from '@mantine/notifications';
+import { IconCheck,IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId,IconLock, IconUserCircle, IconAt } from '@tabler/icons-react';
+import { useForm } from '@mantine/form';
+import { useState } from 'react';
+
+function PasswordAuth(){
+    const [active, setActive] = useState(0);
+    let email = '';
+    let Password = '';
+    const clientId = '';
+    const clientSecret = '';
+    let policy = '';
+    const form = useForm({
+        initialValues: { email: '', password: '',policy:'AT_RESPWD',channel:'CH_DIRECT',clientId:'',clientSecret:''},
+    
+        // functions will be used to validate values at corresponding key
+        validate: (values) => {
+            if (active === 1) {
+              return {
+                email:
+                  values.email.trim().length < 6
+                    ? 'Username must include at least 6 characters'
+                    : null,
+                password:
+                  values.password.length < 6 ? 'Password must include at least 6 characters' : null,
+              };
+            }
+      
+            if (active === 0) {
+              return {
+                clientId: values.clientId.trim().length < 2 ? 'Name must include at least 2 characters' : null,
+                clientSecret: values.clientSecret.trim().length < 2 ? 'Client Secret at least 2 characters' : null,
+              };
+            }
+      
+            return {};
+          },
+      });
+      const nextStep = () =>
+      setActive((current) => {
+        if (form.validate().hasErrors) {
+          return current;
+        }
+        return current < 3 ? current + 1 : current;
+      });
+  
+    const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
+
+      return(
+        <><Grid>
+              <Grid.Col span={2}></Grid.Col>
+              <Grid.Col span={8}>
+
+              <Box pos="relative" sx={(theme) => ({
+              backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+              padding: theme.spacing.xl,
+              borderRadius: theme.radius.md,
+              cursor: 'pointer',
+
+              '&:hover': {
+                  backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+              },
+          })}
+          >
+                  <Center><h3>Test Password Authenticator.</h3></Center>
+
+
+                  <Stepper active={active} breakpoint="sm">
+                      <Stepper.Step label="Client Authentication" description="Client settings">
+                          <TextInput label="Client ID" placeholder="Client" {...form.getInputProps('clientId')} />
+                          <PasswordInput
+                              mt="md"
+                              label="Client password"
+                              placeholder="Password"
+                              {...form.getInputProps('clientSecret')} />
+                              <br/>
+                              <Badge  variant="filled" color='gray'>Disconnected</Badge>
+                      </Stepper.Step>
+                      <Stepper.Step label="User Authentication" description="User settings">
+                          <TextInput label="Email" placeholder='Please enter your Email' {...form.getInputProps('email')} />
+                          <PasswordInput label="Password" placeholder='' {...form.getInputProps('password')} />
+                          <TextInput label="Authentication Policy" placeholder='AT_RESPWD' {...form.getInputProps('policy')} />
+                          <TextInput label="Channel" placeholder='CH_DIRECT' {...form.getInputProps('channel')} />
+                          <br/>
+                          <Badge  variant="filled" color='green'>Connected</Badge>
+                      </Stepper.Step>
+                      <Stepper.Completed>
+                          Completed! Form values:
+                          <Code block mt="xl">
+                              {JSON.stringify(form.values, null, 2)}
+                          </Code>
+                      </Stepper.Completed>
+                  </Stepper>
+
+                  <br />
+                  <Center>
+                      <Button onClick={console.log('Clicked')}>
+                          Login
+                      </Button>
+                  </Center>
+                  <Group position="right" mt="xl">
+                      {active !== 0 && (
+                          <Button variant="default" onClick={prevStep}>
+                              Back
+                          </Button>
+                      )}
+                      {active !== 3 && <Button onClick={nextStep}>Next</Button>}
+                  </Group>
+                  <JsonInput
+                      label="Response Body"
+                      placeholder="JSON Response Body"
+                      validationError="Invalid JSON"
+                      formatOnBlur
+                      autosize
+                      minRows={4}
+                      id="resBody">
+
+                  </JsonInput>
+
+
+              </Box>
+              </Grid.Col>
+              <Grid.Col span={2}></Grid.Col>
+          </Grid></>
+            
+      );
+
+}
+
+export default PasswordAuth;
