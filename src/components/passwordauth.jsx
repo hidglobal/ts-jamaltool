@@ -87,6 +87,11 @@ function PasswordAuth(){
                           <Badge  variant="filled" color='green'>Connected</Badge>
                       </Stepper.Step>
                       <Stepper.Completed>
+                      <Center>
+                      <Button onClick={console.log('Clicked')}>
+                          Login
+                      </Button>
+                  </Center>
                           Completed! Form values:
                           <Code block mt="xl">
                               {JSON.stringify(form.values, null, 2)}
@@ -95,11 +100,7 @@ function PasswordAuth(){
                   </Stepper>
 
                   <br />
-                  <Center>
-                      <Button onClick={console.log('Clicked')}>
-                          Login
-                      </Button>
-                  </Center>
+
                   <Group position="right" mt="xl">
                       {active !== 0 && (
                           <Button variant="default" onClick={prevStep}>

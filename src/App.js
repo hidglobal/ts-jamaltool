@@ -12,14 +12,14 @@ export default function App() {
     const [opened, setOpened] = useState(false);
     const theme = useMantineTheme();
     //let colorSession = sessionStorage.setItem('themeColor');
-    const [color,setColor] = useState('light');
+    const [color,setColor] = useState(localStorage.getItem('themeColor'));
     function toggleColorScheme(){
           if(color==='light'){
             setColor('dark');
-            //sessionStorage.setItem('themeColor') = 'dark';
+            localStorage.setItem('themeColor', 'dark');
           }else{
             setColor('light');
-            //sessionStorage.setItem('themeColor') = 'light';
+            localStorage.setItem('themeColor','light');
           }
     }
     return (
