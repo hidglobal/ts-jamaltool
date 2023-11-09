@@ -56,7 +56,7 @@ function RegisterUser(){
 						autoClose: false,
 						withCloseButton: false,
 					  });
-					axios.post('http://api.bz9.net/register', {
+					axios.post('http://localhost:4000/register', {
 						Title: usertitle,   
 						familyName: userfamily,
 						firstName: userfirst,

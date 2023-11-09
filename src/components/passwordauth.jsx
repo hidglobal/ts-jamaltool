@@ -12,8 +12,10 @@ function PasswordAuth(){
     const clientId = '';
     const clientSecret = '';
     let policy = '';
-    const form = useForm({
-        initialValues: { email: '', password: '',policy:'AT_RESPWD',channel:'CH_DIRECT',clientId:'',clientSecret:''},
+    	let hostname = sessionStorage.getItem("hostname");
+	let Tenant =sessionStorage.getItem("tenant");
+    const form4 = useForm({
+        initialValues: { email: '', password: '',policy:'AT_STDPWD',channel:'CH_DIRECT',clientId:'',clientSecret:''},
     
         // functions will be used to validate values at corresponding key
         validate: (values) => {
@@ -30,7 +32,7 @@ function PasswordAuth(){
       
             if (active === 0) {
               return {
-                clientId: values.clientId.trim().length < 2 ? 'Name must include at least 2 characters' : null,
+                clientId: values.clientId.trim().length < 2 ? 'Client must include at least 2 characters' : null,
                 clientSecret: values.clientSecret.trim().length < 2 ? 'Client Secret at least 2 characters' : null,
               };
             }
@@ -40,7 +42,7 @@ function PasswordAuth(){
       });
       const nextStep = () =>
       setActive((current) => {
-        if (form.validate().hasErrors) {
+        if (form4.validate().hasErrors) {
           return current;
         }
         return current < 3 ? current + 1 : current;
@@ -69,33 +71,56 @@ function PasswordAuth(){
 
                   <Stepper active={active} breakpoint="sm">
                       <Stepper.Step label="Client Authentication" description="Client settings">
-                          <TextInput label="Client ID" placeholder="Client" {...form.getInputProps('clientId')} />
+                          <TextInput label="Client ID" placeholder="Client" {...form4.getInputProps('clientId')} />
                           <PasswordInput
                               mt="md"
                               label="Client password"
                               placeholder="Password"
-                              {...form.getInputProps('clientSecret')} />
+                              {...form4.getInputProps('clientSecret')} />
                               <br/>
                               <Badge  variant="filled" color='gray'>Disconnected</Badge>
                       </Stepper.Step>
                       <Stepper.Step label="User Authentication" description="User settings">
-                          <TextInput label="Email" placeholder='Please enter your Email' {...form.getInputProps('email')} />
-                          <PasswordInput label="Password" placeholder='' {...form.getInputProps('password')} />
-                          <TextInput label="Authentication Policy" placeholder='AT_RESPWD' {...form.getInputProps('policy')} />
-                          <TextInput label="Channel" placeholder='CH_DIRECT' {...form.getInputProps('channel')} />
+                          <TextInput label="Email" placeholder='Please enter your Email' {...form4.getInputProps('email')} />
+                          <PasswordInput label="Password" placeholder='' {...form4.getInputProps('password')} />
+                          <TextInput label="Authentication Policy" placeholder='AT_RESPWD' {...form4.getInputProps('policy')} />
+                          <TextInput label="Channel" placeholder='CH_DIRECT' {...form4.getInputProps('channel')} />
                           <br/>
-                          <Badge  variant="filled" color='green'>Connected</Badge>
+                          
                       </Stepper.Step>
                       <Stepper.Completed>
                       <Center>
-                      <Button onClick={console.log('Clicked')}>
+                      <Button onClick={
+                          ()=>    
+                                             
+                        axios.post('http://localhost:4000/passauth', { 
+                          email: form4.values.email,
+                          password:form4.values.password,
+                          hostname: hostname,
+                          tenant: Tenant,
+                          client_id:form4.values.clientId,
+                          client_secret:form4.values.clientSecret,
+                        }, {
+                          headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                          }
+                        }
+                      ).then(function(response){
+                          document.getElementById('resBody').value = JSON.stringify(response.data);
+                          document.getElementById('status').innerHTML = '<span>Connected</span>';
+                          document.getElementById('status').style.color = 'green'
+                        }) 
+                      }
+
+                      >
                           Login
                       </Button>
                   </Center>
-                          Completed! Form values:
+                          Completed! and for test purposes these are the values:
                           <Code block mt="xl">
-                              {JSON.stringify(form.values, null, 2)}
+                              {JSON.stringify(form4.values, null, 2)}
                           </Code>
+                          <Badge  variant="filled" color='gray' id='status'>Disconnected</Badge>
                       </Stepper.Completed>
                   </Stepper>
 
