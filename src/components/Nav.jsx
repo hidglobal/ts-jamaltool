@@ -21,6 +21,7 @@ function Navlinks(){
 
   <NavLink component="a" label="Register User" icon={<IconUserPlus size="1rem"/>} href="/register"  />
   <NavLink component="a" label="Create Password Authenticator" href="/createPasswordAuthenticator" icon={<IconUserShield size="1rem"/>} />
+  <NavLink component="a" label="Create OTP Authenticator" href="/createOtpAuth" icon={<IconUserShield size="1rem"/>} />
   <NavLink component="a" href="/Users" label="View Users" icon={<IconUserQuestion size="1rem"/>} />
 
 <NavLink

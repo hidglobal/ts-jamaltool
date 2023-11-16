@@ -5,28 +5,29 @@ import { notifications } from '@mantine/notifications';
 import { IconCheck,IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId,IconLock, IconUserCircle, IconAt } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
+import { JsonInput } from '@mantine/core';
 
-function CreatePasswordAuth(){
+function CreateOTPAuth(){
     const [visible, { toggle }] = useDisclosure(false);
 	let AccessToken = sessionStorage.getItem("access_token");
 	let hostname = sessionStorage.getItem("hostname");
 	let tenant = sessionStorage.getItem("tenant");
-    const form3 = useForm({
+    const form6 = useForm({
         initialValues:{
 			access_token:AccessToken,
-            policy:'AT_STDPWD',
+            policy:'AT_OTP',
             Email: '',
             Password: '',
         },
     });
+ 
     const fetch = async () => {
-        await axios.post('https://api.bz9.net/createAuthenticator',{
+        await axios.post('https://api.bz9.net/createotpAuthenticator',{
         access_token:AccessToken.replace(/(\r?\n|\r)/gm,""),
         hostname:hostname,
         tenant:tenant,
-        Email:form3.values.Email,
-        Password:form3.values.Password,
-        policy:form3.values.policy,
+        Email:form6.values.Email,
+
         
     }, {
         headers: {
@@ -34,16 +35,34 @@ function CreatePasswordAuth(){
           }
     }
     ).then(function(response){
-       
+        const internalId = 'Internal ID of '+ form6.values.Email;
+        const payload = JSON.stringify({
+            "schemas" : [
+              "urn:hid:scim:api:idp:2.0:Authenticator"
+            ],
+            "policy" : {
+              "value" : "AT_OTP"
+            },
+            "status" : {
+              "status" : "ENABLED",
+              "expiryDate" : "2040-05-15T18:15:21+00:00",
+              "startDate" : "2015-05-15T18:15:21+00:00"
+            },
+            "owner" : {
+              "value" : internalId // the internal ID of the user (!= external ID), this ID is retrieved via the Users search endpoint
+            }
+          });
         
         notifications.update({
             id: 'load-data',
             color: 'green',
-            title: 'Password Authenticator',
-            message: JSON.stringify(response.data.replace(/(\r?\n|\r)/gm,"")),
+            title: 'OTP Authenticator',
+            message: "Successfully created an OTP Authenticator.",
             icon: <IconFaceId size="1rem" />,
             autoClose: 2000,
            }); 
+           document.getElementById("reqBody").innerHTML = payload;
+           document.getElementById("resBody").innerHTML = JSON.stringify(response.data);
     }).catch(function(error){
     
         if (error.response) {
@@ -98,16 +117,9 @@ function CreatePasswordAuth(){
         },
       })}
       >
-        <Center><h3>Create a password authenticator.</h3></Center>
-          <TextInput label="Access Token" placeholder="Token" {...form3.getInputProps('access_token')} />
-          <TextInput label="Policy" placeholder='AT_STDPWD' {...form3.getInputProps('policy')}/>
-          <TextInput label="Email" placeholder="Email" {...form3.getInputProps('Email')} />
-          <PasswordInput mt="md" label="Password" placeholder="Password"  
-          visible={visible}
-          onVisibilityChange={toggle}
-          {...form3.getInputProps('Password')}
-          icon={<IconLock size="1rem" />}
-          />
+        <Center><h3>Create an OTP authenticator.</h3></Center>
+          <TextInput label="Access Token" placeholder="Token" {...form6.getInputProps('access_token')} />
+          <TextInput label="Email" placeholder="Email" {...form6.getInputProps('Email')} />
         
                 <br/>
                 <Center>
@@ -117,18 +129,36 @@ function CreatePasswordAuth(){
     id: 'load-data',
     loading: true,
     title: 'Authenticator',
-    message: 'Creating Password Authenticator..',
+    message: 'Creating OTP Authenticator..',
     autoClose: false,
     withCloseButton: false,
   });
 fetch();
 
- }}>Create Password Authenticator</Button>
+ }}>Create OTP Authenticator</Button>
 </Center>
+<JsonInput
+      label="Payload"
+      placeholder="JSON Request Payload"
+      validationError="Invalid JSON"
+      formatOnBlur
+      autosize
+      minRows={4}
+      id="reqBody"
+    />
+<JsonInput
+      label="JSON Response Body"
+      placeholder="JSON Response Body"
+      validationError="Invalid JSON"
+      formatOnBlur
+      autosize
+      minRows={4}
+      id="resBody"
+    />
 </Box>
   
       );
 
 }
 
-export default CreatePasswordAuth;
+export default CreateOTPAuth;

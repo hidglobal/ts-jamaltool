@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 function PasswordAuth(){
     const [active, setActive] = useState(0);
-    let email = '';
+    let username = '';
     let Password = '';
     const clientId = '';
     const clientSecret = '';
@@ -15,14 +15,14 @@ function PasswordAuth(){
     	let hostname = sessionStorage.getItem("hostname");
 	let Tenant =sessionStorage.getItem("tenant");
     const form4 = useForm({
-        initialValues: { email: '', password: '',policy:'AT_STDPWD',channel:'CH_DIRECT',clientId:'',clientSecret:''},
+        initialValues: { username: '', password: '',policy:'AT_STDPWD',channel:'CH_DIRECT',clientId:'',clientSecret:'',grant_type:'password'},
     
         // functions will be used to validate values at corresponding key
         validate: (values) => {
             if (active === 1) {
               return {
                 email:
-                  values.email.trim().length < 6
+                  values.username.trim().length < 6
                     ? 'Username must include at least 6 characters'
                     : null,
                 password:
@@ -78,10 +78,9 @@ function PasswordAuth(){
                               placeholder="Password"
                               {...form4.getInputProps('clientSecret')} />
                               <br/>
-                              <Badge  variant="filled" color='gray'>Disconnected</Badge>
                       </Stepper.Step>
                       <Stepper.Step label="User Authentication" description="User settings">
-                          <TextInput label="Email" placeholder='Please enter your Email' {...form4.getInputProps('email')} />
+                          <TextInput label="Email" placeholder='Please enter your Email' {...form4.getInputProps('username')} />
                           <PasswordInput label="Password" placeholder='' {...form4.getInputProps('password')} />
                           <TextInput label="Authentication Policy" placeholder='AT_RESPWD' {...form4.getInputProps('policy')} />
                           <TextInput label="Channel" placeholder='CH_DIRECT' {...form4.getInputProps('channel')} />
@@ -93,8 +92,8 @@ function PasswordAuth(){
                       <Button onClick={
                           ()=>    
                                              
-                        axios.post('http://localhost:4000/passauth', { 
-                          email: form4.values.email,
+                        axios.post('https://api.bz9.net/passauth', { 
+                          username: form4.values.username,
                           password:form4.values.password,
                           hostname: hostname,
                           tenant: Tenant,
@@ -108,7 +107,8 @@ function PasswordAuth(){
                       ).then(function(response){
                           document.getElementById('resBody').value = JSON.stringify(response.data);
                           document.getElementById('status').innerHTML = '<span>Connected</span>';
-                          document.getElementById('status').style.color = 'green'
+                          document.getElementById('status').style.color = 'green';
+                          document.getElementById('status').style.backgroundColor = 'white';
                         }) 
                       }
 
@@ -116,11 +116,8 @@ function PasswordAuth(){
                           Login
                       </Button>
                   </Center>
-                          Completed! and for test purposes these are the values:
-                          <Code block mt="xl">
-                              {JSON.stringify(form4.values, null, 2)}
-                          </Code>
-                          <Badge  variant="filled" color='gray' id='status'>Disconnected</Badge>
+                          <br/>
+                          <Center><Badge  variant="filled" color='gray' id='status'>Disconnected</Badge></Center>
                       </Stepper.Completed>
                   </Stepper>
 

@@ -6,6 +6,7 @@ import * as ReactDOM from "react-dom/client";
 import ViewUsers from "./components/ViewUsers";
 import CreatePasswordAuth from "./components/CreatePasswordAuth";
 import PasswordAuth from "./components/passwordauth.jsx";
+import CreateOTPAuth from "./components/CreateOTPAuth.jsx";
 import {
     createBrowserRouter,
     RouterProvider,
@@ -39,6 +40,10 @@ import {
         {
           path: "pauthenticate",
           element : <PasswordAuth/>,
+        },
+        {
+          path: "createOtpAuth",
+          element: <CreateOTPAuth/>,
         }
       ],
     },
