@@ -22,7 +22,7 @@ function CreateOTPAuth(){
     });
  
     const fetch = async () => {
-        await axios.post('https://api.bz9.net/createotpAuthenticator',{
+        await axios.post('http://localhost:4000/createotpAuthenticator',{
         access_token:AccessToken.replace(/(\r?\n|\r)/gm,""),
         hostname:hostname,
         tenant:tenant,

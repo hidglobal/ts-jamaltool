@@ -1,0 +1,1 @@
+{"version":3,"file":"IVariableContext.js","names":[],"sources":["../src/IVariableContext.ts"],"sourcesContent":["export interface IVariableContext {\n  componentName: string;\n  componentSlug: string;\n  precedingCss: string;\n  index: number;\n  processor: string;\n  source: string;\n  unit: string;\n  valueSlug: string;\n}\n"],"mappings":""}

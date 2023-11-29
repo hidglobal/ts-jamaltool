@@ -12,7 +12,7 @@ function ViewUsers(){
 	let hostname = sessionStorage.getItem("hostname");
 	let tenant = sessionStorage.getItem("tenant");
     const fetch = async () => {
-        await axios.post('https://api.bz9.net/users',{
+        await axios.post('http://localhost:4000/users',{
         access_token:AccessToken.replace(/(\r?\n|\r)/gm,""),
         hostname:hostname,
         tenant:tenant,

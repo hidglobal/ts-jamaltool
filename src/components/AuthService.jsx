@@ -4,6 +4,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { IconLock,IconCheck,IconAlertCircle, IconFaceIdError, IconEarOff } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
+//var brain = require('brain');
 
 function AuthService(){
     const [visible, { toggle }] = useDisclosure(false);
@@ -46,6 +47,8 @@ function AuthService(){
        >
           <Center><Text>Login (Customer Domain)</Text></Center>
           <TextInput label="Host" placeholder="host" {...form.getInputProps('Host')} />
+
+         
           <TextInput mt="md" label="Tenant/Security Domain" placeholder="Tenant" {...form.getInputProps('Tenant')} />
           <TextInput mt="md" label="Username" placeholder="Username" {...form.getInputProps('username')} />
           <PasswordInput mt="md" label="Password" placeholder="Password" visible={visible}
@@ -117,7 +120,7 @@ function AuthService(){
                 autoClose: false,
                 withCloseButton: false,
               });
-              (!!hostname) ? axios.post('https://api.bz9.net/conng', {
+              (!!hostname) ? axios.post('http://localhost:4000/conng', {
                 grant_type:grant_type,    
                 username: username,
                 password:password,

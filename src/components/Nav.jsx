@@ -37,7 +37,7 @@ function Navlinks(){
         childrenOffset={28}
       >
         <NavLink component="a" label="Test Password Authenticator" icon={<IconFlame size="1rem"/>} href="/pauthenticate"/>
-        <NavLink label="Test OTP Authenticator" icon={<IconFlame size="1rem"/>} />
+        <NavLink component="a" href="/otpAuth" label="Test OTP Authenticator" icon={<IconFlame size="1rem"/>} />
         <NavLink label="Test Push workflow (Without CIBA)" icon={<IconFlame size="1rem"/>} />
         <NavLink label="Test Push workflow (With CIBA) Update CIBA Listener" icon={<IconFlame size="1rem"/>} />
         <NavLink label="Update CIBA Listener with Debug Logs - External Service" icon={<IconFlame size="1rem"/>} />
