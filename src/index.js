@@ -12,6 +12,11 @@ import {
     createBrowserRouter,
     RouterProvider,
   } from "react-router-dom";
+import CreateDevice from "./components/createDevice.jsx";
+import GetDevice from "./components/getDevice.jsx";
+import CloneDevice from "./components/cloneDevice.jsx";
+import AssignDevice from "./components/assignDevice.jsx";
+import ProvisionDevice from "./components/provisiondevice.jsx";
 
   const router = createBrowserRouter([
     {
@@ -49,6 +54,26 @@ import {
         {
           path: 'otpAuth',
           element: <OTPAuth/>,
+        },
+        {
+          path: 'createdevice',
+          element: <CreateDevice/>,
+        },
+        {
+          path: 'getdevice',
+          element: <GetDevice/>,
+        },
+        {
+          path: 'clonedevice',
+          element: <CloneDevice/>,
+        },
+        {
+          path: 'assigndevice',
+          element: <AssignDevice/>,
+        },
+        {
+          path: 'provisiondevice',
+          element: <ProvisionDevice/>,
         }
       ],
     },

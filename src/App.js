@@ -13,6 +13,9 @@ export default function App() {
     const theme = useMantineTheme();
     //let colorSession = sessionStorage.setItem('themeColor');
     const [color,setColor] = useState(localStorage.getItem('themeColor'));
+    if(color.length==0){
+      setColor('dark');
+    }
     function toggleColorScheme(){
           if(color==='light'){
             setColor('dark');

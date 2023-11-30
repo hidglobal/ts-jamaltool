@@ -25,11 +25,15 @@ function Navlinks(){
   <NavLink component="a" href="/Users" label="View Users" icon={<IconUserQuestion size="1rem"/>} />
 
 <NavLink
-        label="Device Provision"
+        label="Devices"
         icon={<IconDevicesPlus size="1.5rem" stroke={1.5} />}
         childrenOffset={28}
       >
-        <NavLink label="Add Device" icon={<IconDeviceMobilePlus size="1rem"/>} />
+        <NavLink label="Create Device" component="a" href="/createdevice" icon={<IconDeviceMobilePlus size="1rem"/>} />
+        <NavLink label="Get Device" component="a" href="/getdevice" icon={<IconDeviceMobilePlus size="1rem"/>} />
+        <NavLink label="Clone Device" component="a" href="/clonedevice" icon={<IconDeviceMobilePlus size="1rem"/>} />
+        <NavLink label="Assign Device" component="a" href="/assigndevice" icon={<IconDeviceMobilePlus size="1rem"/>} />
+        <NavLink label="Provision Device" component="a" href="/Provisiondevice" icon={<IconDeviceMobilePlus size="1rem"/>} />
 </NavLink>
 <NavLink
         label="Tools"

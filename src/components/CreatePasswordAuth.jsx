@@ -1,5 +1,5 @@
 
-import { Text,TextInput, Button, Group, Box, Card,Grid, Chip, Badge, Center,PasswordInput} from '@mantine/core';
+import { Text,TextInput, Button, Group, Box, Card,Grid, Chip, Badge, Center,PasswordInput, JsonInput} from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
 import { IconCheck,IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId,IconLock, IconUserCircle, IconAt } from '@tabler/icons-react';
@@ -20,7 +20,7 @@ function CreatePasswordAuth(){
         },
     });
     const fetch = async () => {
-        await axios.post('https://api.bz9.net/createAuthenticator',{
+        await axios.post('http://localhost:4000/createAuthenticator',{
         access_token:AccessToken.replace(/(\r?\n|\r)/gm,""),
         hostname:hostname,
         tenant:tenant,
@@ -44,6 +44,7 @@ function CreatePasswordAuth(){
             icon: <IconFaceId size="1rem" />,
             autoClose: 2000,
            }); 
+           document.getElementById('resBody').innerHTML = response;
     }).catch(function(error){
     
         if (error.response) {
@@ -78,6 +79,7 @@ function CreatePasswordAuth(){
          icon: <IconFaceIdError size="1rem" />,
          autoClose: 2000,
         }); 
+        document.getElementById('resBody').innerHTML = error;
        }
        
        
@@ -125,6 +127,7 @@ fetch();
 
  }}>Create Password Authenticator</Button>
 </Center>
+
 </Box>
   
       );
