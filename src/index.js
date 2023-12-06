@@ -17,6 +17,8 @@ import GetDevice from "./components/getDevice.jsx";
 import CloneDevice from "./components/cloneDevice.jsx";
 import AssignDevice from "./components/assignDevice.jsx";
 import ProvisionDevice from "./components/provisiondevice.jsx";
+import ApproveOTPAuth from "./components/approveotp.jsx";
+import ApprovePushAuth from "./components/approveciba.jsx";
 
   const router = createBrowserRouter([
     {
@@ -74,6 +76,14 @@ import ProvisionDevice from "./components/provisiondevice.jsx";
         {
           path: 'provisiondevice',
           element: <ProvisionDevice/>,
+        },
+        {
+          path: 'approvetotp',
+          element: <ApproveOTPAuth/>,
+        },
+        {
+          path: 'approvepush',
+          element: <ApprovePushAuth/>,
         }
       ],
     },

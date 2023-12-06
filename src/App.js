@@ -1,5 +1,5 @@
 import React from "react";
-import {MantineProvider,AppShell,Navbar,Text,Footer,MediaQuery,Burger,Header,useMantineTheme, Box } from '@mantine/core';
+import {MantineProvider,AppShell,Navbar,Text,Footer,MediaQuery,Burger,Header,useMantineTheme, Box, Paper } from '@mantine/core';
 import { useState } from 'react';
 import { Group,ActionIcon,Grid} from '@mantine/core';
 import { IconSun, IconMoonStars } from '@tabler/icons-react';
@@ -80,7 +80,7 @@ export default function App() {
       }
     >
        <Outlet />
-    <Footer><Box>Development by Mohamed Jamal - Technical Support</Box> </Footer>
+    <Footer><Paper>Development by Mohamed Jamal - Technical Support</Paper> </Footer>
     </AppShell>
         </MantineProvider>
       
