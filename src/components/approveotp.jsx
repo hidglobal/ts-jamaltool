@@ -9,13 +9,13 @@ function ApproveOTPAuth() {
   const [active, setActive] = useState(0);
   let username = '';
   let Password = '';
-  const clientId = '';
-  const clientSecret = '';
   let policy = '';
   let hostname = sessionStorage.getItem("hostname");
   let Tenant = sessionStorage.getItem("tenant");
+  let client_id = sessionStorage.getItem('client_id');
+  let client_secret = sessionStorage.getItem('client_secret');
   const form4 = useForm({
-    initialValues: { username: '', password: '', clientId: '', clientSecret: '', grant_type: 'password' },
+    initialValues: { username: '', password: '', clientId: client_id, clientSecret: client_secret, grant_type: 'password' },
 
     // functions will be used to validate values at corresponding key
     validate: (values) => {

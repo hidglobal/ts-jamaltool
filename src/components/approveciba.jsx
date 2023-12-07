@@ -4,15 +4,14 @@ import { notifications } from '@mantine/notifications';
 import { IconCheck, IconChevronDown, IconFaceIdError, IconEarOff, IconFaceId, IconLock, IconUserCircle, IconAt, IconPhonePlus, IconDeviceMobile } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
-import { render } from 'react-dom';
-import { Select } from '@mantine/core';
-import { createRoot } from 'react-dom/client';
 import { useMantineTheme } from '@mantine/core';
-
+import { renderToString } from 'react-dom/server';
+const utils = require("pvtsutils");
 
 function ApprovePushAuth() {
   const [active, setActive] = useState(0);
   const theme = useMantineTheme();
+
   let username = '';
   let Password = '';
   const clientId = '';
@@ -21,27 +20,24 @@ function ApprovePushAuth() {
   let hostname = sessionStorage.getItem("hostname");
   let Tenant = sessionStorage.getItem("tenant");
   let accessToken = sessionStorage.getItem("access_token");
+  let IdToken = sessionStorage.getItem('gToken');
+  let client_id = sessionStorage.getItem('client_id');
+  let client_secret = sessionStorage.getItem('client_secret');
   const [pvalue, setValue] = useState('');
   const form49 = useForm({
-    initialValues: { userid: '', password: '', authType: 'AT_EMPOTP', deviceid: '', clientId: '', clientSecret: '', grant_type: 'password' },
+    initialValues: { userid: '', pushBody: '',
+    bcPayload:'{  \"scope\": \"openid hid-tx-sign\",  \n    \"client_notification_token\": \"8d67dc78-7faa-4d41-aabd-67707b374255\", \n     \"acr_values\": \"mod-mf\", \n     \"login_hint_token\": \"\"\n  }'
+    , pHeader: '{\"alg\" : \"none\",\"typ\" : \"JWT\" }', deviceid: '', clientId: '', clientSecret: '', craftedPayload: '' },
 
     // functions will be used to validate values at corresponding key
     validate: (values) => {
       if (active === 1) {
-        return {
-          email:
-            values.userid.trim().length < 3
-              ? 'User ID must be at least 3 characters'
-              : null,
-          password:
-            values.password.length < 6 ? 'Password must include at least 6 characters' : null,
-        };
       }
 
       if (active === 0) {
         return {
-            userid: values.userid.trim().length < 2 ? 'Please enter a username': null,
-            deviceid: values.deviceid.trim().length < 2 ? 'Please choose a device name':null,
+          userid: values.userid.trim().length < 2 ? 'Please enter a username' : null,
+          deviceid: sessionStorage.getItem('deviceid').length < 2 ? 'Please choose a device id' : null,
         };
       }
 
@@ -53,7 +49,7 @@ function ApprovePushAuth() {
       if (form49.validate().hasErrors) {
         return current;
       }
-      return current < 3 ? current + 1 : current;
+      return current < 4 ? current + 1 : current;
     });
 
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
@@ -79,53 +75,184 @@ function ApprovePushAuth() {
 
           <Stepper active={active} breakpoint="sm">
             <Stepper.Step label="Select Device" description="User settings">
-            <Paper shadow="xs" p="md">
-              <TextInput label="Email" placeholder='Please enter your email/username' {...form49.getInputProps('userid')} />
-              <br/>
-              <div id="devices"></div>
-              <br/>
-              <Center><Button onClick={()=>{
-                if(form49.values.userid.length>2){
-             axios.post('http://localhost:4000/devicelist', {
-                userid: form49.values.userid,
-                hostname: hostname,
-                access_token: accessToken,
-                tenant: Tenant,
-                client_id: form49.values.clientId,
-                client_secret: form49.values.clientSecret,
-              }, {
-                headers: {
-                  'Content-Type': 'application/x-www-form-urlencoded',
-                }
-              }
-              ).then(function (response) {
-                document.getElementById('resBody').value = JSON.stringify(response.data);
-                
-                //console.log(devices.map(row => row.id));
-                if(response.data.resources != null){
-                    let devices = Array.from(response.data.resources);
-                    
-                let node = createRoot(document.getElementById('devices'));
-                const device_data = devices.map(device => <option key={device.id} value={device.id}>{device.friendlyName || 'device not provisioned' }</option>);
-                node.render(<Input component="select" rightSection={<IconChevronDown size={14} stroke={1.5} />} id="scdevice" value={pvalue} onChange={setValue}  icon={<IconDeviceMobile/>} radius="xl" size="sm" >
-                {device_data}
-                </Input>);
-               
-               function valuofme(){
- 
-                    console.log('You selected: ', pvalue);
-               }
-                   
-                
-                
-            }
-              })   
-               
-            }}
-        }>List devices</Button></Center>
+              <Paper shadow="xs" p="md">
+                <TextInput label="Email" placeholder='Please enter your email/username' {...form49.getInputProps('userid')} />
+                <br />
 
+                <br />
+                <Center><Button onClick={() => {
+                  if (form49.values.userid.length > 2) {
+                    axios.post('http://localhost:4000/devicelist', {
+                      userid: form49.values.userid,
+                      hostname: hostname,
+                      access_token: accessToken,
+                      tenant: Tenant,
+                      client_id: form49.values.clientId,
+                      client_secret: form49.values.clientSecret,
+                    }, {
+                      headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                      }
+                    }
+                    ).then(function (response) {
+                      document.getElementById('resBody').value = JSON.stringify(response.data);
+
+                      if (response.data.resources != null) {
+                        let devices = Array.from(response.data.resources);
+                        const userinternal = response?.data?.resources['0']?.owner.value;
+                        sessionStorage.setItem('userInternalId', userinternal);
+                        const device_data = devices.map(device => <option key={device.id} value={device.id}>{device.friendlyName || 'Device is not provisioned'}</option>);
+                        let devicehtm = renderToString(<Input component="select" rightSection={<IconChevronDown size={14} stroke={1.5} />} id="scdevice" value={pvalue} onChange={setValue(document.getElementById('scdevice')?.value)} icon={<IconDeviceMobile />} radius="xl" size="sm" {...form49.getInputProps('deviceid')} >
+                          {device_data}
+                        </Input>);
+                        document.getElementById('devices').innerHTML = devicehtm;
+                        document.getElementById('userinternal').innerText = 'Your user internal ID: ' + userinternal;
+
+
+
+                      }
+                    })
+
+                  }
+                }
+                }>List devices</Button></Center>
+                <br />
+                <div id="devices"></div>
+                <br />
+                <div id="currentDevice"></div>
+                <div id="userinternal"></div>
+                {document.getElementById('scdevice')?.value?.length > 2 &&
+                  <Center><Button id="SelectDv" onClick={() => {
+                    if (document.getElementById('scdevice')?.value != null) {
+                      const deviceName = document.getElementById('scdevice')?.options[document.getElementById('scdevice').selectedIndex].text;
+                      const deviceID = document.getElementById('scdevice')?.value;
+                      document.getElementById('currentDevice').innerHTML = 'Current selected device: ' + deviceName;
+                      document.getElementById('currentDevice').innerHTML += '<br/>Current selected device id: ' + deviceID;
+                      sessionStorage.setItem('deviceid', deviceID);
+                      sessionStorage.setItem('deviceName', deviceName);
+                    }
+                  }}>Select device</Button></Center>
+                }
+              </Paper>
+            </Stepper.Step>
+            <Stepper.Step label="Push Notification" description="Push Settings">
+              <Center><Chip defaultChecked color="indigo" variant="filled">You have selected this device to send Push Notification: {sessionStorage.getItem('deviceName')}</Chip></Center>
               <br />
-</Paper>
+              <Center><Chip defaultChecked color="indigo" variant="filled">User internal ID: {sessionStorage.getItem('userInternalId')}</Chip></Center>
+
+              <Center><h4>Craft Header and Body of the Push Notification. ( Generate ID Token )</h4></Center>
+              <TextInput label="Transaction Message" id="tds" />
+
+              <JsonInput
+                label="Crafted body"
+                placeholder="Crafted Body of the Push Message"
+                validationError="Invalid JSON"
+                formatOnBlur
+                autosize
+                minRows={4}
+                id="bodyPush"
+                {...form49.getInputProps('pushBody')}
+                >
+              </JsonInput>
+              <JsonInput
+                label="Crafted Header"
+                placeholder="Crafted Header of the Push Message"
+                validationError="Invalid JSON"
+                formatOnBlur
+                autosize
+                minRows={4}
+                {...form49.getInputProps('pHeader')}
+
+                id="headerPush">
+
+              </JsonInput>
+              <br />
+              <Center>
+                
+                <Button onClick={
+                  () => {
+
+                    const deviceInternalID = sessionStorage.getItem('deviceid');
+                    var tds = document.getElementById('tds')?.value;
+                    var header = {
+                      "alg" : "none",
+                      "typ" : "JWT"
+                  };
+                    var stringifiedHeader = btoa(JSON
+                      .stringify(header));
+
+                    var encodedHeader = stringifiedHeader;
+                    var data = {};
+                    if (deviceInternalID.length < 2) {
+                      data = {
+                        "usercode": form49.values.userid,
+
+                        "authpol": "AT_PASA",
+                        "tds": tds,
+                        "createSession": "0"
+
+                      };
+
+                    }
+                    else {
+                      data = {
+                        "usercode": form49.values.userid,
+                        "deviceid": deviceInternalID,
+                        "authpol": "AT_PASA",
+                        "tds": tds,
+                        "createSession": "0"
+
+                      };
+                      
+                    }
+                    form49.setFieldValue('pushBody',JSON.stringify(data));
+                    var stringifiedData = btoa(JSON.stringify(data));
+                    var encodedData = stringifiedData;
+                    let CIBAtokenLogin = encodedHeader + "." + encodedData + ".";
+                    form49.setFieldValue('bcPayload','{  \"scope\": \"openid hid-tx-sign\",  \n    \"client_notification_token\": \"8d67dc78-7faa-4d41-aabd-67707b374255\", \n     \"acr_values\": \"mod-mf\", \n     \"login_hint_token\": \"'+CIBAtokenLogin+'\"\n  }');
+                    document.getElementById('gToken').innerText = 'Generated Token:\n' + CIBAtokenLogin;
+                    
+                    const messagesuccess = renderToString(<Center><Chip defaultChecked color="teal" variant="filled">Successfully crafted an ID Token.</Chip></Center>)
+                    document.getElementById('cmsg').innerHTML = messagesuccess;
+                  }}>Craft ID Token</Button></Center>
+              <br />
+              <Code color="teal" block id='gToken'></Code>
+              <br />
+              <div id="cmsg"></div>
+            </Stepper.Step>
+            <Stepper.Step label="Send Push Notification" description="Send Settings">
+            <JsonInput
+                label="Payload"
+                validationError="Invalid JSON"
+                formatOnBlur
+                autosize
+                minRows={4}
+                id="bcPayload"
+                {...form49.getInputProps('bcPayload')}
+                >
+                
+              </JsonInput>
+              <br/>
+              <Center>
+              <Button onClick={()=>{
+
+                axios.post('http://localhost:4000/bcauthorize', {
+                  hostname: hostname,
+                  tenant: Tenant,
+                  bcPayload: form49.values.bcPayload,
+                  access_token: accessToken,
+                  client_id: client_id,
+                  client_secret: client_secret,
+                }, {
+                  headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                  }
+                }
+                ).then(function (response) {
+                  document.getElementById('resBody').value = JSON.stringify(response.data);
+                })
+            
+              }}>Send Push Notification</Button></Center>
             </Stepper.Step>
             <Stepper.Completed>
               <Center>
