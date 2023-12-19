@@ -1,52 +1,66 @@
 import { NavLink,Box,Navbar,ScrollArea,createStyles,rem } from "@mantine/core";
-import { IconHome,IconListDetails,IconUsers,IconUserPlus,IconUserShield
-,IconDeviceMobilePlus,IconDevicesPlus,IconUserQuestion,IconTools,IconFlame} from "@tabler/icons-react";
+import { useDisclosure, useSessionStorage } from "@mantine/hooks";
+import { IconHome,IconChevronRight,IconUsers,IconUserPlus,IconUserShield
+,IconDeviceMobilePlus,IconDevicesPlus,IconUserQuestion,IconTools,IconFlame,IconActivity,IconFingerprint,IconGauge, IconUserCode, IconDeviceMobileBolt, IconDeviceCameraPhone, IconUserCog, IconUserCheck} from "@tabler/icons-react";
 import { isActive } from "@tiptap/react";
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 import { useLocation} from 'react-router-dom';
 
 function Navlinks(){
-    const [active, setActive] = useState(0);
+  if(sessionStorage.getItem('activeItem')===null){
+    sessionStorage.setItem('activeItem',0);
+  }
+
+    const [active, setActive] = useState(sessionStorage.getItem('activeItem'));
     const location = useLocation();
-    //console.log(location.pathname);
+    const data = [
+      { icon: IconGauge, label: 'Dashboard',href:'/'},
+      {
+        icon: IconFingerprint,
+        label: 'Authentication',
+        href:'/authentication'
+      },
+      { icon: IconUserPlus, label: 'Register user',href:'/register' },
+      {icon:IconUserShield,label: 'Create Password Authenticatior', href: '/createPasswordAuthenticator'},
+      {icon:IconUserCode, label: 'Create OTP Authenticator', href:'/createOtpAuth'},
+      {icon: IconUserQuestion, label:'Users', href:'/Users'},
+      {icon:IconDeviceMobilePlus,label:'Create Device',href:'/createdevice'},
+      {icon:IconDeviceMobileBolt,label:'Get Device', href:'/getdevice'},
+      {icon:IconDeviceCameraPhone,label:'Clone Device',href:'/clonedevice'},
+      {icon:IconUserCog,label:'Assign Device',href:'/assigndevice'},
+      {icon:IconUserCheck,label:'Provision Device',href:'/Provisiondevice'},
+      {icon:IconFlame, label:'Test Password Authenticator',href:'/pauthenticate'},
+      {icon:IconTools,label:'Test OTP Authenticator',href:'/otpAuth'},
+      {icon:IconTools,label:'Test HID Approve TOTP', href:'/approvetotp'},
+      {icon:IconGauge,label:'Test HID Approve Push Auth',href:'/approvepush'}
+    ];
+    const second = [
+
+
+    ];
+    const items = data.map((item, index) => (
+      <NavLink
+        key={item.label}
+        active={index == active}
+        label={item.label}
+        description={item.description}
+        rightSection={item.rightSection}
+        component="a"
+        href={item.href}
+        icon={<item.icon size="1rem" stroke={1.5} />}
+        onClick={() => {sessionStorage.setItem('activeItem',index);setActive(index);}}
+        variant="filled"
+      />
+    ));
+
 
    return (
 
       <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
    <Box>
 
-<NavLink component="a" label="Authentication" href="/" icon={<IconListDetails size="1rem"
+   {items}
 
-/>} />
-
-  <NavLink component="a" label="Register User" icon={<IconUserPlus size="1rem"/>} href="/register"  />
-  <NavLink component="a" label="Create Password Authenticator" href="/createPasswordAuthenticator" icon={<IconUserShield size="1rem"/>} />
-  <NavLink component="a" label="Create OTP Authenticator" href="/createOtpAuth" icon={<IconUserShield size="1rem"/>} />
-  <NavLink component="a" href="/Users" label="View Users" icon={<IconUserQuestion size="1rem"/>} />
-
-<NavLink
-        label="Devices"
-        icon={<IconDevicesPlus size="1.5rem" stroke={1.5} />}
-        childrenOffset={28}
-      >
-        <NavLink label="Create Device" component="a" href="/createdevice" icon={<IconDeviceMobilePlus size="1rem"/>} />
-        <NavLink label="Get Device" component="a" href="/getdevice" icon={<IconDeviceMobilePlus size="1rem"/>} />
-        <NavLink label="Clone Device" component="a" href="/clonedevice" icon={<IconDeviceMobilePlus size="1rem"/>} />
-        <NavLink label="Assign Device" component="a" href="/assigndevice" icon={<IconDeviceMobilePlus size="1rem"/>} />
-        <NavLink label="Provision Device" component="a" href="/Provisiondevice" icon={<IconDeviceMobilePlus size="1rem"/>} />
-</NavLink>
-<NavLink
-        label="Tools"
-        icon={<IconTools size="1.5rem" stroke={1.5} />}
-        childrenOffset={28}
-      >
-        <NavLink component="a" label="Test Password Authenticator" icon={<IconFlame size="1rem"/>} href="/pauthenticate"/>
-        <NavLink component="a" href="/otpAuth" label="Test OTP Authenticator" icon={<IconFlame size="1rem"/>} />
-        <NavLink component="a" href="/approvetotp" label="Test HID Approve TOTP" icon={<IconFlame size="1rem"/>} />
-        <NavLink component="a" href="/approvepush" label="Test HID Approve Push Auth" icon={<IconFlame size="1rem"/>} />
-        <NavLink label="Logs" icon={<IconFlame size="1rem"/>} />
-
-</NavLink>
 
 </Box>
 </Navbar.Section>

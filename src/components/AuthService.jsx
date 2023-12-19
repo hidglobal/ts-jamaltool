@@ -45,7 +45,7 @@ function AuthService() {
       },
     })}
     >
-      <Center><Text>Login (Customer Domain)</Text></Center>
+      <Center><h2>Login Authentication service</h2></Center>
       <TextInput label="Host" placeholder="host" {...form.getInputProps('Host')} />
 
 

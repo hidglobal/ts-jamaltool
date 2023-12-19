@@ -1,7 +1,7 @@
 import React from "react";
 import App from "./App";
 import AuthService from "./components/AuthService.jsx";
-import RegisterUser from "./components/RegisterUser.js";
+import RegisterUser from "./components/RegisterUser.jsx";
 import * as ReactDOM from "react-dom/client";
 import ViewUsers from "./components/ViewUsers";
 import CreatePasswordAuth from "./components/CreatePasswordAuth";
@@ -19,6 +19,7 @@ import AssignDevice from "./components/assignDevice.jsx";
 import ProvisionDevice from "./components/provisiondevice.jsx";
 import ApproveOTPAuth from "./components/approveotp.jsx";
 import ApprovePushAuth from "./components/approveciba.jsx";
+import Dashboard from "./components/dashboad.jsx";
 
   const router = createBrowserRouter([
     {
@@ -26,7 +27,11 @@ import ApprovePushAuth from "./components/approveciba.jsx";
       element: <App/>,
       children: [
         {
-          path: "/",
+          path:'/',
+          element: <Dashboard/>,
+        },
+        {
+          path: "/authentication",
           element: <AuthService />,
         },
         {
