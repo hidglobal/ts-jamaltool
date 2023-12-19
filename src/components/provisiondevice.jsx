@@ -15,7 +15,7 @@ function ProvisionDevice() {
     initialValues: {
       access_token: AccessToken,
       deviceId: '',
-      cPayload: '{\n        \"schemas\": [\"urn:hid:scim:api:idp:2.0:Provision\"],\n        \"deviceType\": \"DT_TDSV4\",\n        \"description\": \"did=14488,url=' + hostname + ':443/' + tenant + ',pch=CH_TDSPROV,pth=AT_TDSOOB,pct=CT_TDSOOB,pdt=DT_TDSOOB,mod=GEN,sec=\",\n        \"owner\": {\n            \"value\" : \"12896\"\n        },\n    \"attributes\": [{\n                \"name\": \"AUTH_TYPE\",\n                \"value\": \"AT_SMK\",\n                \"readOnly\": false\n            }\n        ]\n    }'
+      cPayload: '{\n        \"schemas\": [\"urn:hid:scim:api:idp:2.0:Provision\"],\n        \"deviceType\": \"DTC_TD898a\",\n        \"description\": \"did=14488,url=' + hostname + ':443/' + tenant + ',pch=CH_TDSPROV,pth=AT_TDSOOB,pct=CT_TDSOOB,pdt=DT_TDSOOB,mod=GEN,sec=\",\n        \"owner\": {\n            \"value\" : \"12896\"\n        },\n    \"attributes\": [{\n                \"name\": \"AUTH_TYPE\",\n                \"value\": \"AT_SMK\",\n                \"readOnly\": false\n            }\n        ]\n    }'
     }
   });
 

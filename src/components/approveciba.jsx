@@ -1,17 +1,17 @@
-import { Paper, TextInput, Button, Stepper, Box, Group, Grid, Chip, Badge, Center, Input, JsonInput, Code } from '@mantine/core';
+import { Paper, TextInput, Button, Stepper, Box, Group, Grid, Chip, Badge, Center, Input, JsonInput, Code, Loader } from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
-import { IconCheck, IconChevronDown, IconFaceIdError, IconEarOff, IconFaceId, IconLock, IconUserCircle, IconAt, IconPhonePlus, IconDeviceMobile } from '@tabler/icons-react';
+import { IconCheck, IconChevronDown, IconFaceIdError, IconEarOff, IconFaceId, IconLock, IconUserCircle, IconAt, IconPhonePlus, IconDeviceMobile, IconMoodX } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import { useMantineTheme } from '@mantine/core';
 import { renderToString } from 'react-dom/server';
-const utils = require("pvtsutils");
+import { Notification } from '@mantine/core';
+
 
 function ApprovePushAuth() {
   const [active, setActive] = useState(0);
   const theme = useMantineTheme();
-
   let username = '';
   let Password = '';
   const clientId = '';
@@ -135,16 +135,15 @@ function ApprovePushAuth() {
                 }
               </Paper>
             </Stepper.Step>
-            <Stepper.Step label="Push Notification" description="Push Settings">
+            <Stepper.Step label="Craft ID Token" description="ID Token Settings">
               <Center><Chip defaultChecked color="indigo" variant="filled">You have selected this device to send Push Notification: {sessionStorage.getItem('deviceName')}</Chip></Center>
               <br />
-              <Center><Chip defaultChecked color="indigo" variant="filled">User internal ID: {sessionStorage.getItem('userInternalId')}</Chip></Center>
 
               <Center><h4>Craft Header and Body of the Push Notification. ( Generate ID Token )</h4></Center>
               <TextInput label="Transaction Message" id="tds" />
 
               <JsonInput
-                label="Crafted body"
+                label="Body"
                 placeholder="Crafted Body of the Push Message"
                 validationError="Invalid JSON"
                 formatOnBlur
@@ -155,7 +154,7 @@ function ApprovePushAuth() {
                 >
               </JsonInput>
               <JsonInput
-                label="Crafted Header"
+                label="Header"
                 placeholder="Crafted Header of the Push Message"
                 validationError="Invalid JSON"
                 formatOnBlur
@@ -220,7 +219,7 @@ function ApprovePushAuth() {
               <br />
               <div id="cmsg"></div>
             </Stepper.Step>
-            <Stepper.Step label="Send Push Notification" description="Send Settings">
+            <Stepper.Step label="Push Notification" description="Push Settings">
             <JsonInput
                 label="Payload"
                 validationError="Invalid JSON"
@@ -249,10 +248,61 @@ function ApprovePushAuth() {
                   }
                 }
                 ).then(function (response) {
-                  document.getElementById('resBody').value = JSON.stringify(response.data);
-                })
+                  document.getElementById('resBody').value = JSON.stringify(response?.data);
+                  const auth_req_id = response?.data.auth_req_id;
+                  if(auth_req_id?.length>2){
+      
+                    const loader = renderToString(<>
+                    <Center>
+                    <Notification
+                    title="Push Notification sent successfully"
+                    color="teal" 
+                  >
+                    <Loader color="teal" size={12} /> Please wait until we recieve verification from HID Approve
+                  </Notification>
+                  </Center>
+                    </>);
+                    document.getElementById('loader').innerHTML = loader;
+                  }else{
+                    
+                    const ErrorNot = renderToString(<>
+                      <Center>
+                      <Notification
+                      title="Error when sending Push Notification"
+                      color="red" 
+                      icon={<IconMoodX size="1.2rem" />}
+                    >
+                      There's an error when we tried to send the Push Notification.
+                    </Notification>
+                    </Center>
+                      </>);
+                      document.getElementById('loader').innerHTML = ErrorNot;
+                  }
+                  
+                  async function callback(){
+                    axios.post('http://localhost:4000/callback_url',{
+
+                  },{
+                    headers: {
+                      'Content-Type': 'application/x-www-form-urlencoded',
+                    }
+                  }).then(function(response){
+                    const id_token = response.id_token;
+                    return id_token;
+                  })}
+
+
+                  Promise.all(callback()).then((response)=>{
+
+                  }).catch((error)=>{
+
+                  })
+                                });
+              
             
               }}>Send Push Notification</Button></Center>
+              <br/>
+              <div id="loader"></div>
             </Stepper.Step>
             <Stepper.Completed>
               <Center>

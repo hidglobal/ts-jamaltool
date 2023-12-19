@@ -84,7 +84,7 @@ function ApproveOTPAuth() {
               <br/>
               <Group position="center">
                 <label>One Time Password</label>
-              <PinInput mask label="One Time Password" placeholder='' {...form4.getInputProps('password')} oneTimeCode  aria-label="One time password" length={6}/>
+              <PinInput label="One Time Password" placeholder='' {...form4.getInputProps('password')} oneTimeCode  aria-label="One time password" length={6}/>
                 </Group>
               <br />
 

@@ -15,7 +15,7 @@ function CreateDevice(){
   const form8 = useForm({
     initialValues:{
   access_token:AccessToken,
-      bPayload:'{\n \"schemas\": [\"urn:hid:scim:api:idp:2.0:Device\"],\n        \"externalId\": \"myExternalId\",\n        \"type\": \"DT_TDSV4\",\n        \"status\": {\n            \"status\": \"PENDING\",\n            \"expiryDate\": \"2039-06-12T14:46:58+02:00\",\n            \"startDate\": \"2017-06-12T14:46:58+02:00\"        \n}}',
+      bPayload:'{\n \"schemas\": [\"urn:hid:scim:api:idp:2.0:Device\"],\n        \"externalId\": \"myExternalId\",\n        \"type\": \"DTC_TD898a\",\n        \"status\": {\n            \"status\": \"PENDING\",\n            \"expiryDate\": \"2039-06-12T14:46:58+02:00\",\n            \"startDate\": \"2017-06-12T14:46:58+02:00\"        \n}}',
     },
 });
 
