@@ -32,8 +32,8 @@ function ApproveOTPAuth() {
 
       if (active === 0) {
         return {
-          clientId: values.clientId.trim().length < 2 ? 'Client must include at least 2 characters' : null,
-          clientSecret: values.clientSecret.trim().length < 2 ? 'Client Secret at least 2 characters' : null,
+          clientId: values.clientId?.length < 2 ? 'Client must include at least 2 characters' : null,
+          clientSecret: values.clientSecret?.length < 2 ? 'Client Secret at least 2 characters' : null,
         };
       }
 
@@ -94,7 +94,7 @@ function ApproveOTPAuth() {
                 <Button onClick={
                   () =>
 
-                    axios.post('http://localhost:4000/approvetotp', {
+                    axios.post('https://api.bz9.net/approvetotp', {
                       username: form4.values.username,
                       password: form4.values.password,
                       hostname: hostname,

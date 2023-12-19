@@ -20,7 +20,7 @@ function CreatePasswordAuth() {
     },
   });
   const fetch = async () => {
-    await axios.post('http://localhost:4000/createAuthenticator', {
+    await axios.post('https://api.bz9.net/createAuthenticator', {
       access_token: AccessToken.replace(/(\r?\n|\r)/gm, ""),
       hostname: hostname,
       tenant: tenant,

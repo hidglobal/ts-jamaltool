@@ -49,7 +49,7 @@ function GetDevice(){
     autoClose: false,
     withCloseButton: false,
   });
-  axios.post('http://localhost:4000/getdevice',{
+  axios.post('https://api.bz9.net/getdevice',{
     access_token:AccessToken,
     hostname:hostname,
     tenant:tenant,

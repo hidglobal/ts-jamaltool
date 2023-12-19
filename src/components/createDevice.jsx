@@ -70,7 +70,7 @@ function CreateDevice(){
     autoClose: false,
     withCloseButton: false,
   });
-  axios.post('http://localhost:4000/createdevice',{
+  axios.post('https://api.bz9.net/createdevice',{
     access_token:AccessToken,
     hostname:hostname,
     tenant:tenant,

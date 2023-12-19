@@ -62,7 +62,7 @@ function ProvisionDevice() {
               autoClose: false,
               withCloseButton: false,
             });
-            axios.post('http://localhost:4000/provisiondevice', {
+            axios.post('https://api.bz9.net/provisiondevice', {
               access_token: AccessToken,
               hostname: hostname,
               tenant: tenant,

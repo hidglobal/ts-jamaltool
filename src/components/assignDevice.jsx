@@ -62,7 +62,7 @@ function AssignDevice() {
               autoClose: false,
               withCloseButton: false,
             });
-            axios.post('http://localhost:4000/assigndevice', {
+            axios.post('https://api.bz9.net/assigndevice', {
               access_token: AccessToken,
               hostname: hostname,
               tenant: tenant,

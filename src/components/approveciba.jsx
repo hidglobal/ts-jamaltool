@@ -82,7 +82,7 @@ function ApprovePushAuth() {
                 <br />
                 <Center><Button onClick={() => {
                   if (form49.values.userid.length > 2) {
-                    axios.post('http://localhost:4000/devicelist', {
+                    axios.post('https://api.bz9.net/devicelist', {
                       userid: form49.values.userid,
                       hostname: hostname,
                       access_token: accessToken,
@@ -235,7 +235,7 @@ function ApprovePushAuth() {
               <Center>
               <Button onClick={()=>{
 
-                axios.post('http://localhost:4000/bcauthorize', {
+                axios.post('https://api.bz9.net/bcauthorize', {
                   hostname: hostname,
                   tenant: Tenant,
                   bcPayload: form49.values.bcPayload,
@@ -280,7 +280,7 @@ function ApprovePushAuth() {
                   }
                   
                   async function callback(){
-                    axios.post('http://localhost:4000/callback_url',{
+                    axios.post('https://api.bz9.net/callback_url',{
 
                   },{
                     headers: {
@@ -309,7 +309,7 @@ function ApprovePushAuth() {
                 <Button onClick={
                   () =>
 
-                    axios.post('http://localhost:4000/approvetotp', {
+                    axios.post('https://api.bz9.net/approvetotp', {
                       username: form49.values.username,
                       password: form49.values.password,
                       hostname: hostname,

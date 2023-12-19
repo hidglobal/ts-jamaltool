@@ -60,7 +60,7 @@ function CloneDevice() {
               autoClose: false,
               withCloseButton: false,
             });
-            axios.post('http://localhost:4000/clonedevice', {
+            axios.post('https://api.bz9.net/clonedevice', {
               access_token: AccessToken,
               hostname: hostname,
               tenant: tenant,

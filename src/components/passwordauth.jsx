@@ -92,7 +92,7 @@ function PasswordAuth() {
                 <Button onClick={
                   () =>
 
-                    axios.post('http://localhost:4000/passauth', {
+                    axios.post('https://api.bz9.net/passauth', {
                       username: form4.values.username,
                       password: form4.values.password,
                       hostname: hostname,

@@ -76,7 +76,7 @@ function OTPAuth(){
                                 ()=>{
                                     form7.values.sdevicePayload = '{\n  \"schemas\": [\n    \"urn:ietf:params:scim:api:messages:2.0:SearchRequest\"\n  ],\n  \"filter\": \"externalId eq '+form7.values.deviceID+' and type eq '+form7.values.deviceType+'\",\n  \"sortBy\": \"id\",\n  \"sortOrder\": \"descending\",\n  \"startIndex\": 0,\n  \"count\": 100\n}'
                                     document.getElementById('reqBody1').value = JSON.stringify(form7.values.sdevicePayload)
-                                    axios.post('http://localhost:4000/sdevice', { 
+                                    axios.post('https://api.bz9.net/sdevice', { 
                           sdevicePayload: form7.values.sdevicePayload,
                           hostname: hostname,
                           tenant: Tenant,
@@ -129,7 +129,7 @@ function OTPAuth(){
                             ()=>{
                                 form7.values.adevicePayload = '{\n  \"schemas\":[\"urn:hid:scim:api:idp:2.0:Device\"],\n  \"id\":\"'+form7.values.deviceiID+'\",\n    \"owner\":{ \n   \"display\":\"'+form7.values.username+'\" \n     },   \n  \"status\":{\n    \"status\":\"ACTIVE\", \n   \"active\":true, \n    \"expiryDate\":"2045-11-30T11:54:31+0100", \n \"startDate\":\"2020-11-30T11:54:31+0100\" \n }}';
                                 document.getElementById('reqBody2').value = JSON.stringify(form7.values.adevicePayload)
-                                axios.post('http://localhost:4000/asdevice', { 
+                                axios.post('https://api.bz9.net/asdevice', { 
                           adevicePayload: form7.values.adevicePayload,
                           hostname: hostname,
                           tenant: Tenant,
@@ -191,7 +191,7 @@ function OTPAuth(){
                           <Center><Button onClick={
                             ()=>{
                                
-                                axios.post('http://localhost:4000/otpauth', { 
+                                axios.post('https://api.bz9.net/otpauth', { 
                           username: form7.values.username,
                           password1:form7.values.otpass,
                           client_id:form7.values.clientID,
@@ -223,7 +223,7 @@ function OTPAuth(){
                       <Button onClick={
                           ()=>    
                                              
-                        axios.post('http://localhost:4000/otpauth', { 
+                        axios.post('https://api.bz9.net/otpauth', { 
                           username: form7.values.username,
                           password:form7.values.password,
                           hostname: hostname,
