@@ -279,9 +279,9 @@ function ApprovePushAuth() {
                       title="CIBA Called by Auth Service successfully"
                       color="teal" 
                     >
-                      {get_token}
                     </Notification>
-                    </Center>
+                    {get_token}
+                    </Center> 
                       </>);
                       document.getElementById('loader').innerHTML = loader2;
                   }else{
