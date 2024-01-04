@@ -2,6 +2,25 @@ import { Center, Grid, Paper, Box, Timeline, Badge} from "@mantine/core";
 import { Blockquote } from "@mantine/core";
 import { IconCheck, IconFlame,IconGitBranch, IconTicTac } from "@tabler/icons-react";
 function Dashboard(){
+    const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+    // Access your API key as an environment variable (see "Set up your API key" above)
+    const genAI = new GoogleGenerativeAI('AIzaSyAiMimtz8xXBJYF53jqJnO10YS4qJoyBog');
+    
+    async function run() {
+      // For text-only input, use the gemini-pro model
+      const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+    
+      const prompt = "Write a story about a magic backpack."
+    
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+      console.log(text);
+    }
+    
+    run();
+
     function getDateTime() {
         var now     = new Date(); 
         var year    = now.getFullYear();

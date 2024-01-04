@@ -34,8 +34,6 @@ function CreatePasswordAuth() {
       }
     }
     ).then(function (response) {
-
-
       notifications.update({
         id: 'load-data',
         color: 'green',
@@ -127,6 +125,16 @@ function CreatePasswordAuth() {
 
         }}>Create Password Authenticator</Button>
       </Center>
+      <JsonInput
+            label="Response Body"
+            placeholder="JSON Response Body"
+            validationError="Invalid JSON"
+            formatOnBlur
+            autosize
+            minRows={4}
+            id="resBody">
+
+          </JsonInput>
 
     </Box>
 

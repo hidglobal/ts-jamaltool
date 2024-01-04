@@ -1,5 +1,5 @@
 
-import { Text,TextInput, Button,JsonInput, Group, Box, Card,Grid, Chip, Badge, Center} from '@mantine/core';
+import { Text,Textarea, Button,JsonInput, Group, Box, Card,Grid, Chip, Badge, Center} from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
 import { IconCheck,IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId, IconUserCircle, IconAt } from '@tabler/icons-react';
@@ -81,9 +81,41 @@ function CreateDevice(){
       }
 }
 ).then(function(response){
-    const resp = response.data;
+    var resp = response.data;
+    var detail = response.data.detail;
     document.getElementById("resBody").value = JSON.stringify(resp);
+    const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+    // Access your API key as an environment variable (see "Set up your API key" above)
+    const genAI = new GoogleGenerativeAI('AIzaSyAiMimtz8xXBJYF53jqJnO10YS4qJoyBog');
     
+    async function run() {
+      // For text-only input, use the gemini-pro model
+      
+    if(detail == null){
+      if(resp.id!=null){
+        const text= 'Your device was created successfully with this id '+resp.id;
+        document.getElementById('ai').innerText = text
+        var msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        window.speechSynthesis.speak(msg);
+      }
+    }else{
+      const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+      const prompt = 'Explain this HID Global Authentication API error detail : '+ detail;
+    
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+      document.getElementById('ai').innerHTML = text;
+      var msg = new SpeechSynthesisUtterance();
+      msg.text = text;
+      window.speechSynthesis.speak(msg);
+    }
+ 
+    }
+    
+    run();
     notifications.update({
         id: 'load-data',
         color: 'green',
@@ -126,6 +158,13 @@ function CreateDevice(){
 
  }}>Create device</Button>
 </Center>
+<Textarea
+        placeholder=""
+        label="Artificial Intelligence "
+        autosize
+        minRows={8}
+        id="ai"
+      />
 </Card>
             </div>
       );

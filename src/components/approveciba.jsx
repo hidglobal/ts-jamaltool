@@ -7,6 +7,9 @@ import { useState } from 'react';
 import { useMantineTheme } from '@mantine/core';
 import { renderToString } from 'react-dom/server';
 import { Notification } from '@mantine/core';
+import {io} from 'socket.io-client';
+
+const socket = io('ws://api.bz9.net:5000');
 
 
 function ApprovePushAuth() {
@@ -263,6 +266,24 @@ function ApprovePushAuth() {
                   </Center>
                     </>);
                     document.getElementById('loader').innerHTML = loader;
+                    async function callback(){
+                      const id_token = await socket.on('clientstatus',(arg)=>{
+                        return arg;
+                      })};
+                    
+                    
+                    const get_token = Promise.all(callback());
+                    const loader2 = renderToString(<>
+                      <Center>
+                      <Notification
+                      title="CIBA Called by Auth Service successfully"
+                      color="teal" 
+                    >
+                      {get_token}
+                    </Notification>
+                    </Center>
+                      </>);
+                      document.getElementById('loader').innerHTML = loader2;
                   }else{
                     
                     const ErrorNot = renderToString(<>
@@ -279,28 +300,12 @@ function ApprovePushAuth() {
                       document.getElementById('loader').innerHTML = ErrorNot;
                   }
                   
-                  async function callback(){
-                    axios.post('https://api.bz9.net/callback_url',{
-
-                  },{
-                    headers: {
-                      'Content-Type': 'application/x-www-form-urlencoded',
-                    }
-                  }).then(function(response){
-                    const id_token = response.id_token;
-                    return id_token;
-                  })}
+             
 
 
-                  Promise.all(callback()).then((response)=>{
-
-                  }).catch((error)=>{
-
-                  })
-                                });
               
             
-              }}>Send Push Notification</Button></Center>
+              })}}>Send Push Notification</Button></Center>
               <br/>
               <div id="loader"></div>
             </Stepper.Step>
