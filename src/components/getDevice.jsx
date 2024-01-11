@@ -1,9 +1,9 @@
 
-import { Text,TextInput, Button,JsonInput, Group, Box, Card,Grid, Chip, Badge, Center} from '@mantine/core';
+import { Text,TextInput, Button,JsonInput, Card,Grid, Center} from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
-import { IconCheck,IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId, IconUserCircle, IconAt } from '@tabler/icons-react';
-import { useState,useEffect } from 'react';
+import { IconFaceIdError, IconFaceId } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from '@mantine/form';
 
 
@@ -17,6 +17,30 @@ function GetDevice(){
   deviceID:'',
         },
 });
+
+const navigate = useNavigate();
+if(AccessToken===null){
+  
+    setTimeout(()=>{
+      navigate('/authentication')
+    },2000);
+  
+return (
+<>
+<Center>
+
+  <Card>
+<Card.Section withBorder inheritPadding py="xs">
+  <Text>Authentication</Text>
+</Card.Section>
+<Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
+  </Card>
+</Center>
+
+</>
+
+);
+}else{
 
     return (
 <div>
@@ -108,7 +132,7 @@ function GetDevice(){
 </Card>
             </div>
       );
-
+}
 }
 
 export default GetDevice;

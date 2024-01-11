@@ -1,10 +1,10 @@
 
-import { Text, TextInput, Button, JsonInput, Group, Box, Card, Grid, Chip, Badge, Center } from '@mantine/core';
+import { Text, TextInput, Button, JsonInput, Card, Grid, Center } from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
-import { IconCheck, IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId, IconUserCircle, IconAt } from '@tabler/icons-react';
-import { useState, useEffect } from 'react';
+import { IconFaceIdError, IconFaceId } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
+import { useNavigate } from 'react-router-dom';
 const QRCode = require('qrcode');
 
 function ProvisionDevice() {
@@ -14,11 +14,40 @@ function ProvisionDevice() {
   const form20 = useForm({
     initialValues: {
       access_token: AccessToken,
-      deviceId: '',
-      cPayload: '{\n        \"schemas\": [\"urn:hid:scim:api:idp:2.0:Provision\"],\n        \"deviceType\": \"DTC_TD898a\",\n        \"description\": \"did=14488,url=' + hostname + ':443/' + tenant + ',pch=CH_TDSPROV,pth=AT_TDSOOB,pct=CT_TDSOOB,pdt=DT_TDSOOB,mod=GEN,sec=\",\n        \"owner\": {\n            \"value\" : \"12896\"\n        },\n    \"attributes\": [{\n                \"name\": \"AUTH_TYPE\",\n                \"value\": \"AT_SMK\",\n                \"readOnly\": false\n            }\n        ]\n    }'
+      deviceId: '14488',
+      ownerId: '12896',
+      deviceType:'DT_TDSV4',
+      cPayload: '{\n        \"schemas\": [\"urn:hid:scim:api:idp:2.0:Provision\"],\n        \"deviceType\": \"DT_TDSV4\",\n        \"description\": \"did=14488,url=' + hostname + ':443/' + tenant + ',pch=CH_TDSPROV,pth=AT_TDSOOB,pct=CT_TDSOOB,pdt=DT_TDSOOB,mod=GEN,sec=\",\n        \"owner\": {\n            \"value\" : \"12896\"\n        },\n    \"attributes\": [{\n                \"name\": \"AUTH_TYPE\",\n                \"value\": \"AT_SMK\",\n                \"readOnly\": false\n            }\n        ]\n    }'
     }
   });
 
+  function updateProv(){
+
+    form20.values.cPayload = '{\n        \"schemas\": [\"urn:hid:scim:api:idp:2.0:Provision\"],\n        \"deviceType\": \"'+form20.values.deviceType+'\",\n        \"description\": \"did='+form20.values.deviceId+',url=' + hostname + ':443/' + tenant + ',pch=CH_TDSPROV,pth=AT_TDSOOB,pct=CT_TDSOOB,pdt=DT_TDSOOB,mod=GEN,sec=\",\n        \"owner\": {\n            \"value\" : \"'+form20.values.ownerId+'\"\n        },\n    \"attributes\": [{\n                \"name\": \"AUTH_TYPE\",\n                \"value\": \"AT_SMK\",\n                \"readOnly\": false\n            }\n        ]\n    }';
+  }
+  const navigate = useNavigate();
+  if(AccessToken===null){
+    
+      setTimeout(()=>{
+        navigate('/authentication')
+      },2000);
+    
+  return (
+  <>
+  <Center>
+  
+    <Card>
+  <Card.Section withBorder inheritPadding py="xs">
+    <Text>Authentication</Text>
+  </Card.Section>
+  <Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
+    </Card>
+  </Center>
+  
+  </>
+  
+  );
+  }else{
   return (
     <div>
       <Grid grow gutter="sm">
@@ -27,6 +56,11 @@ function ProvisionDevice() {
         <Center>
           <h3>Provision Device</h3>
         </Center>
+        <TextInput label='Device type' placeholder='Device type' {...form20.getInputProps('deviceType')} />
+        <TextInput label='Device ID' placeholder='Device ID' {...form20.getInputProps('deviceId')} />
+        <TextInput label='User ID' placeholder='User Internal ID' {...form20.getInputProps('ownerId')} />
+        <br/>
+        <Center><Button onClick={updateProv()}>Update Payload</Button></Center>
         <JsonInput
           label="Payload"
           placeholder="JSON request"
@@ -52,6 +86,7 @@ function ProvisionDevice() {
         <div id="provmsg"></div>
         <br />
         <Center>
+
           <Button onClick={() => {
 
             notifications.show({
@@ -132,7 +167,7 @@ function ProvisionDevice() {
           <div id='qrcode' style={{ width: '200px', height: '200px', marginTop: '10px' }}></div></Center>
       </Card></div>
   );
-
+        }
 }
 
 export default ProvisionDevice;

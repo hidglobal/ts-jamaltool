@@ -1,15 +1,16 @@
-import { Paper, TextInput, Button, Stepper, Box, Group, Grid, Chip, Badge, Center, Input, JsonInput, Code, Loader } from '@mantine/core';
+import { Paper, TextInput, Button, Stepper, Box, Group, Grid, Chip, Badge, Center, Input, JsonInput, Code, Loader,Card, Text } from '@mantine/core';
 import axios from 'axios';
-import { notifications } from '@mantine/notifications';
-import { IconCheck, IconChevronDown, IconFaceIdError, IconEarOff, IconFaceId, IconLock, IconUserCircle, IconAt, IconPhonePlus, IconDeviceMobile, IconMoodX } from '@tabler/icons-react';
+import { IconChevronDown,IconDeviceMobile, IconMoodX } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import { useMantineTheme } from '@mantine/core';
 import { renderToString } from 'react-dom/server';
 import { Notification } from '@mantine/core';
-import {io} from 'socket.io-client';
+import { useNavigate } from 'react-router-dom';
 
-const socket = io('ws://api.bz9.net:5000');
+const { io } = require("socket.io-client");
+
+const socket = io("https://api.bz9.net");
 
 
 function ApprovePushAuth() {
@@ -18,7 +19,7 @@ function ApprovePushAuth() {
   let username = '';
   let Password = '';
   const clientId = '';
-  const clientSecret = '';
+
   let policy = '';
   let hostname = sessionStorage.getItem("hostname");
   let Tenant = sessionStorage.getItem("tenant");
@@ -57,6 +58,29 @@ function ApprovePushAuth() {
 
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 
+  const navigate = useNavigate();
+  if(accessToken===null){
+    
+      setTimeout(()=>{
+        navigate('/authentication')
+      },2000);
+    
+  return (
+  <>
+  <Center>
+  
+    <Card>
+  <Card.Section withBorder inheritPadding py="xs">
+    <Text>Authentication</Text>
+  </Card.Section>
+  <Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
+    </Card>
+  </Center>
+  
+  </>
+  
+  );
+  }else{
   return (
     <><Grid>
       <Grid.Col span={2}></Grid.Col>
@@ -266,24 +290,31 @@ function ApprovePushAuth() {
                   </Center>
                     </>);
                     document.getElementById('loader').innerHTML = loader;
-                    async function callback(){
-                      const id_token = await socket.on('clientstatus',(arg)=>{
-                        return arg;
-                      })};
                     
-                    
-                    const get_token = Promise.all(callback());
-                    const loader2 = renderToString(<>
-                      <Center>
-                      <Notification
-                      title="CIBA Called by Auth Service successfully"
-                      color="teal" 
-                    >
-                    </Notification>
-                    {get_token}
-                    </Center> 
-                      </>);
-                      document.getElementById('loader').innerHTML = loader2;
+			function callback(){
+		        const id_token = socket.on('clientstatus',(arg)=>{
+			const loader2 = renderToString(<>
+                    <Center>
+                    <Notification
+                    title="HID Approve Status"
+                    color="blue"
+                  >
+                    You have choosen to {arg} the request
+                  </Notification>
+                  </Center>
+                    </>);
+
+			document.getElementById('loader').innerHTML= loader2;
+			});
+		
+			};
+                    setInterval(callback,100);
+                    /* let count = 0;
+                    setInterval(()=>{
+			socket.volatile.emit("ping",++count)
+			},50);
+                    */
+                      //document.getElementById('loader').innerHTML = JSON.stringify(get_token);
                   }else{
                     
                     const ErrorNot = renderToString(<>
@@ -371,6 +402,7 @@ function ApprovePushAuth() {
     </Grid></>
 
   );
+            }
 
 }
 

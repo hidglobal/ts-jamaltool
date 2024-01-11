@@ -1,10 +1,10 @@
 
-import { Text,TextInput, Button, Group, Box,Center,Select,JsonInput} from '@mantine/core';
+import { Text,TextInput, Button, Group, Box,Center,Card,JsonInput} from '@mantine/core';
 import { useForm } from '@mantine/form';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
-import { IconCheck,IconAlertCircle, IconFaceIdError, IconEarOff } from '@tabler/icons-react';
-
+import { IconCheck, IconFaceIdError } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 function RegisterUser(){
 	let AccessToken = sessionStorage.getItem("access_token");
 	let hostname = sessionStorage.getItem("hostname");
@@ -19,6 +19,31 @@ function RegisterUser(){
             Phone_Number:''
         },
     });
+
+	const navigate = useNavigate();
+	if(AccessToken===null){
+	  
+		setTimeout(()=>{
+		  navigate('/authentication')
+		},2000);
+	  
+	return (
+	<>
+	<Center>
+	
+	  <Card>
+	<Card.Section withBorder inheritPadding py="xs">
+	  <Text>Authentication</Text>
+	</Card.Section>
+	<Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
+	  </Card>
+	</Center>
+	
+	</>
+	
+	);
+	}else{
+
     return (
         <Box pos="relative" sx={(theme) => ({
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
@@ -113,7 +138,7 @@ function RegisterUser(){
 					   } else {
 						// Something happened in setting up the request that triggered an Error
 					   //document.getElementById("status").innerHTML ='Error: '+ JSON.stringify(error.message);
-					   document.getElementById("status").innerHTML = "Error!";
+
 					   notifications.update({
 						id: 'load-data',
 						color: 'red',
@@ -148,6 +173,7 @@ function RegisterUser(){
         </Box>
 
       );
+		}
 
 }
 

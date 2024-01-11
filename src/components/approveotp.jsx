@@ -1,10 +1,10 @@
-import { Text, TextInput, Button, Stepper, Box, Group, Grid, PinInput, Badge, Center, PasswordInput, JsonInput, Code } from '@mantine/core';
+import { Text, TextInput, Button, Stepper, Box, Group, Grid, PinInput, Badge, Center, PasswordInput, JsonInput, Card } from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
 import { IconCheck, IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId, IconLock, IconUserCircle, IconAt } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 function ApproveOTPAuth() {
   const [active, setActive] = useState(0);
   let username = '';
@@ -14,6 +14,7 @@ function ApproveOTPAuth() {
   let Tenant = sessionStorage.getItem("tenant");
   let client_id = sessionStorage.getItem('client_id');
   let client_secret = sessionStorage.getItem('client_secret');
+  let accessToken = sessionStorage.getItem('access_token');
   const form4 = useForm({
     initialValues: { username: '', password: '', clientId: client_id, clientSecret: client_secret, grant_type: 'password' },
 
@@ -50,6 +51,29 @@ function ApproveOTPAuth() {
 
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 
+  const navigate = useNavigate();
+  if(accessToken===null){
+    
+      setTimeout(()=>{
+        navigate('/authentication')
+      },2000);
+    
+  return (
+  <>
+  <Center>
+  
+    <Card>
+  <Card.Section withBorder inheritPadding py="xs">
+    <Text>Authentication</Text>
+  </Card.Section>
+  <Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
+    </Card>
+  </Center>
+  
+  </>
+  
+  );
+  }else{
   return (
     <><Grid>
       <Grid.Col span={2}></Grid.Col>
@@ -151,7 +175,7 @@ function ApproveOTPAuth() {
     </Grid></>
 
   );
-
+            }
 }
 
 export default ApproveOTPAuth;

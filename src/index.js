@@ -21,6 +21,7 @@ import ApproveOTPAuth from "./components/approveotp.jsx";
 import ApprovePushAuth from "./components/approveciba.jsx";
 import Dashboard from "./components/dashboad.jsx";
 
+import UpdateCiba from "./components/updateciba.jsx";
   const router = createBrowserRouter([
     {
       path: "/",
@@ -89,6 +90,10 @@ import Dashboard from "./components/dashboad.jsx";
         {
           path: 'approvepush',
           element: <ApprovePushAuth/>,
+        },
+        {
+          path: 'updateCIBA',
+          element: <UpdateCiba/>,
         }
       ],
     },

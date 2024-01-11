@@ -1,9 +1,9 @@
 
-import { Text,Textarea, Button,JsonInput, Group, Box, Card,Grid, Chip, Badge, Center} from '@mantine/core';
+import { Text,Textarea, Button,JsonInput, Group, Box, Card,Grid, Chip, Badge, Center, TextInput} from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
 import { IconCheck,IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId, IconUserCircle, IconAt } from '@tabler/icons-react';
-import { useState,useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from '@mantine/form';
 
 let deviceList = [];
@@ -15,9 +15,38 @@ function CreateDevice(){
   const form8 = useForm({
     initialValues:{
   access_token:AccessToken,
+  device_type:'DT_TDSV4',deviceExternalId:'',
       bPayload:'{\n \"schemas\": [\"urn:hid:scim:api:idp:2.0:Device\"],\n        \"externalId\": \"myExternalId\",\n        \"type\": \"DTC_TD898a\",\n        \"status\": {\n            \"status\": \"PENDING\",\n            \"expiryDate\": \"2039-06-12T14:46:58+02:00\",\n            \"startDate\": \"2017-06-12T14:46:58+02:00\"        \n}}',
     },
 });
+
+function detChange(){
+  form8.values.bPayload = '{\n    "schemas": ["urn:hid:scim:api:idp:2.0:Device"],\n    "externalId": "'+form8.values.deviceExternalId+'",\n    "type": "'+form8.values.device_type+'",\n    "status": {\n        "status": "PENDING",\n        "expiryDate": "2039-06-12T14:46:58+02:00",\n        "startDate": "2017-06-12T14:46:58+02:00"\n    }\n  }'
+
+}
+const navigate = useNavigate();
+if(AccessToken===null){
+  
+    setTimeout(()=>{
+      navigate('/authentication')
+    },2000);
+  
+return (
+<>
+<Center>
+
+  <Card>
+<Card.Section withBorder inheritPadding py="xs">
+  <Text>Authentication</Text>
+</Card.Section>
+<Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
+  </Card>
+</Center>
+
+</>
+
+);
+}else{
 
     return (
 <div>
@@ -27,6 +56,8 @@ function CreateDevice(){
 <Center>
 <h3>Create a device</h3>
 </Center>
+<TextInput label='Device External ID' placeholder='You can choose the name you like for the device.' {...form8.getInputProps('deviceExternalId')}></TextInput>
+<TextInput label='Device Type' placeholder='Please enter an existing device type' {...form8.getInputProps('device_type')}></TextInput>
 <JsonInput
  label="Payload"
  placeholder="JSON request"
@@ -60,6 +91,8 @@ function CreateDevice(){
 </JsonInput>
                 <br/>
                 <Center>
+                  <Group>
+                  <Button onClick={detChange()}>Update payload</Button> 
             <Button onClick={()=>{
   
    notifications.show({
@@ -83,6 +116,7 @@ function CreateDevice(){
 ).then(function(response){
     var resp = response.data;
     var detail = response.data.detail;
+    var statusres = response.data.status;
     document.getElementById("resBody").value = JSON.stringify(resp);
     const { GoogleGenerativeAI } = require("@google/generative-ai");
 
@@ -95,22 +129,26 @@ function CreateDevice(){
     if(detail == null){
       if(resp.id!=null){
         const text= 'Your device was created successfully with this id '+resp.id;
-        document.getElementById('ai').innerText = text
+        document.getElementById('ai').innerText = text;
+        /*
         var msg = new SpeechSynthesisUtterance();
         msg.text = text;
         window.speechSynthesis.speak(msg);
+        */
       }
     }else{
       const model = genAI.getGenerativeModel({ model: "gemini-pro"});
-      const prompt = 'Explain this HID Global Authentication API error detail : '+ detail;
-    
+      const prompt = 'Explain this HID Global Authentication API error detail : '+ detail+ ' with this status code '+statusres;
+      document.getElementById('ai').innerHTML = 'Analysing the error detail and status code....';
       const result = await model.generateContent(prompt);
       const response = await result.response;
       const text = response.text();
       document.getElementById('ai').innerHTML = text;
+      /*
       var msg = new SpeechSynthesisUtterance();
       msg.text = text;
       window.speechSynthesis.speak(msg);
+      */
     }
  
     }
@@ -157,6 +195,7 @@ function CreateDevice(){
  });
 
  }}>Create device</Button>
+ </Group>
 </Center>
 <Textarea
         placeholder=""
@@ -168,6 +207,7 @@ function CreateDevice(){
 </Card>
             </div>
       );
+}
 
 }
 

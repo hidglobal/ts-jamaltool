@@ -80,7 +80,7 @@ export default function App() {
       }
     >
        <Outlet />
-    <Footer><Paper>Development by Mohamed Jamal - Technical Support</Paper> </Footer>
+    <Footer><Paper>Development by Mohamed Jamal - TS</Paper> </Footer>
     </AppShell>
         </MantineProvider>
       

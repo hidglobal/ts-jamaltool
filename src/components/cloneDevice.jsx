@@ -1,9 +1,9 @@
 
-import { Text, TextInput, Button, JsonInput, Group, Box, Card, Grid, Chip, Badge, Center } from '@mantine/core';
+import { Text, TextInput, Button, JsonInput, Card, Grid, Center } from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
-import { IconCheck, IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId, IconUserCircle, IconAt } from '@tabler/icons-react';
-import { useState, useEffect } from 'react';
+import {  IconFaceIdError,IconFaceId } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from '@mantine/form';
 
 
@@ -17,6 +17,30 @@ function CloneDevice() {
       cPayload: '{\n        \"schemas\": [\n          \"urn:hid:scim:api:idp:2.0:device:Type\"\n        ],\n        \"copyFrom\": \"DT_TDSV4\",\n        \"id\": \"DT_TD9ed\",\n        \"name\": \"Custom Mobile push based Validation\",\n        \"notes\": \"Custom Device type for Mobile push based Validation Application\",\n        \"urn:hid:scim:api:idp:2.0:device:type:Push\": {\n          \"custoFile\": \"\"\n        }\n      }'
     }
   });
+
+  const navigate = useNavigate();
+  if(AccessToken===null){
+    
+      setTimeout(()=>{
+        navigate('/authentication')
+      },2000);
+    
+  return (
+  <>
+  <Center>
+  
+    <Card>
+  <Card.Section withBorder inheritPadding py="xs">
+    <Text>Authentication</Text>
+  </Card.Section>
+  <Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
+    </Card>
+  </Center>
+  
+  </>
+  
+  );
+  }else{
 
   return (
     <div>
@@ -119,6 +143,7 @@ function CloneDevice() {
       </Card>
     </div>
   );
+        }
 
 }
 

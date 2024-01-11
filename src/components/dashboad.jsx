@@ -2,24 +2,7 @@ import { Center, Grid, Paper, Box, Timeline, Badge} from "@mantine/core";
 import { Blockquote } from "@mantine/core";
 import { IconCheck, IconFlame,IconGitBranch, IconTicTac } from "@tabler/icons-react";
 function Dashboard(){
-    const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-    // Access your API key as an environment variable (see "Set up your API key" above)
-    const genAI = new GoogleGenerativeAI('AIzaSyAiMimtz8xXBJYF53jqJnO10YS4qJoyBog');
-    
-    async function run() {
-      // For text-only input, use the gemini-pro model
-      const model = genAI.getGenerativeModel({ model: "gemini-pro"});
-    
-      const prompt = "Write a story about a magic backpack."
-    
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      const text = response.text();
-      console.log(text);
-    }
-    
-    run();
 
     function getDateTime() {
         var now     = new Date(); 
@@ -63,16 +46,12 @@ function Dashboard(){
 
 <Grid>
 
-<Grid.Col span={6}><Paper>HID Auth Diagnostic project is set of tools are designed to help HID teams in API training and diagnosis of the root causes of API errors.</Paper>
+<Grid.Col span={6}><Paper>HID Auth Diagnostic project is set of tools are designed to help HID teams and customers in Authentication API training and diagnosis of the root causes of API errors with the power of AI.</Paper>
 <b>Features:</b>
 <Center>
 <Timeline  active={13} bulletSize={24} lineWidth={2}>
     <Timeline.Item bullet={<IconCheck size={12} />} title="Register a user"></Timeline.Item>
     <Timeline.Item bullet={<IconCheck size={12} />} title="Get list of Users"></Timeline.Item>
-    <Timeline.Item bullet={<IconCheck size={12} />} title="Test Password Authenticator"></Timeline.Item>
-    <Timeline.Item bullet={<IconCheck size={12} />} title="Test OTP Authenticator"></Timeline.Item>
-    <Timeline.Item bullet={<IconCheck size={12} />} title="Test HID Approve TOTP"></Timeline.Item>
-    <Timeline.Item bullet={<IconCheck size={12} />} title="Test HID Approve Push Authentication"></Timeline.Item>
     <Timeline.Item bullet={<IconCheck size={12} />} title="Create a Device"></Timeline.Item>
     <Timeline.Item bullet={<IconCheck size={12} />} title="Get a Device"></Timeline.Item>
     <Timeline.Item bullet={<IconCheck size={12} />} title="Assign a Device"></Timeline.Item>
@@ -80,6 +59,12 @@ function Dashboard(){
     <Timeline.Item bullet={<IconCheck size={12} />} title="Provision Device"></Timeline.Item>
     <Timeline.Item bullet={<IconCheck size={12} />} title="Create Password Authenticator"></Timeline.Item>
     <Timeline.Item bullet={<IconCheck size={12} />} title="Create OTP Authenticator"></Timeline.Item>
+    <Timeline.Item bullet={<IconCheck size={12} />} title="Test Password Authenticator"></Timeline.Item>
+    <Timeline.Item bullet={<IconCheck size={12} />} title="Test OTP Authenticator"></Timeline.Item>
+    <Timeline.Item bullet={<IconCheck size={12} />} title="Test HID Approve TOTP"></Timeline.Item>
+    <Timeline.Item bullet={<IconCheck size={12} />} title="Test HID Approve Push Authentication"></Timeline.Item>
+    <Timeline.Item bullet={<IconCheck size={12} />} title="Update CIBA Listener"></Timeline.Item>
+
     
     </Timeline>
     </Center>

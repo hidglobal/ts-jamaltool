@@ -1,9 +1,9 @@
 
-import { Text, TextInput, Button, JsonInput, Group, Box, Card, Grid, Chip, Badge, Center } from '@mantine/core';
+import { Text, TextInput, Button, JsonInput, Group, Card, Grid, Center } from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
-import { IconCheck, IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId, IconUserCircle, IconAt } from '@tabler/icons-react';
-import { useState, useEffect } from 'react';
+import { IconFaceIdError, IconFaceId } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from '@mantine/form';
 
 
@@ -15,10 +15,37 @@ function AssignDevice() {
     initialValues: {
       access_token: AccessToken,
       deviceId: '',
+      ownerId: '',
       cPayload: '{\n        \"schemas\": [\"urn:hid:scim:api:idp:2.0:Device\"],\n        \"status\": {\n            \"status\": \"ACTIVE\",\n            \"active\": true\n        },\n        \"owner\": {\n            \"value\": \"13128\" \n       }\n    }'
     }
   });
 
+  function updatePayload(){
+    form19.values.cPayload = '{\n        \"schemas\": [\"urn:hid:scim:api:idp:2.0:Device\"],\n        \"status\": {\n            \"status\": \"ACTIVE\",\n            \"active\": true\n        },\n        \"owner\": {\n            \"value\": \"'+form19.values.ownerId+'\" \n       }\n    }'
+  }
+  const navigate = useNavigate();
+  if(AccessToken===null){
+    
+      setTimeout(()=>{
+        navigate('/authentication')
+      },2000);
+    
+  return (
+  <>
+  <Center>
+  
+    <Card>
+  <Card.Section withBorder inheritPadding py="xs">
+    <Text>Authentication</Text>
+  </Card.Section>
+  <Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
+    </Card>
+  </Center>
+  
+  </>
+  
+  );
+  }else{
   return (
     <div>
       <Grid grow gutter="sm">
@@ -28,6 +55,7 @@ function AssignDevice() {
           <h3>Assign device to a user.</h3>
         </Center>
         <TextInput label='Device ID' placeholder='Device ID' {...form19.getInputProps('deviceId')} />
+        <TextInput label='User ID' placeholder='User Internal ID' {...form19.getInputProps('ownerId')} />
         <JsonInput
           label="Payload"
           placeholder="JSON request"
@@ -52,6 +80,9 @@ function AssignDevice() {
         </JsonInput>
         <br />
         <Center>
+          <Group>
+            <Button onClick={updatePayload()}>Update Payload</Button>
+          
           <Button onClick={() => {
 
             notifications.show({
@@ -118,11 +149,12 @@ function AssignDevice() {
             });
 
           }}>Assign device</Button>
+          </Group>
         </Center>
       </Card>
     </div>
   );
-
+        }
 }
 
 export default AssignDevice;

@@ -5,6 +5,7 @@ import { notifications } from '@mantine/notifications';
 import { IconCheck, IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId, IconLock, IconUserCircle, IconAt } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
+import { useNavigate } from 'react-router-dom';
 
 function CreatePasswordAuth() {
   const [visible, { toggle }] = useDisclosure(false);
@@ -83,6 +84,29 @@ function CreatePasswordAuth() {
 
     });
   };
+  const navigate = useNavigate();
+  if(AccessToken===null){
+    
+      setTimeout(()=>{
+        navigate('/authentication')
+      },2000);
+    
+  return (
+  <>
+  <Center>
+  
+    <Card>
+  <Card.Section withBorder inheritPadding py="xs">
+    <Text>Authentication</Text>
+  </Card.Section>
+  <Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
+    </Card>
+  </Center>
+  
+  </>
+  
+  );
+  }else{
 
   return (
 
@@ -139,7 +163,7 @@ function CreatePasswordAuth() {
     </Box>
 
   );
-
+      }
 }
 
 export default CreatePasswordAuth;

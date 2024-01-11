@@ -1,9 +1,10 @@
 
-import { Text,TextInput, Button, Group, Box, Card,Grid, Chip, Badge, Center} from '@mantine/core';
+import { Text, Button, Group, Card,Grid, Badge, Center} from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
-import { IconCheck,IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId, IconUserCircle, IconAt } from '@tabler/icons-react';
+import {  IconFaceIdError, IconFaceId, IconUserCircle } from '@tabler/icons-react';
 import { useState,useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 let userList = [];
 
 function ViewUsers(){
@@ -78,6 +79,29 @@ function ViewUsers(){
      useEffect(() => {
         
      }, []);
+     const navigate = useNavigate();
+     if(AccessToken===null){
+       
+         setTimeout(()=>{
+           navigate('/authentication')
+         },2000);
+       
+     return (
+     <>
+     <Center>
+     
+       <Card>
+     <Card.Section withBorder inheritPadding py="xs">
+       <Text>Authentication</Text>
+     </Card.Section>
+     <Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
+       </Card>
+     </Center>
+     
+     </>
+     
+     );
+     }else{
     return (
 <div>
 <Grid grow gutter="sm">
@@ -102,6 +126,7 @@ fetch();
 
             </div>
       );
+}
 
 }
 

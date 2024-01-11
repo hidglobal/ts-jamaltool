@@ -1,11 +1,12 @@
 
-import { Text,TextInput, Button, Group, Box, Card,Grid, Chip, Badge, Center,PasswordInput} from '@mantine/core';
+import { Text,TextInput, Button, Box, Card, Center} from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
-import { IconCheck,IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId,IconLock, IconUserCircle, IconAt } from '@tabler/icons-react';
+import { IconFaceIdError, IconFaceId } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { JsonInput } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
 
 function CreateOTPAuth(){
     const [visible, { toggle }] = useDisclosure(false);
@@ -102,7 +103,30 @@ function CreateOTPAuth(){
        
      });
     }; 
-              
+        
+    const navigate = useNavigate();
+    if(AccessToken===null){
+      
+        setTimeout(()=>{
+          navigate('/authentication')
+        },2000);
+      
+    return (
+    <>
+    <Center>
+    
+      <Card>
+    <Card.Section withBorder inheritPadding py="xs">
+      <Text>Authentication</Text>
+    </Card.Section>
+    <Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
+      </Card>
+    </Center>
+    
+    </>
+    
+    );
+    }else{
     return (
 
 <Box pos="relative" sx={(theme) => ({
@@ -158,6 +182,7 @@ fetch();
 </Box>
   
       );
+}
 
 }
 

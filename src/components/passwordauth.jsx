@@ -1,21 +1,22 @@
-import { Text, TextInput, Button, Stepper, Box, Group, Grid, Chip, Badge, Center, PasswordInput, JsonInput, Code } from '@mantine/core';
+import { Text, TextInput, Button, Stepper, Box, Group, Grid, Card, Badge, Center, PasswordInput, JsonInput, Code } from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
-import { IconCheck, IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId, IconLock, IconUserCircle, IconAt } from '@tabler/icons-react';
+
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 function PasswordAuth() {
   const [active, setActive] = useState(0);
   let username = '';
   let Password = '';
-  const clientId = '';
-  const clientSecret = '';
+  const clientId = sessionStorage.getItem('client_id');
+  const clientSecret = sessionStorage.getItem('client_secret');
   let policy = '';
   let hostname = sessionStorage.getItem("hostname");
   let Tenant = sessionStorage.getItem("tenant");
+ let accessToken = sessionStorage.getItem("access_token");
   const form4 = useForm({
-    initialValues: { username: '', password: '', policy: 'AT_STDPWD', channel: 'CH_DIRECT', clientId: '', clientSecret: '', grant_type: 'password' },
+    initialValues: { username: '', password: '', policy: 'AT_STDPWD', channel: 'CH_DIRECT', clientId: clientId, clientSecret: clientSecret, grant_type: 'password' },
 
     // functions will be used to validate values at corresponding key
     validate: (values) => {
@@ -49,7 +50,29 @@ function PasswordAuth() {
     });
 
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
-
+  const navigate = useNavigate();
+  if(accessToken===null){
+    
+      setTimeout(()=>{
+        navigate('/authentication')
+      },2000);
+    
+  return (
+  <>
+  <Center>
+  
+    <Card>
+  <Card.Section withBorder inheritPadding py="xs">
+    <Text>Authentication</Text>
+  </Card.Section>
+  <Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
+    </Card>
+  </Center>
+  
+  </>
+  
+  );
+  }else{
   return (
     <><Grid>
       <Grid.Col span={2}></Grid.Col>
@@ -149,6 +172,7 @@ function PasswordAuth() {
     </Grid></>
 
   );
+            }
 
 }
 
