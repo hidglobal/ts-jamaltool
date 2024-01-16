@@ -64,7 +64,7 @@ function Dashboard(){
     <Timeline.Item bullet={<IconCheck size={12} />} title="Test HID Approve TOTP"></Timeline.Item>
     <Timeline.Item bullet={<IconCheck size={12} />} title="Test HID Approve Push Authentication"></Timeline.Item>
     <Timeline.Item bullet={<IconCheck size={12} />} title="Update CIBA Listener"></Timeline.Item>
-
+    <Timeline.Item title="More" bullet={<IconGitPullRequest size={12} />} lineVariant="dashed"><Text size="xs" mt={4}>coming soon</Text></Timeline.Item>
     
     </Timeline>
     </Center>
