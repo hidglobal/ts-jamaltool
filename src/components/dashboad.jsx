@@ -1,6 +1,6 @@
 import { Center, Grid, Paper, Box, Timeline, Badge, Text} from "@mantine/core";
 import { Blockquote } from "@mantine/core";
-import { IconCheck, IconFlame,IconUserCircle } from "@tabler/icons-react";
+import { IconCheck, IconFlame,IconUserCircle,IconGitPullRequest } from "@tabler/icons-react";
 function Dashboard(){
 
 
