@@ -3,8 +3,8 @@ import { Text,TextInput, Button, Group, Box,Center,Card,JsonInput} from '@mantin
 import { useForm } from '@mantine/form';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
-import { IconCheck, IconFaceIdError } from '@tabler/icons-react';
-import { useNavigate } from 'react-router-dom';
+import { IconCheck, IconFaceIdError,IconAlertCircle } from '@tabler/icons-react';
+import { Alert } from '@mantine/core';
 function RegisterUser(){
 	let AccessToken = sessionStorage.getItem("access_token");
 	let hostname = sessionStorage.getItem("hostname");
@@ -12,7 +12,6 @@ function RegisterUser(){
     const form2 = useForm({
         initialValues:{
 			access_token:AccessToken,
-            Title: '',
             First_Name: '',
             Family_Name:'',
             Email:'',
@@ -20,31 +19,24 @@ function RegisterUser(){
         },
     });
 
-	const navigate = useNavigate();
-	if(AccessToken===null){
-	  
-		setTimeout(()=>{
-		  navigate('/authentication')
-		},2000);
-	  
-	return (
-	<>
-	<Center>
+	if(AccessToken==null){
+		var AlertMsg = <Center>
+		   <Card>
+		 <Alert icon={<IconAlertCircle size="1rem" />} title="Authentication" color="orange">
+	   Please authenticate to HID API endpoint on <a href="/authentication">this link</a>.
+	   </Alert>
+		   </Card>
+		 </Center>
+	   }else{
+		 var AlertMsg = '';
+	   }
 	
-	  <Card>
-	<Card.Section withBorder inheritPadding py="xs">
-	  <Text>Authentication</Text>
-	</Card.Section>
-	<Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
-	  </Card>
-	</Center>
-	
-	</>
-	
-	);
-	}else{
 
     return (
+		<>
+		<div id="alertmsg">{AlertMsg}</div>
+<br/>
+		
         <Box pos="relative" sx={(theme) => ({
         backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
         padding: theme.spacing.xl,
@@ -57,9 +49,9 @@ function RegisterUser(){
         },
       })}
       >
-		<Center><h2>Register a user</h2></Center>
+
 		  <TextInput label="Access Token" placeholder="Token" {...form2.getInputProps('access_token')} />
-          <TextInput label="Title" placeholder="Title" {...form2.getInputProps('Title')} />
+
           <TextInput mt="md" label="Family Name" placeholder="Family Name" {...form2.getInputProps('Family_Name')} />
           <TextInput mt="md" label="First Name" placeholder="First Name" {...form2.getInputProps('First_Name')} />
           <TextInput mt="md" label="Email" placeholder="Email" {...form2.getInputProps('Email')} />
@@ -69,7 +61,6 @@ function RegisterUser(){
             <Button
               variant="outline"
               onClick={()=> {
-					let usertitle = form2.values.Title;
 					let userfamily = form2.values.Family_Name;
 					let userfirst = form2.values.First_Name;
 					let useremail = form2.values.Email;
@@ -83,7 +74,6 @@ function RegisterUser(){
 						withCloseButton: false,
 					  });
 					axios.post('https://api.bz9.net/register', {
-						Title: usertitle,   
 						familyName: userfamily,
 						firstName: userfirst,
 						hostname: hostname,
@@ -171,10 +161,10 @@ function RegisterUser(){
 			id="resBody"
          />
         </Box>
-
+		</>
       );
 		}
 
-}
+
 
 export default RegisterUser;

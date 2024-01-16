@@ -1,9 +1,8 @@
 
-import { Text, TextInput, Button, JsonInput, Group, Card, Grid, Center } from '@mantine/core';
+import { Text, TextInput, Button, JsonInput, Group, Card, Grid, Center, Alert } from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
-import { IconFaceIdError, IconFaceId } from '@tabler/icons-react';
-import { useNavigate } from 'react-router-dom';
+import { IconFaceIdError, IconFaceId,IconAlertCircle } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 
 
@@ -23,33 +22,24 @@ function AssignDevice() {
   function updatePayload(){
     form19.values.cPayload = '{\n        \"schemas\": [\"urn:hid:scim:api:idp:2.0:Device\"],\n        \"status\": {\n            \"status\": \"ACTIVE\",\n            \"active\": true\n        },\n        \"owner\": {\n            \"value\": \"'+form19.values.ownerId+'\" \n       }\n    }'
   }
-  const navigate = useNavigate();
-  if(AccessToken===null){
-    
-      setTimeout(()=>{
-        navigate('/authentication')
-      },2000);
-    
-  return (
-  <>
-  <Center>
-  
-    <Card>
-  <Card.Section withBorder inheritPadding py="xs">
-    <Text>Authentication</Text>
-  </Card.Section>
-  <Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
-    </Card>
-  </Center>
-  
-  </>
-  
-  );
-  }else{
+  if(AccessToken==null){
+    var AlertMsg = <Center>
+       <Card>
+     <Alert icon={<IconAlertCircle size="1rem" />} title="Authentication" color="orange">
+   Please authenticate to HID API endpoint on <a href="/authentication">this link</a>.
+   </Alert>
+       </Card>
+     </Center>
+   }else{
+     var AlertMsg = '';
+   }
+
   return (
     <div>
       <Grid grow gutter="sm">
       </Grid>
+      <div id="alertmsg">{AlertMsg}</div>
+<br/>
       <Card>
         <Center>
           <h3>Assign device to a user.</h3>
@@ -155,6 +145,6 @@ function AssignDevice() {
     </div>
   );
         }
-}
+
 
 export default AssignDevice;

@@ -30,6 +30,8 @@
     "brainjs": "^0.7.4",
     "dayjs": "^1.11.7",
     "embla-carousel-react": "^7.1.0",
+    "esdoc": "^1.1.0",
+    "esdoc-standard-plugin": "^1.0.0",
     "express": "^4.18.2",
     "https": "^1.0.0",
     "https-browserify": "^1.0.0",
@@ -50,6 +52,7 @@
     "stream-http": "^3.2.0",
     "synaptic": "^1.1.4",
     "url": "^0.11.0",
+    "use-effect-x": "^0.1.5",
     "util": "^0.12.5",
     "web-vitals": "^2.1.4",
     "webpack": "^5.89.0"

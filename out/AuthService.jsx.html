@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: AuthService.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: AuthService.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { isNotEmpty, useForm, isEmail } from '@mantine/form';
+import { PasswordInput, Text, TextInput, Button, Group, Box, Center, Select, JsonInput, Tooltip, Textarea} from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { IconLock, IconCheck, IconAlertCircle, IconFaceIdError, IconEarOff } from '@tabler/icons-react';
+import { notifications } from '@mantine/notifications';
+import axios from 'axios';
+
+/** This component is using HID Authentication API End point to generate an access token to do various HID Authentication functions */
+function AuthService() {
+  const [visible, { toggle }] = useDisclosure(false);
+  /**  
+   * Form for user input
+   * - Hostname for API endpoint
+   * - Tenant/Security Domain
+   * - Username
+   * - Password
+   * - Client ID
+   * - Client Secret
+   * - Grant Type
+   */
+    const form = useForm({
+    initialValues: {
+      Host: sessionStorage.getItem("hostname"),
+      Tenant: sessionStorage.getItem("tenant"),
+      username: sessionStorage.getItem("username"),
+      password: sessionStorage.getItem("password"),
+      client_id: sessionStorage.getItem("client_id"),
+      client_secret: sessionStorage.getItem("client_secret"),
+      grant_type: 'password'
+    },
+    validateInputOnChange: true
+    ,
+    validate: {
+      Host: isNotEmpty('Enter a hostname'),
+      Tenant: isNotEmpty('Enter a Tenant'),
+      grant_type: isNotEmpty('Please choose a grant type'),
+      client_id: isNotEmpty('Please enter a Client ID'),
+      client_secret: isNotEmpty('Please enter Client Password'),
+      username: isNotEmpty('Please enter a valid username'),
+      password: isNotEmpty('Please enter a password'),
+    },
+
+  });
+  // Render authentication form
+  return (
+
+    &lt;Box pos="relative" sx={(theme) => ({
+      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+      padding: theme.spacing.xl,
+      borderRadius: theme.radius.md,
+      cursor: 'pointer',
+
+      '&amp;:hover': {
+        backgroundColor:
+          theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[1],
+      },
+    })}
+    >
+        {/* Title and description */}
+      &lt;Center>&lt;h2>Login (Authentication Service)&lt;/h2>&lt;/Center>
+      &lt;Center>&lt;Text>You can use any internet accessible (public) HID authentication product from AaaS, HID Appliance or HID AS and for private VPNs/DMZs please install these tools on your network.&lt;/Text>&lt;/Center>
+      &lt;Tooltip
+      label="Please enter an Internet accessible HID API Endpoint for example: auth-eu.api.hidglobal.com, auth-de.api.hidglobal.com, auth-us.api.hidglobal.com "
+      color="blue"
+      withArrow
+      arrowPosition="center"
+    >
+      &lt;TextInput label="Host" placeholder="host" {...form.getInputProps('Host')} />
+&lt;/Tooltip>
+
+      &lt;TextInput mt="md" label="Tenant/Security Domain" placeholder="Tenant" {...form.getInputProps('Tenant')} />
+      &lt;TextInput mt="md" label="Username" placeholder="Username" {...form.getInputProps('username')} />
+      &lt;PasswordInput mt="md" label="Password" placeholder="Password" visible={visible}
+        onVisibilityChange={toggle} {...form.getInputProps('password')} icon={&lt;IconLock size="1rem" />} />
+              &lt;Tooltip
+      label="Please enter an OpenID API Integration Application ID ( Client ID )"
+      color="blue"
+      withArrow
+      arrowPosition="center"
+    >
+      &lt;TextInput mt="md" label="Client ID" placeholder="Client ID" {...form.getInputProps('client_id')} />
+      &lt;/Tooltip>
+      &lt;Tooltip
+      label="Please enter an OpenID API Integration Application password ( Client Password )"
+      color="blue"
+      withArrow
+      arrowPosition="center"
+    >
+      &lt;PasswordInput mt="md" label="Client Secret" placeholder="Client Secret" visible={visible}
+        onVisibilityChange={toggle} {...form.getInputProps('client_secret')} icon={&lt;IconLock size="1rem" />} />
+        &lt;/Tooltip>
+
+      &lt;Select
+        label="Grant Type"
+        placeholder="password"
+        data={[
+          { value: 'password', label: 'Password' },
+          { value: 'client_credentials', label: 'Client Credentials' },
+          { value: 'authorization_code', label: 'Authorization Code (not implemented yet)' },
+          { value: 'refresh_token', label: 'Refresh Token (not implemented yet)' },
+        ]}
+        {...form.getInputProps('grant_type')}
+      />
+      &lt;Group position="center" mt="xl">
+        &lt;Button
+          variant="filled"
+          onClick={() => {
+            let hostname = form.values.Host;
+            sessionStorage.setItem("hostname", hostname);
+            let tenant = form.values.Tenant;
+            sessionStorage.setItem("tenant", tenant);
+            let grant_type = form.values.grant_type;
+            sessionStorage.setItem("grant_type", grant_type);
+            let username = form.values.username;
+            sessionStorage.setItem("username", username);
+            let password = form.values.password;
+            sessionStorage.setItem("password", password);
+            let client_id = form.values.client_id;
+            sessionStorage.setItem("client_id", client_id);
+            let client_secret = form.values.client_secret;
+            sessionStorage.setItem("client_secret", client_secret);
+            notifications.update({
+              id: 'load-data',
+              color: 'green',
+              title: 'Authentication details!',
+              message: "You have saved your HID Auth details to the browser session successfully.",
+              icon: &lt;IconEarOff size="1rem" />,
+              autoClose: 2000,
+            })
+          }
+          }
+        >
+          Save
+
+        &lt;/Button>
+        &lt;Button variant="outline" onClick=
+          {() => {
+
+            let hostname = form.values.Host;
+            sessionStorage.setItem("hostname", hostname);
+            let tenant = form.values.Tenant;
+            let grant_type = form.values.grant_type;
+            let username = form.values.username;
+            let password = form.values.password;
+            let client_id = form.values.client_id;
+            let client_secret = form.values.client_secret;
+            notifications.show({
+              id: 'load-data',
+              loading: true,
+              title: 'Connecting',
+              message: 'Connecting to ' + hostname,
+              autoClose:true,
+              withCloseButton: true,
+            });
+            (!!hostname) ? axios.post('https://api.bz9.net/conng', {
+              grant_type: grant_type,
+              username: username,
+              password: password,
+              hostname: hostname,
+              tenant: tenant,
+              client_id: client_id,
+              client_secret: client_secret,
+            }, {
+              auth: {
+                username: client_id,
+                password: client_secret,
+              },
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+              }
+            }
+            ).then(function (response) {
+              { document.getElementById("resBody").value = JSON.stringify(response.data); 
+              const resp = response.data;
+              var detail = response.data.detail;
+              var statusres = response.data.status;
+              if(response.data.access_token!=null){
+                notifications.update({
+                  id: 'load-data',
+                  color: 'teal',
+                  title: 'Connected!',
+                  message: "Successfully recieved an access token:\n " + JSON.stringify(response.data.access_token),
+                  icon: &lt;IconCheck size="1rem" />,
+                  autoClose: 2000
+                  // autoClose: 2000,
+                }) 
+                sessionStorage.setItem("access_token", response.data.access_token?.replace(/"/g, ''));
+                var response_data = JSON.stringify('Successful authentication and obtained access token of type bearer');
+              }else{
+                var response_data = JSON.stringify(response.data);
+              }
+              
+
+              const { GoogleGenerativeAI } = require("@google/generative-ai");
+              const genAI = new GoogleGenerativeAI('AIzaSyAiMimtz8xXBJYF53jqJnO10YS4qJoyBog');
+              
+              async function run() {      
+
+                const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+              
+                if(detail!=null &amp;&amp; statusres !=null){
+                  const prompt = 'Explain this HID Global Authentication API error detail : '+ detail+ ' with this status code '+statusres;
+                }
+                
+                const prompt = 'Explain this HID Global Authentication API ' + response_data;
+                document.getElementById('ai').innerHTML = 'Analysing....';
+                const result = await model.generateContent(prompt);
+                const response = await result.response;
+                const text = response.text();
+                document.getElementById('ai').innerHTML = text;
+
+              
+           
+            }
+              
+              run();
+            
+            
+            }
+              document.getElementById("status").style.color = "green";
+              {
+                (!!JSON.stringify(response.data.access_token)) ? document.getElementById("status").innerText = "Access Token: " + JSON.stringify(response.data.access_token)?.replace(/"/g, '')
+                  + "\nToken Type: " + JSON.stringify(response.data.token_type)?.replace(/"/g, '') + "\nExpires in: " + JSON.stringify(response.data.expires_in)?.replace(/"/g, '') :
+                  document.getElementById("status").innerText = "Error: " + JSON.stringify(response.data.error_description)?.replace(/"/g, '')
+              }
+
+             
+              
+              
+
+
+              
+
+
+            }).catch(function (error) {
+
+              if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                //document.getElementById("status").innerHTML = JSON.stringify(error.response.data);
+                document.getElementById("status").innerHTML = JSON.stringify(error.response.status);
+
+                // document.getElementById("status").innerHTML = error.response.headers;
+              } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                notifications.update({
+                  id: 'load-data',
+                  color: 'red',
+                  title: 'Error!',
+                  message: "The request was made but no response was received",
+                  icon: &lt;IconFaceIdError size="1rem" />,
+                  autoClose: 2000,
+                });
+                //document.getElementById("status").innerHTML = JSON.stringify(error.request);
+              } 
+              
+
+
+            }) :
+              notifications.update({
+                id: 'load-data',
+                color: 'red',
+                title: 'Error!',
+                message: "Sorry, you must provide an API end point to authenticate.",
+                icon: &lt;IconFaceIdError size="1rem" />,
+                autoClose: 2000,
+              });
+
+          }}>Test Connection&lt;/Button>
+        &lt;Text fz="xs">All data is saved on your browser session and we don't keep any copy of your data.&lt;/Text>
+      &lt;/Group>
+      &lt;br />
+      
+      &lt;JsonInput
+        label="Response Body"
+        placeholder="JSON Response Body"
+        validationError="Invalid JSON"
+        formatOnBlur
+        autosize
+        minRows={4}
+        id="resBody"
+      />
+      &lt;Textarea id="ai" label="AI" minRows={8}>
+
+
+      &lt;/Textarea>
+    &lt;/Box>
+
+
+  );
+
+}
+
+export default AuthService;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AuthService">AuthService</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Jan 11 2024 16:12:11 GMT+0000 (Greenwich Mean Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

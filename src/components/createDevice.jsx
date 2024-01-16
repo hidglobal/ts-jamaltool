@@ -3,7 +3,7 @@ import { Text,Textarea, Button,JsonInput, Group, Box, Card,Grid, Chip, Badge, Ce
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
 import { IconCheck,IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId, IconUserCircle, IconAt } from '@tabler/icons-react';
-import { useNavigate } from 'react-router-dom';
+import { Alert } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 let deviceList = [];
@@ -24,34 +24,25 @@ function detChange(){
   form8.values.bPayload = '{\n    "schemas": ["urn:hid:scim:api:idp:2.0:Device"],\n    "externalId": "'+form8.values.deviceExternalId+'",\n    "type": "'+form8.values.device_type+'",\n    "status": {\n        "status": "PENDING",\n        "expiryDate": "2039-06-12T14:46:58+02:00",\n        "startDate": "2017-06-12T14:46:58+02:00"\n    }\n  }'
 
 }
-const navigate = useNavigate();
-if(AccessToken===null){
-  
-    setTimeout(()=>{
-      navigate('/authentication')
-    },2000);
-  
-return (
-<>
-<Center>
 
-  <Card>
-<Card.Section withBorder inheritPadding py="xs">
-  <Text>Authentication</Text>
-</Card.Section>
-<Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
-  </Card>
-</Center>
-
-</>
-
-);
-}else{
+if(AccessToken==null){
+  var AlertMsg = <Center>
+     <Card>
+   <Alert icon={<IconAlertCircle size="1rem" />} title="Authentication" color="orange">
+ Please authenticate to HID API endpoint on <a href="/authentication">this link</a>.
+ </Alert>
+     </Card>
+   </Center>
+ }else{
+   var AlertMsg = '';
+ }
 
     return (
 <div>
 <Grid grow gutter="sm">
 </Grid>
+<div id="alertmsg">{AlertMsg}</div>
+<br/>
 <Card>
 <Center>
 <h3>Create a device</h3>
@@ -119,13 +110,9 @@ return (
     var statusres = response.data.status;
     document.getElementById("resBody").value = JSON.stringify(resp);
     const { GoogleGenerativeAI } = require("@google/generative-ai");
-
-    // Access your API key as an environment variable (see "Set up your API key" above)
     const genAI = new GoogleGenerativeAI('AIzaSyAiMimtz8xXBJYF53jqJnO10YS4qJoyBog');
     
-    async function run() {
-      // For text-only input, use the gemini-pro model
-      
+    async function run() {      
     if(detail == null){
       if(resp.id!=null){
         const text= 'Your device was created successfully with this id '+resp.id;
@@ -209,6 +196,5 @@ return (
       );
 }
 
-}
 
 export default CreateDevice;

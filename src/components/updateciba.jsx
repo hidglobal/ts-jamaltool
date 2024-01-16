@@ -1,11 +1,11 @@
-import { Button, TextInput,JsonInput, Group, Card, Center,Text } from "@mantine/core";
+import { Button, TextInput,JsonInput, Group, Card, Center,Alert } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { notifications } from '@mantine/notifications';
-import { IconAlarm, IconConePlus, IconEyeExclamation, IconEyeX, IconScanEye } from "@tabler/icons-react";
+import { IconAlertCircle } from "@tabler/icons-react";
 import { IconFaceId, IconFaceIdError, IconWoman } from "@tabler/icons-react";
 import axios from 'axios';
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+
 
 
 function UpdateCiba(){
@@ -24,30 +24,21 @@ function UpdateCiba(){
       function updatePay(){
         form43.values.CBPayload = '{\n            "urn:hid:scim:api:idp:2.0:UserAttribute": {\n            "attributes": [\n             {\n                "name": "ATR_CIBACB",\n                "value": "'+form43.values.cibaListener+'"\n              }\n            ]\n          }\n        }'
       }
-      const navigate = useNavigate();
-if(accessToken==null){
-  
-    setTimeout(()=>{
-      navigate('/authentication')
-    },2000);
-  
-return (
-<>
-<Center>
-
-  <Card>
-<Card.Section withBorder inheritPadding py="xs">
-  <Text>Authentication</Text>
-</Card.Section>
-<Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
-  </Card>
-</Center>
-
-</>
-
-);
-}else{
+      if(accessToken==null){
+        var AlertMsg = <Center>
+           <Card>
+         <Alert icon={<IconAlertCircle size="1rem" />} title="Authentication" color="orange">
+         Please authenticate to HID API endpoint on <a href="/authentication">this link</a>.
+         </Alert>
+           </Card>
+         </Center>
+         }else{
+         var AlertMsg = '';
+         }
  return (
+<>
+<div id="alertmsg">{AlertMsg}</div>
+<br/>
 
 <Card>
     <Center><h3>Update CIBA Listener</h3></Center>
@@ -151,10 +142,10 @@ notifications.show({
 
           </JsonInput>
           </Card>
+          </>
 
     );
 }
 
-}
 
 export default UpdateCiba;

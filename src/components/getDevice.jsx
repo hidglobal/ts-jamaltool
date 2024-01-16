@@ -2,8 +2,8 @@
 import { Text,TextInput, Button,JsonInput, Card,Grid, Center} from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
-import { IconFaceIdError, IconFaceId } from '@tabler/icons-react';
-import { useNavigate } from 'react-router-dom';
+import { IconFaceIdError, IconFaceId,IconAlertCircle } from '@tabler/icons-react';
+import { Alert } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 
@@ -18,34 +18,25 @@ function GetDevice(){
         },
 });
 
-const navigate = useNavigate();
-if(AccessToken===null){
-  
-    setTimeout(()=>{
-      navigate('/authentication')
-    },2000);
-  
-return (
-<>
-<Center>
+if(AccessToken==null){
+  var AlertMsg = <Center>
+     <Card>
+   <Alert icon={<IconAlertCircle size="1rem" />} title="Authentication" color="orange">
+ Please authenticate to HID API endpoint on <a href="/authentication">this link</a>.
+ </Alert>
+     </Card>
+   </Center>
+ }else{
+   var AlertMsg = '';
+ }
 
-  <Card>
-<Card.Section withBorder inheritPadding py="xs">
-  <Text>Authentication</Text>
-</Card.Section>
-<Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
-  </Card>
-</Center>
-
-</>
-
-);
-}else{
 
     return (
 <div>
 <Grid grow gutter="sm">
 </Grid>
+<div id="alertmsg">{AlertMsg}</div>
+<br/>
 <Card>
 <Center>
 <h3>Get a device</h3>
@@ -133,6 +124,6 @@ return (
             </div>
       );
 }
-}
+
 
 export default GetDevice;

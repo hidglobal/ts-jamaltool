@@ -104,29 +104,7 @@ function CreateOTPAuth(){
      });
     }; 
         
-    const navigate = useNavigate();
-    if(AccessToken===null){
-      
-        setTimeout(()=>{
-          navigate('/authentication')
-        },2000);
-      
-    return (
-    <>
-    <Center>
-    
-      <Card>
-    <Card.Section withBorder inheritPadding py="xs">
-      <Text>Authentication</Text>
-    </Card.Section>
-    <Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
-      </Card>
-    </Center>
-    
-    </>
-    
-    );
-    }else{
+   
     return (
 
 <Box pos="relative" sx={(theme) => ({
@@ -184,6 +162,5 @@ fetch();
       );
 }
 
-}
 
 export default CreateOTPAuth;

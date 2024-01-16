@@ -2,9 +2,9 @@
 import { Text, Button, Group, Card,Grid, Badge, Center} from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
-import {  IconFaceIdError, IconFaceId, IconUserCircle } from '@tabler/icons-react';
+import {  IconFaceIdError, IconFaceId, IconUserCircle,IconAlertCircle } from '@tabler/icons-react';
 import { useState,useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Alert } from '@mantine/core';
 let userList = [];
 
 function ViewUsers(){
@@ -79,31 +79,22 @@ function ViewUsers(){
      useEffect(() => {
         
      }, []);
-     const navigate = useNavigate();
-     if(AccessToken===null){
-       
-         setTimeout(()=>{
-           navigate('/authentication')
-         },2000);
-       
-     return (
-     <>
-     <Center>
-     
-       <Card>
-     <Card.Section withBorder inheritPadding py="xs">
-       <Text>Authentication</Text>
-     </Card.Section>
-     <Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
-       </Card>
-     </Center>
-     
-     </>
-     
-     );
-     }else{
+     if(AccessToken==null){
+      var AlertMsg = <Center>
+         <Card>
+       <Alert icon={<IconAlertCircle size="1rem" />} title="Authentication" color="orange">
+       Please authenticate to HID API endpoint on <a href="/authentication">this link</a>.
+       </Alert>
+         </Card>
+       </Center>
+       }else{
+       var AlertMsg = '';
+       }
     return (
 <div>
+<div id="alertmsg">{AlertMsg}</div>
+<br/>
+
 <Grid grow gutter="sm">
                 {usersList.map((user,id)=>  <Grid.Col span={4}><Card shadow="sm" padding="lg" radius="md" withBorder key={id}><IconUserCircle /><Group position="apart" spacing="xs">{user.displayName}<Badge variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>ID:{user.id}</Badge></Group><Badge>{user.title}</Badge><br/>{user.userName}</Card></Grid.Col>)}
                 </Grid>
@@ -128,6 +119,5 @@ fetch();
       );
 }
 
-}
 
 export default ViewUsers;

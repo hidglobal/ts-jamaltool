@@ -1,11 +1,11 @@
 
-import { Text, TextInput, Button, Group, Box, Card, Grid, Chip, Badge, Center, PasswordInput, JsonInput } from '@mantine/core';
+import { Text, TextInput, Button, Group, Box, Card, Alert, Center, PasswordInput, JsonInput } from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
 import { IconCheck, IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId, IconLock, IconUserCircle, IconAt } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
-import { useNavigate } from 'react-router-dom';
+
 
 function CreatePasswordAuth() {
   const [visible, { toggle }] = useDisclosure(false);
@@ -84,31 +84,24 @@ function CreatePasswordAuth() {
 
     });
   };
-  const navigate = useNavigate();
-  if(AccessToken===null){
-    
-      setTimeout(()=>{
-        navigate('/authentication')
-      },2000);
-    
-  return (
-  <>
-  <Center>
   
-    <Card>
-  <Card.Section withBorder inheritPadding py="xs">
-    <Text>Authentication</Text>
-  </Card.Section>
-  <Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
-    </Card>
-  </Center>
+  if(AccessToken==null){
+    var AlertMsg = <Center>
+       <Card>
+     <Alert icon={<IconAlertCircle size="1rem" />} title="Authentication" color="orange">
+   Please authenticate to HID API endpoint on <a href="/authentication">this link</a>.
+   </Alert>
+       </Card>
+     </Center>
+   }else{
+     var AlertMsg = '';
+   }
   
-  </>
-  
-  );
-  }else{
 
   return (
+<>
+<div id="alertmsg">{AlertMsg}</div>
+<br/>
 
     <Box pos="relative" sx={(theme) => ({
       backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
@@ -161,9 +154,10 @@ function CreatePasswordAuth() {
           </JsonInput>
 
     </Box>
+    
+</>
 
   );
       }
-}
 
 export default CreatePasswordAuth;

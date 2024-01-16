@@ -1,12 +1,12 @@
 import { Paper, TextInput, Button, Stepper, Box, Group, Grid, Chip, Badge, Center, Input, JsonInput, Code, Loader,Card, Text } from '@mantine/core';
 import axios from 'axios';
-import { IconChevronDown,IconDeviceMobile, IconMoodX } from '@tabler/icons-react';
+import { IconChevronDown,IconDeviceMobile, IconMoodX,IconAlertCircle } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import { useMantineTheme } from '@mantine/core';
 import { renderToString } from 'react-dom/server';
 import { Notification } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
+import { Alert } from '@mantine/core';
 
 const { io } = require("socket.io-client");
 
@@ -57,35 +57,25 @@ function ApprovePushAuth() {
     });
 
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
-
-  const navigate = useNavigate();
-  if(accessToken===null){
-    
-      setTimeout(()=>{
-        navigate('/authentication')
-      },2000);
-    
-  return (
-  <>
-  <Center>
-  
-    <Card>
-  <Card.Section withBorder inheritPadding py="xs">
-    <Text>Authentication</Text>
-  </Card.Section>
-  <Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
-    </Card>
-  </Center>
-  
-  </>
-  
-  );
+  if(accessToken==null){
+   var AlertMsg = <Center>
+      <Card>
+    <Alert icon={<IconAlertCircle size="1rem" />} title="Authentication" color="orange">
+  Please authenticate to HID API endpoint on <a href="/authentication">this link</a>.
+  </Alert>
+      </Card>
+    </Center>
   }else{
+    var AlertMsg = '';
+  }
+ 
   return (
-    <><Grid>
+    <Grid>
       <Grid.Col span={2}></Grid.Col>
       <Grid.Col span={8}>
-
+    
+<div id="alertmsg">{AlertMsg}</div>
+<br/>
         <Box pos="relative" sx={(theme) => ({
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
           padding: theme.spacing.xl,
@@ -399,11 +389,10 @@ function ApprovePushAuth() {
         </Box>
       </Grid.Col>
       <Grid.Col span={2}></Grid.Col>
-    </Grid></>
+    </Grid>
 
   );
             }
 
-}
 
 export default ApprovePushAuth;

@@ -1,10 +1,9 @@
-import { Text, TextInput, Button, Stepper, Box, Group, Grid, PinInput, Badge, Center, PasswordInput, JsonInput, Card } from '@mantine/core';
+import { Text, TextInput, Button, Stepper, Box, Group, Grid, PinInput, Badge, Center,Alert, PasswordInput, JsonInput, Card } from '@mantine/core';
 import axios from 'axios';
-import { notifications } from '@mantine/notifications';
-import { IconCheck, IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId, IconLock, IconUserCircle, IconAt } from '@tabler/icons-react';
+import {IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId, IconLock, IconUserCircle} from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 function ApproveOTPAuth() {
   const [active, setActive] = useState(0);
   let username = '';
@@ -51,34 +50,24 @@ function ApproveOTPAuth() {
 
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 
-  const navigate = useNavigate();
-  if(accessToken===null){
-    
-      setTimeout(()=>{
-        navigate('/authentication')
-      },2000);
-    
-  return (
-  <>
-  <Center>
-  
-    <Card>
-  <Card.Section withBorder inheritPadding py="xs">
-    <Text>Authentication</Text>
-  </Card.Section>
-  <Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
-    </Card>
-  </Center>
-  
-  </>
-  
-  );
-  }else{
+  if(accessToken==null){
+    var AlertMsg = <Center>
+       <Card>
+     <Alert icon={<IconAlertCircle size="1rem" />} title="Authentication" color="orange">
+   Please authenticate to HID API endpoint on <a href="/authentication">this link</a>.
+   </Alert>
+       </Card>
+     </Center>
+   }else{
+     var AlertMsg = '';
+   }
+
   return (
     <><Grid>
       <Grid.Col span={2}></Grid.Col>
       <Grid.Col span={8}>
-
+      <div id="alertmsg">{AlertMsg}</div>
+<br/>
         <Box pos="relative" sx={(theme) => ({
           backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
           padding: theme.spacing.xl,
@@ -176,6 +165,6 @@ function ApproveOTPAuth() {
 
   );
             }
-}
+
 
 export default ApproveOTPAuth;

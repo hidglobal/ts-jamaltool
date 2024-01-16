@@ -2,9 +2,9 @@
 import { Text, TextInput, Button, JsonInput, Card, Grid, Center } from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
-import { IconFaceIdError, IconFaceId } from '@tabler/icons-react';
+import { IconFaceIdError, IconFaceId, IconAlertCircle } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
-import { useNavigate } from 'react-router-dom';
+import { Alert } from '@mantine/core';
 const QRCode = require('qrcode');
 
 function ProvisionDevice() {
@@ -25,33 +25,24 @@ function ProvisionDevice() {
 
     form20.values.cPayload = '{\n        \"schemas\": [\"urn:hid:scim:api:idp:2.0:Provision\"],\n        \"deviceType\": \"'+form20.values.deviceType+'\",\n        \"description\": \"did='+form20.values.deviceId+',url=' + hostname + ':443/' + tenant + ',pch=CH_TDSPROV,pth=AT_TDSOOB,pct=CT_TDSOOB,pdt=DT_TDSOOB,mod=GEN,sec=\",\n        \"owner\": {\n            \"value\" : \"'+form20.values.ownerId+'\"\n        },\n    \"attributes\": [{\n                \"name\": \"AUTH_TYPE\",\n                \"value\": \"AT_SMK\",\n                \"readOnly\": false\n            }\n        ]\n    }';
   }
-  const navigate = useNavigate();
-  if(AccessToken===null){
-    
-      setTimeout(()=>{
-        navigate('/authentication')
-      },2000);
-    
-  return (
-  <>
-  <Center>
-  
-    <Card>
-  <Card.Section withBorder inheritPadding py="xs">
-    <Text>Authentication</Text>
-  </Card.Section>
-  <Text>Authenticate with the API end point first, Please wait until we redirect you in seconds.</Text>
-    </Card>
-  </Center>
-  
-  </>
-  
-  );
-  }else{
+  if(AccessToken==null){
+    var AlertMsg = <Center>
+       <Card>
+     <Alert icon={<IconAlertCircle size="1rem" />} title="Authentication" color="orange">
+   Please authenticate to HID API endpoint on <a href="/authentication">this link</a>.
+   </Alert>
+       </Card>
+     </Center>
+   }else{
+     var AlertMsg = '';
+   }
+
   return (
     <div>
       <Grid grow gutter="sm">
       </Grid>
+      <div id="alertmsg">{AlertMsg}</div>
+<br/>
       <Card>
         <Center>
           <h3>Provision Device</h3>
@@ -168,6 +159,5 @@ function ProvisionDevice() {
       </Card></div>
   );
         }
-}
 
 export default ProvisionDevice;
