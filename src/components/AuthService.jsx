@@ -1,7 +1,7 @@
 import { isNotEmpty, useForm, isEmail } from '@mantine/form';
 import { PasswordInput, Text, TextInput, Button, Group, Box, Center, Select, JsonInput, Tooltip, Switch, Textarea, Grid } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconLock, IconCheck, IconAlertCircle, IconFaceIdError, IconEarOff } from '@tabler/icons-react';
+import { IconLock, IconCheck, IconAlertCircle, IconFaceIdError, IconEarOff, IconError404, IconTrashX, IconUserDown } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -48,24 +48,27 @@ function AuthService() {
   });
   const [TokenCheck, CheckedToken] = useState(false);
 
-    if (TokenCheck || form.values?.access_token == null) {
+    if (TokenCheck) {
       let element = document.getElementById('noToken');
       let gotAccess = document.getElementById('gotToken');
       let hidden = element?.getAttribute('hidden');
       if (hidden) {
         gotAccess.removeAttribute('hidden');
+        document.getElementById('testCon')?.setAttribute('hidden','hidden');
       } else {
         element?.setAttribute('hidden', 'hidden');
         gotAccess?.removeAttribute('hidden');
+        document.getElementById('testCon')?.removeAttribute('hidden');
       }
-    } else {
-      document.getElementById('noToken')?.removeAttribute('hidden');
-      document.getElementById('gotToken')?.setAttribute('hidden', 'hidden');
-
-    }
-
-
-
+    } else if(sessionStorage.getItem('access_token')!=null){
+  document.getElementById('gotToken')?.removeAttribute('hidden');
+  document.getElementById('noToken')?.setAttribute('hidden', 'hidden');
+  document.getElementById('testCon')?.setAttribute('hidden','hidden');
+}else {
+  document.getElementById('noToken')?.removeAttribute('hidden');
+  document.getElementById('gotToken')?.setAttribute('hidden', 'hidden');
+  document.getElementById('testCon')?.removeAttribute('hidden');
+}
 
 
   // Render authentication form
@@ -103,10 +106,52 @@ function AuthService() {
 
           <Button compact onClick={() => {
             sessionStorage.removeItem('access_token');
-            form.values.access_token = '';
-          }}>Remove Token</Button>
+            form.setValues({
+              access_token: '',
+            })
+          }}><IconTrashX/></Button>
         } />
+        <br/>
+        <Center>
+          <Tooltip
+          label="You can get User Info and also test your access token at once."
+          withArrow
+          color="blue"
+          arrowPosition='center'
+          
+          >        
+        <Button onClick={()=>{
+           let hostname = form.values.Host;
+           let tenant = form.values.Tenant;
+           let access_token = form.values.access_token;
+           axios.post('https://api.bz9.net/userinfo',
+           {
+            access_token:access_token,
+            hostname: hostname,
+            tenant: tenant
+           },{
+            headers:{
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
 
+
+           }).then(function(response){
+            notifications.show({
+              id: 'load-data',
+              color: 'teal',
+              title: 'Connected!',
+              message: "Successfully recieved User Info",
+              icon: <IconCheck size="1rem" />,
+              autoClose: 2000
+            });
+            document.getElementById('resBody').innerHTML = JSON.stringify(response.data);
+           })
+           
+           
+        }}><IconUserDown/> Get User Info</Button>
+        </Tooltip>
+
+        </Center>
       </div>
       <div id="noToken" >
 
@@ -167,18 +212,16 @@ function AuthService() {
                 title: 'Authentication details!',
                 message: "You have saved your HID Auth details to the browser session successfully.",
               });
-           
-
-
-
-
           }
           }
         >
           Save
 
         </Button>
-        <Button variant="outline" onClick=
+        <span id='testCon'>
+
+        
+        <Button variant="outline"  onClick=
           {() => {
 
             let hostname = form.values.Host;
@@ -231,37 +274,9 @@ function AuthService() {
                     // autoClose: 2000,
                   })
                   sessionStorage.setItem("access_token", response.data.access_token?.replace(/"/g, ''));
-                  var response_data = JSON.stringify('Successful authentication and obtained access token of type bearer');
-                } else {
-                  var response_data = JSON.stringify(response.data);
+                  const response_data = JSON.stringify('Successful authentication and obtained access token of type bearer');
+                  document.getElementById('resBody').innerHTML = response_data;
                 }
-
-
-                const { GoogleGenerativeAI } = require("@google/generative-ai");
-                const genAI = new GoogleGenerativeAI('AIzaSyAiMimtz8xXBJYF53jqJnO10YS4qJoyBog');
-
-                async function run() {
-
-                  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-
-                  if (detail != null && statusres != null) {
-                    const prompt = 'Explain this HID Global Authentication API error detail : ' + detail + ' with this status code ' + statusres;
-                  }
-
-                  const prompt = 'Explain this HID Global Authentication API ' + response_data;
-                  document.getElementById('ai').innerHTML = 'Analysing....';
-                  const result = await model.generateContent(prompt);
-                  const response = await result.response;
-                  const text = response.text();
-                  document.getElementById('ai').innerHTML = text;
-
-
-
-                }
-
-                // run();
-
-
               }
               document.getElementById("status").style.color = "green";
               {
@@ -269,15 +284,6 @@ function AuthService() {
                   + "\nToken Type: " + JSON.stringify(response.data.token_type)?.replace(/"/g, '') + "\nExpires in: " + JSON.stringify(response.data.expires_in)?.replace(/"/g, '') :
                   document.getElementById("status").innerText = "Error: " + JSON.stringify(response.data.error_description)?.replace(/"/g, '')
               }
-
-
-
-
-
-
-
-
-
             }).catch(function (error) {
 
               if (error.response) {
@@ -310,7 +316,7 @@ function AuthService() {
                 autoClose: 2000,
               });
 
-          }}>Test Connection</Button>
+          }}>Test Connection</Button></span>
         <Text fz="xs">All data is saved on your browser session and we don't keep any copy of your data.</Text>
       </Group>
       <br />
@@ -318,13 +324,29 @@ function AuthService() {
       <JsonInput
         label="Response Body"
         placeholder="JSON Response Body"
-        validationError="Invalid JSON"
         formatOnBlur
         autosize
         minRows={4}
         id="resBody"
       />
-      <Textarea id="ai" label="AI" minRows={8}>
+      <br/>
+      <Center>
+      <Button onClick={()=>{
+                        const response_data = document.getElementById('resBody').innerHTML;
+                const { GoogleGenerativeAI } = require("@google/generative-ai");
+                const genAI = new GoogleGenerativeAI('AIzaSyAiMimtz8xXBJYF53jqJnO10YS4qJoyBog');
+                async function run() {
+                  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+                  let prompt = 'Explain this HID Global Authentication API ' + response_data;
+                  document.getElementById('ai').innerHTML = 'Analyzing with HID smart systems....';
+                  const result = await model.generateContent(prompt);
+                  const response = await result.response;
+                  const text = response.text();
+                  document.getElementById('ai').innerHTML = text;
+                }
+                run();
+      }}>Ask Generative AI</Button></Center>
+      <Textarea id="ai" label="HID smart system's response" minRows={8}>
 
 
       </Textarea>
