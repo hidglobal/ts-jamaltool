@@ -37,3 +37,10 @@ Start the server
   npm start
 ```
 
+## Authors
+
+- Mohamed Jamal - [@mohamed-ghayyad](https://github.com/mohamed-ghayyad) 
+- Dinesh - Partner Services Manager
+- Darren Preece - Director of Technical Support
+- Colin Dunn - Manager of Technical Support 
+
