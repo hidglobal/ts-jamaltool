@@ -36,6 +36,9 @@ Start the server
 ```bash
   npm start
 ```
+## Screenshot
+
+![Project Screenshot](https://pasteboard.co/ZpCXzPZv7MFv.png)
 
 ## Authors
 
