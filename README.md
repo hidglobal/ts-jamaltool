@@ -38,7 +38,7 @@ Start the server
 ```
 ## Screenshot
 
-![Project Screenshot](https://pasteboard.co/ZpCXzPZv7MFv.png)
+![Project Screenshot](https://gcdnb.pbrd.co/images/ZpCXzPZv7MFv.png?o=1)
 
 ## Authors
 
