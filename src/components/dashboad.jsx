@@ -1,6 +1,6 @@
-import { Center, Grid, Paper, Box, Timeline, Badge} from "@mantine/core";
+import { Center, Grid, Paper, Box, Timeline, Badge, Text} from "@mantine/core";
 import { Blockquote } from "@mantine/core";
-import { IconCheck, IconFlame,IconGitBranch, IconTicTac } from "@tabler/icons-react";
+import { IconCheck, IconFlame,IconUserCircle } from "@tabler/icons-react";
 function Dashboard(){
 
 
@@ -75,7 +75,28 @@ function Dashboard(){
       icon={<IconFlame size="1.5rem" />}
     >
       Analysis HID Authentication OpenID/SCIM APIs and find root causes with ease.
-    </Blockquote></Grid.Col>
+    </Blockquote>
+    <br/>
+    <h3>Credits:</h3>
+    <Timeline  active={13} bulletSize={24} lineWidth={2}>
+    <Timeline.Item bullet={<IconUserCircle size={12} />} title="Mohamed, Jamal" >
+        <Text color="dimmed" size="sm">Civil engineer, software engineer and currently working as a technical support engineer at HID.</Text>
+        <Text size="xs" mt={4}>Innovation, Ideas, development, and testing.</Text>
+    </Timeline.Item>
+    <Timeline.Item bullet={<IconUserCircle size={12} />} title="Madan, Dinesh" >
+        <Text color="dimmed" size="sm">Consumer Authentication Partner Services Manager.</Text>
+        <Text size="xs" mt={4}>Innovation, Ideas and testing.</Text>
+    </Timeline.Item>
+    <Timeline.Item bullet={<IconUserCircle size={12} />} title="Preece, Darren" >
+        <Text color="dimmed" size="sm">Associate Director, Technical Support.</Text>
+        <Text size="xs" mt={4}>Motivation and Innovation.</Text>
+    </Timeline.Item>
+    <Timeline.Item bullet={<IconUserCircle size={12} />} title="Dunn, Colin" >
+        <Text color="dimmed" size="sm">Manager, Technical Support</Text>
+        <Text size="xs" mt={4}>Motivation, Innovation and testing.</Text>
+    </Timeline.Item>
+    </Timeline>
+    </Grid.Col>
 </Grid>
 </Box>
 </>
