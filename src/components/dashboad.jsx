@@ -79,19 +79,19 @@ function Dashboard(){
     <br/>
     <h3>Credits:</h3>
     <Timeline  active={13} bulletSize={24} lineWidth={2}>
-    <Timeline.Item bullet={<IconUserCircle size={12} />} title="Mohamed, Jamal" >
+    <Timeline.Item bullet={<IconUserCircle size={15} />} title="Mohamed, Jamal" >
         <Text color="dimmed" size="sm">Civil engineer, software engineer and currently working as a technical support engineer at HID.</Text>
-        <Text size="xs" mt={4}>Innovation, Ideas, development, and testing.</Text>
+        <Text size="xs" mt={4}>cutting-edge technology, Innovation, Ideas, development, and testing.</Text>
     </Timeline.Item>
-    <Timeline.Item bullet={<IconUserCircle size={12} />} title="Madan, Dinesh" >
+    <Timeline.Item bullet={<IconUserCircle size={15} />} title="Madan, Dinesh" >
         <Text color="dimmed" size="sm">Consumer Authentication Partner Services Manager.</Text>
         <Text size="xs" mt={4}>Innovation, Ideas and testing.</Text>
     </Timeline.Item>
-    <Timeline.Item bullet={<IconUserCircle size={12} />} title="Preece, Darren" >
+    <Timeline.Item bullet={<IconUserCircle size={15} />} title="Preece, Darren" >
         <Text color="dimmed" size="sm">Associate Director, Technical Support.</Text>
         <Text size="xs" mt={4}>Motivation and Innovation.</Text>
     </Timeline.Item>
-    <Timeline.Item bullet={<IconUserCircle size={12} />} title="Dunn, Colin" >
+    <Timeline.Item bullet={<IconUserCircle size={15} />} title="Dunn, Colin" >
         <Text color="dimmed" size="sm">Manager, Technical Support</Text>
         <Text size="xs" mt={4}>Motivation, Innovation and testing.</Text>
     </Timeline.Item>
