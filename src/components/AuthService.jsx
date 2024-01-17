@@ -124,28 +124,31 @@ function AuthService() {
            let hostname = form.values.Host;
            let tenant = form.values.Tenant;
            let access_token = form.values.access_token;
-           axios.post('https://api.bz9.net/userinfo',
-           {
-            access_token:access_token,
-            hostname: hostname,
-            tenant: tenant
-           },{
-            headers:{
-              'Content-Type': 'application/x-www-form-urlencoded'
-            }
-
-
-           }).then(function(response){
-            notifications.show({
-              id: 'load-data',
-              color: 'teal',
-              title: 'Connected!',
-              message: "Successfully recieved User Info",
-              icon: <IconCheck size="1rem" />,
-              autoClose: 2000
-            });
-            document.getElementById('resBody').innerHTML = JSON.stringify(response.data);
-           })
+           if(hostname!=null && tenant!=null && access_token!=null){
+            axios.post('https://api.bz9.net/userinfo',
+            {
+             access_token:access_token,
+             hostname: hostname,
+             tenant: tenant
+            },{
+             headers:{
+               'Content-Type': 'application/x-www-form-urlencoded'
+             }
+ 
+ 
+            }).then(function(response){
+             notifications.show({
+               id: 'load-data',
+               color: 'teal',
+               title: 'Connected!',
+               message: "Successfully recieved User Info",
+               icon: <IconCheck size="1rem" />,
+               autoClose: 2000
+             });
+             document.getElementById('resBody').innerHTML = JSON.stringify(response.data);
+            })
+           }
+ 
            
            
         }}><IconUserDown/> Get User Info</Button>
@@ -197,7 +200,6 @@ function AuthService() {
             let password = form.values.password;
             let client_id = form.values.client_id;
             let client_secret = form.values.client_secret;
-            
               sessionStorage.setItem("hostname", hostname);
               sessionStorage.setItem("tenant", tenant);
               sessionStorage.setItem("grant_type", grant_type);

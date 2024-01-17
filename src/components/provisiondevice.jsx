@@ -1,5 +1,5 @@
 
-import { Text, TextInput, Button, JsonInput, Card, Grid, Center } from '@mantine/core';
+import {TextInput, Button, JsonInput, Card, Grid, Center } from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
 import { IconFaceIdError, IconFaceId, IconAlertCircle } from '@tabler/icons-react';
