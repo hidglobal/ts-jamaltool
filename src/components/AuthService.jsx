@@ -49,7 +49,6 @@ function AuthService() {
   });
   const [TokenCheck, CheckedToken] = useState(false);
 
-
 if (TokenCheck) {
     // If TokenCheck is true, user has a token
     document.getElementById('noToken')?.setAttribute('hidden', 'hidden');
@@ -106,11 +105,11 @@ if (TokenCheck) {
       <br/>
       <div id="gotToken" hidden>
         <Group position='left'>       
-        <Popover width={400} withArrow shadow="md">
+        <Popover width={280} withArrow shadow="md">
           <Popover.Target>
             <Text size="sm">Access Token 🛈</Text>
         </Popover.Target>
-        <Popover.Dropdown> You can read more about access_token hereYou can read more about access_token hereYou can read more about access_token here
+        <Popover.Dropdown>
           <a href="https://developers.hidglobal.com/authentication-service/reference/authentication-api-access-token">You can read more about access_token here</a>
         </Popover.Dropdown>
         </Popover>
@@ -219,7 +218,9 @@ if (TokenCheck) {
               sessionStorage.setItem("password", password);
               sessionStorage.setItem("client_id", client_id);
               sessionStorage.setItem("client_secret", client_secret);
-              sessionStorage.setItem('access_token', form.values.access_token);
+              if(TokenCheck==true){
+                sessionStorage.setItem('access_token', form.values.access_token);
+              }
               notifications.show({
                 id: 'load-data',
                 color: 'green',
