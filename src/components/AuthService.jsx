@@ -106,11 +106,11 @@ if (TokenCheck) {
       <br/>
       <div id="gotToken" hidden>
         <Group position='left'>       
-        <Popover width={280} withArrow shadow="md">
+        <Popover width={400} withArrow shadow="md">
           <Popover.Target>
             <Text size="sm">Access Token 🛈</Text>
         </Popover.Target>
-        <Popover.Dropdown>
+        <Popover.Dropdown> You can read more about access_token hereYou can read more about access_token hereYou can read more about access_token here
           <a href="https://developers.hidglobal.com/authentication-service/reference/authentication-api-access-token">You can read more about access_token here</a>
         </Popover.Dropdown>
         </Popover>
