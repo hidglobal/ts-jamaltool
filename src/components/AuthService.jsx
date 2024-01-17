@@ -49,26 +49,26 @@ function AuthService() {
   });
   const [TokenCheck, CheckedToken] = useState(false);
 
-    if (TokenCheck) {
-      let element = document.getElementById('noToken');
-      let gotAccess = document.getElementById('gotToken');
-      let hidden = element?.getAttribute('hidden');
-      if (hidden) {
-        gotAccess.removeAttribute('hidden');
-        document.getElementById('testCon')?.setAttribute('hidden','hidden');
-      } else {
-        element?.setAttribute('hidden', 'hidden');
-        gotAccess?.removeAttribute('hidden');
+
+if (TokenCheck) {
+    // If TokenCheck is true, user has a token
+    document.getElementById('noToken')?.setAttribute('hidden', 'hidden');
+    document.getElementById('gotToken')?.removeAttribute('hidden');
+    document.getElementById('testCon')?.setAttribute('hidden', 'hidden');
+} else {
+    // If TokenCheck is false or null, user does not have a token
+    const accessToken = sessionStorage.getItem('access_token');
+    if (accessToken !== null) {
+        // If access token is found in sessionStorage
+        document.getElementById('noToken')?.setAttribute('hidden', 'hidden');
+        document.getElementById('gotToken')?.removeAttribute('hidden');
+        document.getElementById('testCon')?.setAttribute('hidden', 'hidden');
+    } else {
+        // If TokenCheck is false and no access token in sessionStorage
+        document.getElementById('noToken')?.removeAttribute('hidden');
+        document.getElementById('gotToken')?.setAttribute('hidden', 'hidden');
         document.getElementById('testCon')?.removeAttribute('hidden');
-      }
-    } else if(sessionStorage.getItem('access_token')!=null){
-  document.getElementById('gotToken')?.removeAttribute('hidden');
-  document.getElementById('noToken')?.setAttribute('hidden', 'hidden');
-  document.getElementById('testCon')?.setAttribute('hidden','hidden');
-}else {
-  document.getElementById('noToken')?.removeAttribute('hidden');
-  document.getElementById('gotToken')?.setAttribute('hidden', 'hidden');
-  document.getElementById('testCon')?.removeAttribute('hidden');
+    }
 }
 
 
@@ -101,6 +101,7 @@ function AuthService() {
 
       <TextInput mt="md" label="Tenant/Security Domain" placeholder="Tenant" {...form.getInputProps('Tenant')} />
       <br />
+      
       <Switch label="Do you have an access token?" size="md" radius="lg" checked={TokenCheck} onChange={(event) => CheckedToken(event.currentTarget.checked)} />
       <br/>
       <div id="gotToken" hidden>
@@ -115,7 +116,6 @@ function AuthService() {
         </Popover>
         </Group>
         <TextInput mt="sm" placeholder='please paste an access token' {...form.getInputProps('access_token')} rightSection={
-
 <Button compact onClick={() => {
   sessionStorage.removeItem('access_token');
   form.setValues({
