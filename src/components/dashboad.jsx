@@ -94,7 +94,7 @@ function Dashboard(){
     </Timeline.Item>
     <Timeline.Item bullet={<IconUserCircle size={18} />} title="Dunn, Colin" >
         <Text color="dimmed" size="sm">Manager, Technical Support</Text>
-        <Text size="xs" mt={4}>Motivation, Innovation and testing.</Text>
+        <Text size="xs" mt={4}>Motivation, Innovation, Documentation and testing.</Text>
     </Timeline.Item>
     </Timeline>
     </Grid.Col>
