@@ -1,5 +1,5 @@
 import { isNotEmpty, useForm, isEmail } from '@mantine/form';
-import { PasswordInput, Text, TextInput, Button, Group, Box, Center, Select, JsonInput, Tooltip, Switch, Textarea, Grid } from '@mantine/core';
+import { PasswordInput, Text, TextInput, Button, Group, Box, Center, Select, JsonInput, Tooltip, Switch, Textarea, Grid, Popover, HoverCard } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconLock, IconCheck, IconAlertCircle, IconFaceIdError, IconEarOff, IconError404, IconTrashX, IconUserDown } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 /** This component is using HID Authentication API End point to generate an access token to do various HID Authentication functions */
 function AuthService() {
   const [visible, { toggle }] = useDisclosure(false);
+  const [opened, { close, open }] = useDisclosure(false);
   const vd = false;
   /**  
    * Form for user input
@@ -101,16 +102,27 @@ function AuthService() {
       <TextInput mt="md" label="Tenant/Security Domain" placeholder="Tenant" {...form.getInputProps('Tenant')} />
       <br />
       <Switch label="Do you have an access token?" size="md" radius="lg" checked={TokenCheck} onChange={(event) => CheckedToken(event.currentTarget.checked)} />
+      <br/>
       <div id="gotToken" hidden>
-        <TextInput mt="sm" label="Access Token" placeholder='please paste an access token' {...form.getInputProps('access_token')} rightSection={
+        <Group position='left'>       
+        <Popover width={280} withArrow shadow="md">
+          <Popover.Target>
+            <Text size="sm">Access Token 🛈</Text>
+        </Popover.Target>
+        <Popover.Dropdown>
+          <a href="https://developers.hidglobal.com/authentication-service/reference/authentication-api-access-token">You can read more about access_token here</a>
+        </Popover.Dropdown>
+        </Popover>
+        </Group>
+        <TextInput mt="sm" placeholder='please paste an access token' {...form.getInputProps('access_token')} rightSection={
 
-          <Button compact onClick={() => {
-            sessionStorage.removeItem('access_token');
-            form.setValues({
-              access_token: '',
-            })
-          }}><IconTrashX/></Button>
-        } />
+<Button compact onClick={() => {
+  sessionStorage.removeItem('access_token');
+  form.setValues({
+    access_token: '',
+  })
+}}><IconTrashX/></Button>
+} />
         <br/>
         <Center>
           <Tooltip
