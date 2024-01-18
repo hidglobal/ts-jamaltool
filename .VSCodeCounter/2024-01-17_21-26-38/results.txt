@@ -1,0 +1,49 @@
+Date : 2024-01-17 21:26:38
+Directory : c:\Users\mohjam\Desktop\HIDiag-master\src
+Total : 21 files,  3326 codes, 113 comments, 322 blanks, all 3761 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JavaScript JSX |         20 |      3,316 |        113 |        320 |      3,749 |
+| CSS            |          1 |         10 |          0 |          2 |         12 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                        | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                           |         21 |      3,326 |        113 |        322 |      3,761 |
+| . (Files)                                                                   |          2 |        178 |          1 |         14 |        193 |
+| components                                                                  |         18 |      3,138 |        112 |        306 |      3,556 |
+| css                                                                         |          1 |         10 |          0 |          2 |         12 |
++-----------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                    | language       | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| c:\Users\mohjam\Desktop\HIDiag-master\src\App.jsx                           | JavaScript JSX |         76 |          1 |         11 |         88 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\AuthService.jsx        | JavaScript JSX |        470 |         22 |          9 |        501 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\CreateOTPAuth.jsx      | JavaScript JSX |        134 |         12 |         21 |        167 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\CreatePasswordAuth.jsx | JavaScript JSX |        130 |         12 |         22 |        164 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\Nav.jsx                | JavaScript JSX |         60 |          0 |         13 |         73 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\RegisterUser.jsx       | JavaScript JSX |        135 |         12 |         24 |        171 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\SwitchTheme.jsx        | JavaScript JSX |         18 |          0 |          3 |         21 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\ViewUsers.jsx          | JavaScript JSX |         95 |         13 |         16 |        124 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\approveciba.jsx        | JavaScript JSX |        510 |          7 |         23 |        540 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\approveotp.jsx         | JavaScript JSX |        235 |          1 |         13 |        249 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\assignDevice.jsx       | JavaScript JSX |        173 |          3 |          7 |        183 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\cloneDevice.jsx        | JavaScript JSX |        120 |          3 |         18 |        141 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\createDevice.jsx       | JavaScript JSX |        168 |         13 |         20 |        201 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\dashboad.jsx           | JavaScript JSX |        101 |          0 |          5 |        106 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\getDevice.jsx          | JavaScript JSX |        110 |          3 |         17 |        130 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\otpAuth.jsx            | JavaScript JSX |        265 |          5 |         31 |        301 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\passwordauth.jsx       | JavaScript JSX |        148 |          1 |         20 |        169 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\provisiondevice.jsx    | JavaScript JSX |        144 |          2 |         18 |        164 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\components\updateciba.jsx         | JavaScript JSX |        122 |          3 |         26 |        151 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\css\App.css                       | CSS            |         10 |          0 |          2 |         12 |
+| c:\Users\mohjam\Desktop\HIDiag-master\src\index.jsx                         | JavaScript JSX |        102 |          0 |          3 |        105 |
+| Total                                                                       |                |      3,326 |        113 |        322 |      3,761 |
++-----------------------------------------------------------------------------+----------------+------------+------------+------------+------------+

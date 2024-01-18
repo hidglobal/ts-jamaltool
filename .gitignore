@@ -9,7 +9,8 @@
 
 # production
 /build
-
+.VSCodeCounter
+/out
 /node_modules
 # misc
 .DS_Store

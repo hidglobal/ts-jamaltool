@@ -28,8 +28,7 @@ import { useMantineTheme } from "@mantine/core";
 import { renderToString } from "react-dom/server";
 import { Notification } from "@mantine/core";
 import { Alert } from "@mantine/core";
-
-const { io } = require("socket.io-client");
+import io from 'socket.io-client';
 const socket = io("https://api.bz9.net");
 
 function ApprovePushAuth() {

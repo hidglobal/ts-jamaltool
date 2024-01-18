@@ -5,7 +5,7 @@ import { notifications } from '@mantine/notifications';
 import { IconFaceIdError, IconFaceId, IconAlertCircle } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { Alert } from '@mantine/core';
-const QRCode = require('qrcode');
+import QRCode from 'qrcode'
 
 function ProvisionDevice() {
   let AccessToken = sessionStorage.getItem("access_token");
