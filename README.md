@@ -9,6 +9,14 @@ HID Auth Diagnostic project is set of tools are designed to help HID teams and c
 
 You can test, train and diagnostic your HID API endpoint on https://mrdoc.hiddemo.com/
 
+## Dependencies 
+
+Mantine(https://mantine.dev/) - User interface
+Socket.io(https://socket.io/) - real-time CIBA callback communication.
+ElectronJS(https://www.electronjs.org/) - cross-platform applications for easier deployment for non-techies.
+ExpressJS(https://expressjs.com/) 
+Google AI SDK([https://ai.google.dev/](https://github.com/google/generative-ai-js))
+QRcode.js(https://davidshimjs.github.io/qrcodejs/)
 
 
 ## Run Locally
