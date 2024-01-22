@@ -9,7 +9,7 @@ HID Auth Diagnostic project is a set of tools designed to help HID teams and cus
 
 You can test, train, and diagnostic your HID API endpoint on https://mrdoc.hiddemo.com/
 
-## Dependencies appreciation
+## Dependencies
 
 [Mantine](https://mantine.dev/) - User interface
 
