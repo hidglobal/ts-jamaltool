@@ -3,7 +3,7 @@
 
 HID Auth Diagnostic project is a set of tools designed to help HID teams and customers in Authentication API training and diagnosis of the root causes of API errors with the power of AI.
 
-
+[![CodeQL](https://github.com/hidglobal/ts-jamaltool/actions/workflows/codeql.yml/badge.svg)](https://github.com/hidglobal/ts-jamaltool/actions/workflows/codeql.yml)
 
 ## Live
 
