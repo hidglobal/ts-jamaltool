@@ -11,21 +11,21 @@ You can test, train, and diagnostic your HID API endpoint on https://mrdoc.hidde
 
 ## Dependencies appreciation
 
-[@Mantine](https://mantine.dev/) - User interface
+[Mantine](https://mantine.dev/) - User interface
 
-[@Socket.io](https://socket.io/) - real-time CIBA callback communication.
+[Socket.io](https://socket.io/) - real-time CIBA callback communication.
 
-[@ElectronJS](https://www.electronjs.org/) - cross-platform applications for easier deployment for non-techies.
+[ElectronJS](https://www.electronjs.org/) - cross-platform applications for easier deployment for non-techies.
 
-[@ExpressJS](https://expressjs.com/) 
+[ExpressJS](https://expressjs.com/) 
 
-[@Google AI SDK](https://github.com/google/generative-ai-js)
+[Google AI SDK](https://github.com/google/generative-ai-js)
 
-[@QRcode.js](https://davidshimjs.github.io/qrcodejs/)
+[QRcode.js](https://davidshimjs.github.io/qrcodejs/)
 
-[@ViteJS](https://vitejs.dev/)
+[ViteJS](https://vitejs.dev/)
 
-[@axios](https://axios-http.com/)
+[axios](https://axios-http.com/)
 
 ## Run Locally
 
