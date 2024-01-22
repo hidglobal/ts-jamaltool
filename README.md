@@ -1,15 +1,15 @@
 
 # HID Authentication Diagnostic Project
 
-HID Auth Diagnostic project is set of tools are designed to help HID teams and customers in Authentication API training and diagnosis of the root causes of API errors with the power of AI.
+HID Auth Diagnostic project is a set of tools designed to help HID teams and customers in Authentication API training and diagnosis of the root causes of API errors with the power of AI.
 
 
 
 ## Live
 
-You can test, train and diagnostic your HID API endpoint on https://mrdoc.hiddemo.com/
+You can test, train, and diagnostic your HID API endpoint on https://mrdoc.hiddemo.com/
 
-## Dependencies 
+## Dependencies appreciation
 
 [@Mantine](https://mantine.dev/) - User interface
 
@@ -25,7 +25,7 @@ You can test, train and diagnostic your HID API endpoint on https://mrdoc.hiddem
 
 [@ViteJS](https://vitejs.dev/)
 
-[@axios)(https://axios-http.com/)
+[@axios](https://axios-http.com/)
 
 ## Run Locally
 
