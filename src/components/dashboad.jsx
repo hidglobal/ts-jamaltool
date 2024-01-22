@@ -37,7 +37,7 @@ function Dashboard(){
     return(
 <>
 <Box>
-    <Center><h1>HID Auth Diagnostic Tool v0.1</h1></Center>
+    <Center><h1>HID Auth Diagnostic Project v0.1</h1></Center>
     <Center>
     <Badge color="indigo" size="xl" radius="lg" variant="dot">
       <div id='digital-clock'></div>
@@ -47,6 +47,7 @@ function Dashboard(){
 <Grid>
 
 <Grid.Col span={6}><Paper>HID Auth Diagnostic project is set of tools are designed to help HID teams and customers in Authentication API training and diagnosis of the root causes of API errors with the power of AI.</Paper>
+<i><Text size="sm">[ Press F11 to toggle Full Screen. ]</Text></i><br/>
 <b>Features:</b>
 <Center>
 <Timeline  active={13} bulletSize={24} lineWidth={2}>
@@ -94,7 +95,7 @@ function Dashboard(){
     </Timeline.Item>
     <Timeline.Item bullet={<IconUserCircle size={18} />} title="Dunn, Colin" >
         <Text color="dimmed" size="sm">Manager, Technical Support</Text>
-        <Text size="xs" mt={4}>Motivation, Innovation, Documentation and testing.</Text>
+        <Text size="xs" mt={4}>Documentation, Motivation, Innovation, Documentation and testing.</Text>
     </Timeline.Item>
     </Timeline>
     </Grid.Col>

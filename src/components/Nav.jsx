@@ -18,22 +18,22 @@ function Navlinks(){
       {
         icon: IconFingerprint,
         label: 'Authentication',
-        href:'/authentication'
+        href:'/#/authentication'
       },
-      { icon: IconUserPlus, label: 'Register user',href:'/register' },
-      {icon: IconUserQuestion, label:'Users', href:'/Users'},
-      {icon:IconDeviceMobilePlus,label:'Create Device',href:'/createdevice'},
-      {icon:IconDeviceMobileBolt,label:'Get Device', href:'/getdevice'},
-      {icon:IconDeviceCameraPhone,label:'Clone Device',href:'/clonedevice'},
-      {icon:IconUserCog,label:'Assign Device',href:'/assigndevice'},
-      {icon:IconUserCheck,label:'Provision Device',href:'/Provisiondevice'},
-      {icon:IconUserShield,label: 'Create Password Authenticatior', href: '/createPasswordAuthenticator'},
-      {icon:IconUserCode, label: 'Create OTP Authenticator', href:'/createOtpAuth'},
-      {icon:IconFlame, label:'Test Password Authenticator',href:'/pauthenticate'},
-      {icon:IconTools,label:'Test OTP Authenticator',href:'/otpAuth'},
-      {icon:IconTools,label:'Test HID Approve TOTP', href:'/approvetotp'},
-      {icon:IconGauge,label:'Test HID Approve Push Auth',href:'/approvepush'},
-      {icon:IconEar,label:'Update CIBA Listener', href:'/updateCIBA'}
+      { icon: IconUserPlus, label: 'Register user',href:'/#/register' },
+      {icon: IconUserQuestion, label:'Users', href:'/#/Users'},
+      {icon:IconDeviceMobilePlus,label:'Create Device',href:'/#/createdevice'},
+      {icon:IconDeviceMobileBolt,label:'Get Device', href:'/#/getdevice'},
+      {icon:IconDeviceCameraPhone,label:'Clone Device',href:'/#/clonedevice'},
+      {icon:IconUserCog,label:'Assign Device',href:'/#/assigndevice'},
+      {icon:IconUserCheck,label:'Provision Device',href:'/#/Provisiondevice'},
+      {icon:IconUserShield,label: 'Create Password Authenticatior', href: '/#/createPasswordAuthenticator'},
+      {icon:IconUserCode, label: 'Create OTP Authenticator', href:'/#/createOtpAuth'},
+      {icon:IconFlame, label:'Test Password Authenticator',href:'/#/pauthenticate'},
+      {icon:IconTools,label:'Test OTP Authenticator',href:'/#/otpAuth'},
+      {icon:IconTools,label:'Test HID Approve TOTP', href:'/#/approvetotp'},
+      {icon:IconGauge,label:'Test HID Approve Push Auth',href:'/#/approvepush'},
+      {icon:IconEar,label:'Update CIBA Listener', href:'/#/updateCIBA'}
     ];
     const second = [
 

@@ -63,7 +63,6 @@ function AuthService() {
     },
   });
   const [TokenCheck, CheckedToken] = useState(false);
-useEffect();
   if (TokenCheck) {
     // If TokenCheck is true, user has a token
     document.getElementById("noToken")?.setAttribute("hidden", "hidden");
@@ -71,7 +70,7 @@ useEffect();
     document.getElementById("testCon")?.setAttribute("hidden", "hidden");
   } else {
     // If TokenCheck is false or null, user does not have a token
-    const accessToken = sessionStorage.getItem("access_token");
+    const accessToken = sessionStorage?.getItem("access_token");
     if (accessToken !== null) {
       // If access token is found in sessionStorage
       document.getElementById("noToken")?.setAttribute("hidden", "hidden");
@@ -79,9 +78,9 @@ useEffect();
       document.getElementById("testCon")?.setAttribute("hidden", "hidden");
     } else {
       // If TokenCheck is false and no access token in sessionStorage
-      document.getElementById("noToken")?.removeAttribute("hidden");
-      document.getElementById("gotToken")?.setAttribute("hidden", "hidden");
-      document.getElementById("testCon")?.removeAttribute("hidden");
+      document?.getElementById("noToken")?.removeAttribute("hidden");
+      document?.getElementById("gotToken")?.setAttribute("hidden", "hidden");
+      document?.getElementById("testCon")?.removeAttribute("hidden");
     }
   }
 
@@ -126,7 +125,7 @@ useEffect();
         <TextInput
           label="Host"
           placeholder="host"
-          {...form.getInputProps("Host")}
+          {...form?.getInputProps("Host")}
         />
       </Tooltip>
 
@@ -134,7 +133,7 @@ useEffect();
         mt="md"
         label="Tenant/Security Domain"
         placeholder="Tenant"
-        {...form.getInputProps("Tenant")}
+        {...form?.getInputProps("Tenant")}
       />
       <br />
 

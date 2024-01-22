@@ -1,5 +1,5 @@
 import React from "react";
-import App from "./App.jsx";
+import App from "./App.js";
 import AuthService from "./components/AuthService.jsx";
 import RegisterUser from "./components/RegisterUser.jsx";
 import * as ReactDOM from "react-dom/client";
@@ -9,7 +9,7 @@ import PasswordAuth from "./components/passwordauth.jsx";
 import CreateOTPAuth from "./components/CreateOTPAuth.jsx";
 import OTPAuth from "./components/otpAuth.jsx";
 import {
-    createBrowserRouter,
+  createHashRouter,
     RouterProvider,
   } from "react-router-dom";
 import CreateDevice from "./components/createDevice.jsx";
@@ -21,7 +21,7 @@ import ApproveOTPAuth from "./components/approveotp.jsx";
 import ApprovePushAuth from "./components/approveciba.jsx";
 import Dashboard from "./components/dashboad.jsx";
 import UpdateCiba from "./components/updateciba.jsx";
-  const router = createBrowserRouter([
+  const router = createHashRouter([
     {
       path: "/",
       element: <App/>,
@@ -31,11 +31,11 @@ import UpdateCiba from "./components/updateciba.jsx";
           element: <Dashboard/>,
         },
         {
-          path: "/authentication",
+          path: "authentication",
           element: <AuthService />,
         },
         {
-            path: "/auth-server",
+            path: "auth-server",
             element: <AuthService />,
           },
         {
@@ -47,7 +47,7 @@ import UpdateCiba from "./components/updateciba.jsx";
           element: <ViewUsers />,
         },
         {
-          path: "/createPasswordAuthenticator",
+          path: "createPasswordAuthenticator",
           element: <CreatePasswordAuth />,
         },
         {
@@ -99,7 +99,7 @@ import UpdateCiba from "./components/updateciba.jsx";
 
   ]);
   ReactDOM.createRoot(document.getElementById("root")).render(
-
+<React.StrictMode>
       <RouterProvider router={router} />
-  
+      </React.StrictMode>
   );
