@@ -63,3 +63,6 @@ Start the server
 - Darren Preece - Director of Technical Support
 - Colin Dunn - Manager of Technical Support 
 
+## License
+
+MIT
