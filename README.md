@@ -13,7 +13,7 @@ You can test, train, and diagnostic your HID API endpoint on https://mrdoc.hidde
 
 [Mantine](https://mantine.dev/) - User interface
 
-[Socket.io](https://socket.io/) - Real-time CIBA callback communication.
+[Socket.io](https://socket.io/) - Real-time CIBA notifications.
 
 [ElectronJS](https://www.electronjs.org/) - Cross-platform desktop applications.
 
