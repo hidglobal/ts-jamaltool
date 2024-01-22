@@ -19,12 +19,13 @@ You can test, train and diagnostic your HID API endpoint on https://mrdoc.hiddem
 
 [@ExpressJS](https://expressjs.com/) 
 
-[@Google AI SDK]([https://ai.google.dev/](https://github.com/google/generative-ai-js)
+[@Google AI SDK](https://github.com/google/generative-ai-js)
 
 [@QRcode.js](https://davidshimjs.github.io/qrcodejs/)
 
 [@ViteJS](https://vitejs.dev/)
 
+[@axios)(https://axios-http.com/)
 
 ## Run Locally
 
