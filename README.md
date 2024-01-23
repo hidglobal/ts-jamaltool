@@ -65,4 +65,4 @@ Start the server
 
 ## License
 
-MIT
+HID License.docx
