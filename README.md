@@ -1,7 +1,7 @@
 
 # HID Authentication Diagnostic Project
 
-HID Auth Diagnostic project offers a comprehensive suite of tools tailored for Web, Windows, Linux, and macOS platforms. These tools are specifically crafted to facilitate HID teams and users in the realm of Authentication API training, empowering them to diagnose and pinpoint the root causes of API errors. Harnessing the capabilities of artificial intelligence, this cross-platform application aids the HID teams, and customers by providing valuable insights and assistance in the training process, and diagnosis.
+HID Auth Diagnostic project offers a comprehensive suite of tools tailored for Web, Windows, Linux, and macOS platforms. These tools are specifically crafted to facilitate HID teams and customers in the realm of Authentication API training, empowering them to diagnose and pinpoint the root causes of API errors. Harnessing the capabilities of artificial intelligence, this cross-platform application aids the HID teams, and customers by providing valuable insights and assistance in the training process, and diagnosis.
 ensuring a smoother and more efficient authentication experience.
 
 [![CodeQL](https://github.com/hidglobal/ts-jamaltool/actions/workflows/codeql.yml/badge.svg)](https://github.com/hidglobal/ts-jamaltool/actions/workflows/codeql.yml)
