@@ -41,34 +41,17 @@ ENV ZIP_URL https://github.com/hidglobal/ts-jamaltool/raw/main/build.zip
 
 # Install certbot and its dependencies
 RUN apt-get update && \
-    apt-get install -y certbot curl unzip openssl
+    apt-get install -y unzip curl openssl
 
 
 # Create a directory for the public files
-RUN mkdir -p /usr/share/nginx/html/${DOMAIN}
-
+RUN mkdir -p /usr/share/nginx/html/
+RUN rm -rf /usr/share/nginx/html/index.html
 # Download and extract the zip file
 RUN curl -L ${ZIP_URL} -o /tmp/file.zip && \
-    unzip /tmp/file.zip -d /usr/share/nginx/html/${DOMAIN} && \
+    unzip /tmp/file.zip -d /usr/share/nginx/html/ && \
     rm /tmp/file.zip
 
-# Generate a certificate for the domain
-RUN if [ -n "$DOMAIN" ] && [ -n "$EMAIL" ]; then \
-        apt-get install -y certbot && \
-        certbot certonly --nginx -d ${DOMAIN} --non-interactive --agree-tos -m ${EMAIL}; \
-    else \
-        if [ ! -f "/etc/nginx/ssl/nginx-selfsigned.crt" ] || [ ! -f "/etc/nginx/ssl/nginx-selfsigned.key" ]; then \
-            openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-            -keyout /etc/nginx/ssl/nginx-selfsigned.key \
-            -out /etc/nginx/ssl/nginx-selfsigned.crt \
-            -subj "/C=US/ST=State/L=City/O=Organization/CN=${DOMAIN}/emailAddress=${EMAIL}"; \
-        fi; \
-        echo 'please update your nginx config to use this certificate: /etc/nginx/ssl/nginx-selfsigned.crt \n and Key file: /etc/nginx/ssl/nginx-selfsigned.key' \
-    fi    
-
-# Expose ports 80 and 443
-EXPOSE 80
-EXPOSE 443
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
