@@ -52,7 +52,7 @@ Please follow the instructions below:
   docker container run -p 80 -d --name hidiagcontainername hidiagdockerimage .
 ```
 
-Now visit localhost aka my home address is 127.0.0.0
+Now visit localhost 
 
 Enjoy!
 
