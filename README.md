@@ -30,22 +30,25 @@ You can test, train, and diagnostic your HID API endpoint on https://mrdoc.hidde
 
 ## Run Production Docker Container
 
-This is going to download production build of the project build.zip which is only index.html and css, js files.
+This is going to download production build of the project build.zip which is only index.html and css, js files and run it using nginx. [ NodeJS isn't required ]
 
-Copy your desired dockerfile in your working directory, we have two dockerfiles (Dockerfile) is ubuntu and nginx
+Please follow the instructions below:
+
+1- Copy your desired dockerfile in your working directory, we have two dockerfiles (Dockerfile) is ubuntu and nginx
 Dockerfile-Alpine-Nginx is Alpine Linux and nginx
 
-then build a docker image
+2- Build a docker image
 
 ```bash
   docker build -t hidiagdockerimage .
 ```
+3- Build a docker container from the previously built docker image.
 
 ```bash
   docker container run -p 80 -d --name hidiagcontainername hidiagdockerimage .
 ```
 
-Now visit http://localhost 
+Now visit localhost aka my home address is 127.0.0.0
 
 Enjoy!
 
