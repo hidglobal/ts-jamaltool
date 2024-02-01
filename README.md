@@ -39,7 +39,7 @@ Please follow the instructions below:
 
 [Dockerfile](https://github.com/hidglobal/ts-jamaltool/blob/main/Dockerfile) is ubuntu and nginx
     
-[Dockerfile-Alpine-Nginx]{https://github.com/hidglobal/ts-jamaltool/blob/main/Dockerfile-Alpine-Nginx} is Alpine Linux and nginx
+[Dockerfile-Alpine-Nginx](https://github.com/hidglobal/ts-jamaltool/blob/main/Dockerfile-Alpine-Nginx) is Alpine Linux and nginx
 
 2- Build a docker image
 
