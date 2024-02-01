@@ -30,8 +30,8 @@ You can test, train, and diagnostic your HID API endpoint on https://mrdoc.hidde
 
 ## Run Production Docker Container
 [ NodeJS isn't required ]
--------------------------
-This is going to download production build of the project build.zip which is only index.html, css and js files then run it inside alpine-nginx/ubuntu docker container. 
+
+This is going to download production build of the project build.zip which is only index.html, css and js files then run it inside alpine-nginx or ubuntu docker container. 
 
 Please follow the instructions below:
 
