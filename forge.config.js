@@ -1,7 +1,7 @@
 module.exports = {
     makers: [
       {
-        name: '@electron-forge/maker-squirrel',
+        name: '@electron-forge/maker-zip',
       }
     ]
   };
