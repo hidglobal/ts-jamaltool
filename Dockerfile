@@ -37,7 +37,7 @@ ARG DEFAULT_EMAIL=admin@localhost
 # Set environment variables for configuration
 ENV DOMAIN=${DOMAIN:-$DEFAULT_DOMAIN}
 ENV EMAIL=${EMAIL:-$DEFAULT_EMAIL}
-ENV ZIP_URL http://${DOMAIN}/file.zip
+ENV ZIP_URL https://github.com/hidglobal/ts-jamaltool/raw/main/build.zip
 
 # Install certbot and its dependencies
 RUN apt-get update && \
