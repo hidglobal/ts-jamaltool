@@ -46,7 +46,7 @@ Please follow the instructions below:
 ```bash
   docker build -t hidiagdockerimage .
 ```
-3- Build a docker container from the previously built docker image.
+3- Build and run a docker container from the previously built docker image.
 
 ```bash
   docker container run -p 80 -d --name hidiagcontainername hidiagdockerimage .
