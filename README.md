@@ -37,7 +37,7 @@ Please follow the instructions below:
 
 1- Copy your desired docker file in your working directory, we have two docker files:
 
-    *- (Dockerfile) is ubuntu and nginx
+    *- (Dockerfile)(https://github.com/hidglobal/ts-jamaltool/blob/main/Dockerfile) is ubuntu and nginx
     
     *- Dockerfile-Alpine-Nginx is Alpine Linux and nginx
 
