@@ -29,8 +29,9 @@ You can test, train, and diagnostic your HID API endpoint on https://mrdoc.hidde
 [axios](https://axios-http.com/)
 
 ## Run Production Docker Container
-
-This is going to download production build of the project build.zip which is only index.html and css, js files and run it using nginx. [ NodeJS isn't required ]
+[ NodeJS isn't required ]
+-------------------------
+This is going to download production build of the project build.zip which is only index.html, css and js files then run it inside alpine-nginx/ubuntu docker container. 
 
 Please follow the instructions below:
 
