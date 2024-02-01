@@ -35,8 +35,9 @@ This is going to download production build of the project build.zip which is onl
 
 Please follow the instructions below:
 
-1- Copy your desired dockerfile in your working directory, we have two dockerfiles (Dockerfile) is ubuntu and nginx
-Dockerfile-Alpine-Nginx is Alpine Linux and nginx
+1- Copy your desired docker file in your working directory, we have two docker files:
+    *- (Dockerfile) is ubuntu and nginx
+    *- Dockerfile-Alpine-Nginx is Alpine Linux and nginx
 
 2- Build a docker image
 
