@@ -30,7 +30,9 @@ You can test, train, and diagnostic your HID API endpoint on https://mrdoc.hidde
 
 ## Run Production Docker Container
 
-Copy your desired dockerfile in your working directory, we have two dockerfiles Dockerfile is ubuntu and nginx
+This is going to download production build of the project build.zip which is only index.html and css, js files.
+
+Copy your desired dockerfile in your working directory, we have two dockerfiles (Dockerfile) is ubuntu and nginx
 Dockerfile-Alpine-Nginx is Alpine Linux and nginx
 
 then build a docker image
