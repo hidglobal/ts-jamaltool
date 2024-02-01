@@ -1,8 +1,7 @@
 module.exports = {
     makers: [
       {
-        name: '@electron-forge/maker-zip',
-        paltforms: ['Linux','win32/x64']
+        name: '@electron-forge/maker-squirrel',
       }
     ]
   };

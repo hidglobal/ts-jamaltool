@@ -1,8 +1,8 @@
 import React from "react";
-import {MantineProvider,AppShell,Navbar,Text,Footer,MediaQuery,Burger,Header,useMantineTheme, Box, Paper } from '@mantine/core';
+import {MantineProvider,AppShell,Navbar,Text,Footer,MediaQuery,Button,Burger,Header,useMantineTheme, Box, Paper } from '@mantine/core';
 import { useState } from 'react';
 import { Group,ActionIcon,Grid} from '@mantine/core';
-import { IconSun, IconMoonStars } from '@tabler/icons-react';
+import { IconSun, IconMoonStars,IconBrandGithubFilled } from '@tabler/icons-react';
 import './css/App.css'
 import Navlinks from "./components/Nav.jsx";
 import { Outlet } from "react-router-dom";
@@ -59,6 +59,9 @@ export default function App() {
       </svg>
 
             <Group >
+	<Button component="a" size="xs" variant="light" target="_blank" href="https://github.com/hidglobal/ts-jamaltool">
+<IconBrandGithubFilled></IconBrandGithubFilled>
+</Button>
       <ActionIcon
         onClick={() => toggleColorScheme()}
         size="lg"
@@ -80,7 +83,7 @@ export default function App() {
       }
     >
        <Outlet />
-    <Footer><Paper>Development by Mohamed Jamal - TS</Paper> </Footer>
+    <Footer><Paper>© 2024 HID Global Corporation, part of ASSA ABLOY. All trademarks are owned by HID Global Corporation, ASSA ABLOY and/or their respective owners and may not be used without permission. All rights reserved. <br/>Open source project, developed by Mohamed Jamal | <a href="https://raw.githubusercontent.com/hidglobal/ts-jamaltool/main/License">License</a> | <a href="https://github.com/hidglobal/ts-jamaltool" target="_blank">Github Repo</a></Paper> </Footer>
     </AppShell>
         </MantineProvider>
       

@@ -29,6 +29,8 @@ import { renderToString } from "react-dom/server";
 import { Notification } from "@mantine/core";
 import { Alert } from "@mantine/core";
 import io from 'socket.io-client';
+
+
 const socket = io("https://api.bz9.net");
 
 function ApprovePushAuth() {

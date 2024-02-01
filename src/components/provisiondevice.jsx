@@ -1,11 +1,11 @@
 
-import {TextInput, Button, JsonInput, Card, Grid, Center } from '@mantine/core';
+import {TextInput,Text, Button, JsonInput, Card, Grid, Center } from '@mantine/core';
 import axios from 'axios';
 import { notifications } from '@mantine/notifications';
 import { IconFaceIdError, IconFaceId, IconAlertCircle } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { Alert } from '@mantine/core';
-import QRCode from 'qrcode'
+const QRCode = require('qrcode');
 
 function ProvisionDevice() {
   let AccessToken = sessionStorage.getItem("access_token");
@@ -155,7 +155,8 @@ function ProvisionDevice() {
         </Center>
         <Center>
           <br />
-          <div id='qrcode' style={{ width: '200px', height: '200px', marginTop: '10px' }}></div></Center>
+          <div id='qrcode' style={{ width: '250px', height: '250px', marginTop: '10px' }}></div></Center>
+	<Center><Text>If you encounter an error while registering the service, you can zoom-in and try again.</Text></Center>
       </Card></div>
   );
         }
