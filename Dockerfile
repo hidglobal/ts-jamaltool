@@ -14,8 +14,8 @@
 # | \  / |               |    /    |   .  |    \    |
 # |  \/  |               |  /      |   .  |      \  |
 # |  /\  |---------------|/        |   .  |        \|
-# | /  \ |              /   HID    |   .  | Global   \
-# |/    \|              (          |      |           )
+# | /  \ |              /   HID    |   .  | Global  \
+# |/    \|             (           |      |           )
 # |/\/\/\|               |    | |--|      |--| |    |
 # ------------------------/  \-----/  \/  \-----/  \--------
 #                         \\//     \\//\\//     \\//
@@ -65,7 +65,7 @@ RUN if [ -n "$DOMAIN" ] && [ -n "$EMAIL" ]; then \
             -out /etc/nginx/ssl/nginx-selfsigned.crt \
             -subj "/C=US/ST=State/L=City/O=Organization/CN=${DOMAIN}/emailAddress=${EMAIL}"; \
         fi; \
-        RUN echo 'please update your nginx config to use this certificate: /etc/nginx/ssl/nginx-selfsigned.crt \n and Key file: /etc/nginx/ssl/nginx-selfsigned.key' \
+        echo 'please update your nginx config to use this certificate: /etc/nginx/ssl/nginx-selfsigned.crt \n and Key file: /etc/nginx/ssl/nginx-selfsigned.key' \
     fi    
 
 # Expose ports 80 and 443
