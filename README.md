@@ -28,7 +28,26 @@ You can test, train, and diagnostic your HID API endpoint on https://mrdoc.hidde
 
 [axios](https://axios-http.com/)
 
-## Run Locally
+## Run Production Docker Container
+
+Copy your desired dockerfile in your working directory, we have two dockerfiles Dockerfile is ubuntu and nginx
+Dockerfile-Alpine-Nginx is Alpine Linux and nginx
+
+then build a docker image
+
+```bash
+  docker build -t hidiagdockerimage .
+```
+
+```bash
+  docker container run -p 80 -d --name hidiagcontainername hidiagdockerimage .
+```
+
+Now visit http://localhost 
+
+Enjoy!
+
+## Run Development version Locally
 
 Clone the project
 
