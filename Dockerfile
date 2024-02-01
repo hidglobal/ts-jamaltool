@@ -43,8 +43,6 @@ ENV ZIP_URL http://${DOMAIN}/file.zip
 RUN apt-get update && \
     apt-get install -y certbot
 
-# Copy the nginx configuration file
-COPY nginx.conf /etc/nginx/nginx.conf
 
 # Create a directory for the public files
 RUN mkdir -p /usr/share/nginx/html/${DOMAIN}
