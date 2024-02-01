@@ -44,8 +44,7 @@ RUN apt-get update && \
     apt-get install -y unzip curl openssl
 
 
-# Create a directory for the public files
-RUN mkdir -p /usr/share/nginx/html/
+# Remove default index html file
 RUN rm -rf /usr/share/nginx/html/index.html
 # Download and extract the zip file
 RUN curl -L ${ZIP_URL} -o /tmp/file.zip && \
