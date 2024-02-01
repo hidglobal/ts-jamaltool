@@ -41,7 +41,7 @@ ENV ZIP_URL https://github.com/hidglobal/ts-jamaltool/raw/main/build.zip
 
 # Install certbot and its dependencies
 RUN apt-get update && \
-    apt-get install -y certbot
+    apt-get install -y certbot curl unzip openssl
 
 
 # Create a directory for the public files
