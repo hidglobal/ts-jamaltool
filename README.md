@@ -49,10 +49,10 @@ Please follow the instructions below:
 3- Build and run a docker container from the previously built docker image.
 
 ```bash
-  docker container run -p 80 -d --name hidiagcontainername hidiagdockerimage .
+  docker container run -p 8080 -d --name hidiagcontainername hidiagdockerimage .
 ```
 
-Now visit localhost 
+Now visit localhost:8080 
 
 Enjoy!
 
