@@ -5,6 +5,7 @@ import { notifications } from '@mantine/notifications';
 import {  IconFaceIdError, IconFaceId, IconUserCircle,IconAlertCircle } from '@tabler/icons-react';
 import { useState,useEffect } from 'react';
 import { Alert } from '@mantine/core';
+import { API_HOST } from '../config'; 
 let userList = [];
 
 function ViewUsers(){
@@ -13,7 +14,7 @@ function ViewUsers(){
 	let hostname = sessionStorage.getItem("hostname");
 	let tenant = sessionStorage.getItem("tenant");
     const fetch = async () => {
-        await axios.post('https://api.bz9.net/users',{
+        await axios.post(`${API_HOST}/users`,{
         access_token:AccessToken?.replace(/(?:\\[rn]|[\r\n]+)+/g, ""),
         hostname:hostname,
         tenant:tenant,

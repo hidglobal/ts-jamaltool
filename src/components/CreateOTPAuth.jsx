@@ -7,6 +7,7 @@ import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { JsonInput } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
+import { API_HOST } from '../config'; 
 
 function CreateOTPAuth(){
     const [visible, { toggle }] = useDisclosure(false);
@@ -23,7 +24,7 @@ function CreateOTPAuth(){
     });
  
     const fetch = async () => {
-        await axios.post('https://api.bz9.net/createotpAuthenticator',{
+        await axios.post(`${API_HOST}/createotpAuthenticator`,{
         access_token:AccessToken.replace(/(\r?\n|\r)/gm,""),
         hostname:hostname,
         tenant:tenant,

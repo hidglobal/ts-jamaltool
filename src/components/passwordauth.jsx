@@ -5,6 +5,8 @@ import { IconAlertCircle } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import { Alert } from '@mantine/core';
+import { API_HOST } from '../config'; 
+
 function PasswordAuth() {
   const [active, setActive] = useState(0);
   let username = '';
@@ -106,7 +108,7 @@ function PasswordAuth() {
                 <Button onClick={
                   () =>
 
-                    axios.post('https://api.bz9.net/passauth', {
+                    axios.post(`${API_HOST}/passauth`, {
                       username: form4.values.username,
                       password: form4.values.password,
                       hostname: hostname,

@@ -5,7 +5,7 @@ import { notifications } from '@mantine/notifications';
 import { IconFaceIdError, IconFaceId,IconAlertCircle } from '@tabler/icons-react';
 import { Alert } from '@mantine/core';
 import { useForm } from '@mantine/form';
-
+import { API_HOST } from '../config'; 
 
 function GetDevice(){
 	let AccessToken = sessionStorage.getItem("access_token");
@@ -64,7 +64,7 @@ if(AccessToken==null){
     autoClose: false,
     withCloseButton: false,
   });
-  axios.post('https://api.bz9.net/getdevice',{
+  axios.post(`${API_HOST}/getdevice`,{
     access_token:AccessToken,
     hostname:hostname,
     tenant:tenant,

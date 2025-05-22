@@ -19,6 +19,7 @@ import {
 } from "@tabler/icons-react";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
+import { API_HOST } from '../config'; 
 
 function ApproveOTPAuth() {
   const [active, setActive] = useState(0);
@@ -177,7 +178,7 @@ function ApproveOTPAuth() {
                     onClick={() =>
                       axios
                         .post(
-                          "https://api.bz9.net/approvetotp",
+                          `${API_HOST}/approvetotp`,
                           {
                             username: form4.values.username,
                             password: form4.values.password,

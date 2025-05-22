@@ -5,6 +5,8 @@ import axios from 'axios';
 import { notifications } from '@mantine/notifications';
 import { IconCheck, IconFaceIdError,IconAlertCircle } from '@tabler/icons-react';
 import { Alert } from '@mantine/core';
+import { API_HOST } from '../config'; 
+
 function RegisterUser(){
 	let AccessToken = sessionStorage.getItem("access_token");
 	let hostname = sessionStorage.getItem("hostname");
@@ -73,7 +75,7 @@ function RegisterUser(){
 						autoClose: false,
 						withCloseButton: false,
 					  });
-					axios.post('https://api.bz9.net/register', {
+					axios.post(`${API_HOST}/register`, {
 						familyName: userfamily,
 						firstName: userfirst,
 						hostname: hostname,

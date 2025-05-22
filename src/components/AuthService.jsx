@@ -25,6 +25,7 @@ import {
 import { notifications } from "@mantine/notifications";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { API_HOST } from '../config'; 
 
 /** This component is using HID Authentication API End point to generate an access token to do various HID Authentication functions */
 function AuthService() {
@@ -63,27 +64,28 @@ function AuthService() {
     },
   });
   const [TokenCheck, CheckedToken] = useState(false);
-useEffect();
-  if (TokenCheck) {
-    // If TokenCheck is true, user has a token
-    document.getElementById("noToken")?.setAttribute("hidden", "hidden");
-    document.getElementById("gotToken")?.removeAttribute("hidden");
-    document.getElementById("testCon")?.setAttribute("hidden", "hidden");
-  } else {
-    // If TokenCheck is false or null, user does not have a token
-    const accessToken = sessionStorage.getItem("access_token");
-    if (accessToken !== null) {
-      // If access token is found in sessionStorage
+  useEffect(() => {
+    if (TokenCheck) {
+      // If TokenCheck is true, user has a token
       document.getElementById("noToken")?.setAttribute("hidden", "hidden");
       document.getElementById("gotToken")?.removeAttribute("hidden");
       document.getElementById("testCon")?.setAttribute("hidden", "hidden");
     } else {
-      // If TokenCheck is false and no access token in sessionStorage
-      document.getElementById("noToken")?.removeAttribute("hidden");
-      document.getElementById("gotToken")?.setAttribute("hidden", "hidden");
-      document.getElementById("testCon")?.removeAttribute("hidden");
+      // If TokenCheck is false or null, user does not have a token
+      const accessToken = sessionStorage.getItem("access_token");
+      if (accessToken !== null) {
+        // If access token is found in sessionStorage
+        document.getElementById("noToken")?.setAttribute("hidden", "hidden");
+        document.getElementById("gotToken")?.removeAttribute("hidden");
+        document.getElementById("testCon")?.setAttribute("hidden", "hidden");
+      } else {
+        // If TokenCheck is false and no access token in sessionStorage
+        document.getElementById("noToken")?.removeAttribute("hidden");
+        document.getElementById("gotToken")?.setAttribute("hidden", "hidden");
+        document.getElementById("testCon")?.removeAttribute("hidden");
+      }
     }
-  }
+  }, [TokenCheck]);
 
   // Render authentication form
   return (
@@ -197,7 +199,7 @@ useEffect();
                 ) {
                   axios
                     .post(
-                      "https://api.bz9.net/userinfo",
+                      `${API_HOST}/userinfo`,
                       {
                         access_token: access_token,
                         hostname: hostname,
@@ -340,7 +342,7 @@ useEffect();
               !!hostname
                 ? axios
                     .post(
-                      "https://api.bz9.net/conng",
+                      `${API_HOST}/conng`,
                       {
                         grant_type: grant_type,
                         username: username,
@@ -377,7 +379,6 @@ useEffect();
                               JSON.stringify(response.data.access_token),
                             icon: <IconCheck size="1rem" />,
                             autoClose: 2000,
-                            // autoClose: 2000,
                           });
                           sessionStorage.setItem(
                             "access_token",

@@ -16,6 +16,7 @@ import {
   IconAlertCircle,
 } from "@tabler/icons-react";
 import { useForm } from "@mantine/form";
+import { API_HOST } from '../config'; 
 
 function AssignDevice() {
   let AccessToken = sessionStorage.getItem("access_token");
@@ -111,7 +112,7 @@ function AssignDevice() {
                 });
                 axios
                   .post(
-                    "https://api.bz9.net/assigndevice",
+                    `${API_HOST}/assigndevice`,
                     {
                       access_token: AccessToken,
                       hostname: hostname,

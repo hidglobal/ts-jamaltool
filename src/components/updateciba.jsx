@@ -5,7 +5,7 @@ import { IconAlertCircle } from "@tabler/icons-react";
 import { IconFaceId, IconFaceIdError, IconWoman } from "@tabler/icons-react";
 import axios from 'axios';
 import { useEffect } from "react";
-
+import { API_HOST } from '../config'; 
 
 
 function UpdateCiba(){
@@ -18,7 +18,7 @@ function UpdateCiba(){
 
 
     const form43 = useForm({
-        initialValues: { cibaListener:'https://api.bz9.net/callback_url',CBPayload:'{\n            "urn:hid:scim:api:idp:2.0:UserAttribute": {\n            "attributes": [\n             {\n                "name": "ATR_CIBACB",\n                "value": "https://api.bz9.net/callback_url"\n              }\n            ]\n          }\n        }' },
+        initialValues: { cibaListener:`${API_HOST}/callback_url`,CBPayload:'{\n            "urn:hid:scim:api:idp:2.0:UserAttribute": {\n            "attributes": [\n             {\n                "name": "ATR_CIBACB",\n                "value": "'+form43.values.cibaListener+'"\n              }\n            ]\n          }\n        }' },
       });
 
       function updatePay(){
@@ -70,7 +70,7 @@ notifications.show({
     autoClose: false,
     withCloseButton: false,
   });
-  axios.post('https://api.bz9.net/updateCB', {
+  axios.post(`${API_HOST}/updateCB`, {
     access_token: accessToken,
     hostname: hostname,
     tenant: Tenant,

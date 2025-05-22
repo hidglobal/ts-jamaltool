@@ -5,7 +5,7 @@ import { notifications } from '@mantine/notifications';
 import {  IconFaceIdError,IconFaceId,IconAlertCircle } from '@tabler/icons-react';
 import { Alert } from '@mantine/core';
 import { useForm } from '@mantine/form';
-
+import { API_HOST } from '../config'; 
 
 function CloneDevice() {
   let AccessToken = sessionStorage.getItem("access_token");
@@ -74,7 +74,7 @@ function CloneDevice() {
               autoClose: false,
               withCloseButton: false,
             });
-            axios.post('https://api.bz9.net/clonedevice', {
+            axios.post(`${API_HOST}/clonedevice`, {
               access_token: AccessToken,
               hostname: hostname,
               tenant: tenant,

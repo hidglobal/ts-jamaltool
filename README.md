@@ -76,6 +76,13 @@ Install dependencies
   npm install
 ```
 
+Populate config.js
+
+```javascript
+// Update to add your host
+export const API_HOST = sessionStorage.getItem("api_host") || "http://localhost:4000";
+```
+
 Start the server
 
 ```bash

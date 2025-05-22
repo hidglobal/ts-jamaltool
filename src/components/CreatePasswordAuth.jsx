@@ -5,7 +5,7 @@ import { notifications } from '@mantine/notifications';
 import { IconCheck, IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId, IconLock, IconUserCircle, IconAt } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
-
+import { API_HOST } from '../config'; 
 
 function CreatePasswordAuth() {
   const [visible, { toggle }] = useDisclosure(false);
@@ -21,7 +21,7 @@ function CreatePasswordAuth() {
     },
   });
   const fetch = async () => {
-    await axios.post('https://api.bz9.net/createAuthenticator', {
+    await axios.post(`${API_HOST}/createAuthenticator`, {
       access_token: AccessToken.replace(/(\r?\n|\r)/gm, ""),
       hostname: hostname,
       tenant: tenant,

@@ -6,6 +6,7 @@ import { IconFaceIdError, IconFaceId, IconAlertCircle } from '@tabler/icons-reac
 import { useForm } from '@mantine/form';
 import { Alert } from '@mantine/core';
 import QRCode from 'qrcode'
+import { API_HOST } from '../config'; 
 
 function ProvisionDevice() {
   let AccessToken = sessionStorage.getItem("access_token");
@@ -88,7 +89,7 @@ function ProvisionDevice() {
               autoClose: false,
               withCloseButton: false,
             });
-            axios.post('https://api.bz9.net/provisiondevice', {
+            axios.post(`${API_HOST}/provisiondevice`, {
               access_token: AccessToken,
               hostname: hostname,
               tenant: tenant,

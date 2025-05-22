@@ -5,6 +5,7 @@ import { notifications } from '@mantine/notifications';
 import { IconCheck,IconAlertCircle, IconFaceIdError, IconEarOff, IconFaceId, IconUserCircle, IconAt } from '@tabler/icons-react';
 import { Alert } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { API_HOST } from '../config'; 
 
 let deviceList = [];
 
@@ -94,7 +95,7 @@ if(AccessToken==null){
     autoClose: false,
     withCloseButton: false,
   });
-  axios.post('https://api.bz9.net/createdevice',{
+  axios.post(`${API_HOST}/createdevice`,{
     access_token:AccessToken,
     hostname:hostname,
     tenant:tenant,

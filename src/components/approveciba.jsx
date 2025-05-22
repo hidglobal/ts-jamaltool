@@ -29,7 +29,9 @@ import { renderToString } from "react-dom/server";
 import { Notification } from "@mantine/core";
 import { Alert } from "@mantine/core";
 import io from 'socket.io-client';
-const socket = io("https://api.bz9.net");
+import { API_HOST } from '../config'; 
+
+const socket = io(API_HOST);
 
 function ApprovePushAuth() {
   const [active, setActive] = useState(0);
@@ -153,7 +155,7 @@ function ApprovePushAuth() {
                       if (form49.values.userid.length > 2) {
                         axios
                           .post(
-                            "https://api.bz9.net/devicelist",
+                            `${API_HOST}/devicelist`,
                             {
                               userid: form49.values.userid,
                               hostname: hostname,
@@ -373,7 +375,7 @@ function ApprovePushAuth() {
                   onClick={() => {
                     axios
                       .post(
-                        "https://api.bz9.net/bcauthorize",
+                        `${API_HOST}/bcauthorize`,
                         {
                           hostname: hostname,
                           tenant: Tenant,
@@ -470,7 +472,7 @@ function ApprovePushAuth() {
                   onClick={() =>
                     axios
                       .post(
-                        "https://api.bz9.net/approvetotp",
+                        `${API_HOST}/approvetotp`,
                         {
                           username: form49.values.username,
                           password: form49.values.password,
